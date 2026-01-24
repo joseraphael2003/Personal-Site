@@ -2,54 +2,59 @@
 
 import { motion } from "framer-motion";
 
+// Add transition definition to imports if needed, or just type as any/Transition
+// But framer-motion types are usually inferred.
+
 interface ProfileAvatarProps {
     layoutId?: string;
     className?: string;
     size?: "sm" | "lg";
+    transition?: any; // Allow overriding transition
 }
 
-export function ProfileAvatar({ layoutId, className, size = "lg" }: ProfileAvatarProps) {
+export function ProfileAvatar({ layoutId, className, size = "lg", transition }: ProfileAvatarProps) {
     return (
         <motion.div
             layoutId={layoutId}
             className={`relative overflow-hidden rounded-full border-2 border-primary/50 shadow-2xl bg-surface ${className}`}
             initial={false}
-            transition={{
+            transition={transition || {
                 type: "spring",
-                stiffness: 300,
-                damping: 30,
+                stiffness: 120,
+                damping: 25,
             }}
             style={{
-                width: size === "lg" ? 160 : 48,
-                height: size === "lg" ? 160 : 48,
+                width: size === "lg" ? 480 : 48,
+                height: size === "lg" ? 480 : 48,
             }}
         >
             <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent opacity-50" />
-            {/* Placeholder for image */}
-            <div className="absolute inset-0 flex items-center justify-center text-white/20 font-mono text-xs">
-                IMG
-            </div>
+            <img
+                src="/profile.png"
+                alt="Profile"
+                className="absolute inset-0 w-full h-full object-cover"
+            />
         </motion.div>
     );
 }
 
-export function ProfileName({ layoutId, className, size = "lg" }: { layoutId?: string; className?: string; size?: "lg" | "sm" }) {
+export function ProfileName({ layoutId, className, size = "lg", transition }: { layoutId?: string; className?: string; size?: "lg" | "sm", transition?: any }) {
     return (
         <motion.h1
             layoutId={layoutId}
             className={`font-bold tracking-tight text-white ${className}`}
             initial={false}
-            transition={{
+            transition={transition || {
                 type: "spring",
-                stiffness: 300,
-                damping: 30,
+                stiffness: 120,
+                damping: 25,
             }}
             style={{
-                fontSize: size === "lg" ? "3.75rem" : "1.25rem",
+                fontSize: size === "lg" ? "5rem" : "1.25rem",
                 lineHeight: 1,
             }}
         >
-            User Name
+            Jose Raphael V. Dichoso
         </motion.h1>
     );
 }

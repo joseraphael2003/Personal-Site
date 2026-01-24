@@ -24,25 +24,28 @@ export function Scaffold({ children }: { children: React.ReactNode }) {
         <div className="min-h-screen relative">
             <LayoutGroup>
                 {/* State A: Hero (Visible only when at top) */}
-                {!scrolled && (
-                    <div className="relative z-10 container mx-auto px-4">
-                        <Hero />
-                    </div>
-                )}
+                {/* State A: Hero (Always mounted, fades out) */}
+                <div
+                    className={cn(
+                        "relative z-10 container mx-auto px-4 transition-opacity duration-500",
+                        scrolled ? "opacity-0 pointer-events-none absolute inset-0 h-screen" : "opacity-100"
+                    )}
+                >
+                    <Hero />
+                </div>
 
                 {/* State B: Sidebar (Visible when scrolled) */}
-                {scrolled && (
-                    <div className="relative z-20">
-                        <Sidebar />
-                    </div>
-                )}
+                {/* Sidebar (Always mounted, state flows via props) */}
+                <div className="relative z-20">
+                    <Sidebar isScrolled={scrolled} />
+                </div>
 
                 {/* Main Content Area */}
                 {/* When scaffolded, this pushes content down or to the right */}
                 <main
                     className={cn(
                         "transition-all duration-500 ease-in-out",
-                        scrolled ? "pl-72 pr-8 pt-8" : "pt-8 px-4 container mx-auto"
+                        scrolled ? "pl-[120px] pr-8 pt-8" : "pt-8 px-4 container mx-auto"
                     )}
                 >
                     {/* 
