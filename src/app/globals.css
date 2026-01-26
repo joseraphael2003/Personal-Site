@@ -32,3 +32,7 @@ body {
 @utility glass-card {
   @apply bg-surface/30 backdrop-blur-lg border border-accent/30 hover:bg-surface/50 transition-colors duration-300;
 }
+
+@utility bg-gradient-radial {
+  background-image: radial-gradient(closest-side, var(--tw-gradient-stops));
+}

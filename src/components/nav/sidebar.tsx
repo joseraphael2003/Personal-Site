@@ -56,7 +56,7 @@ export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {
         <motion.aside
             initial={{ opacity: 0, x: -20, y: "-50%" }}
             animate={{
-                opacity: 1,
+                opacity: isScrolled ? 1 : 0,
                 x: 0,
                 y: "-50%",
                 width: isHovered ? 280 : 80,
@@ -71,24 +71,30 @@ export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {
             onMouseLeave={() => setIsHovered(false)}
             className={cn(
                 "fixed left-6 top-1/2 flex flex-col glass-panel rounded-3xl z-50 overflow-hidden transition-all duration-300 h-fit py-4",
+                !isScrolled && "pointer-events-none"
             )}
         >
             <motion.div
+                initial={false}
                 animate={{
                     height: isScrolled ? "auto" : 0,
                     marginBottom: isScrolled ? 16 : 0,
-                    opacity: isScrolled ? 1 : 0
+                    opacity: isScrolled ? 1 : 0,
+                    filter: isScrolled ? "blur(0px)" : "blur(10px)",
+                }}
+                transition={{
+                    duration: 0.5,
+                    ease: "easeInOut"
                 }}
                 className="overflow-hidden"
             >
-                <div className={cn("flex items-center px-4", isHovered ? "justify-start gap-4" : "justify-center")}>
+                <Link href="/" className={cn("flex items-center px-4", isHovered ? "justify-start gap-4" : "justify-center")}>
                     <div className="shrink-0">
-                        {isScrolled && <ProfileAvatar
-                            layoutId="avatar"
+                        {/* Static Avatar (No layoutId/morph) */}
+                        <ProfileAvatar
                             size="sm"
                             className="w-10 h-10 border-none"
-                            transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
-                        />}
+                        />
                     </div>
                     <motion.div
                         animate={{
@@ -98,19 +104,18 @@ export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {
                         }}
                         style={{ overflow: "hidden", display: "flex", whiteSpace: "nowrap" }}
                     >
-                        {isScrolled && <ProfileName
-                            layoutId="name"
-                            size="sm"
-                            className="text-lg"
-                            transition={{ type: "tween", duration: 0.1, ease: "easeOut" }}
-                        />}
+                        {/* Static Name "Jose Raphael" */}
+                        <span className="text-white font-bold tracking-tight text-lg">
+                            Jose Raphael
+                        </span>
                     </motion.div>
-                </div>
+                </Link>
             </motion.div>
 
             <nav className="flex-1 overflow-y-auto px-2 no-scrollbar">
                 <ul className="space-y-1">
-                    {NAV_ITEMS.map((item) => (
+                    {/* Removed "Home" from list, using header instead */}
+                    {NAV_ITEMS.filter(item => item.label !== "Home").map((item) => (
                         <li key={item.label}>
                             <Link
                                 href={item.href}

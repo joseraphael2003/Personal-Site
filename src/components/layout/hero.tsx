@@ -6,8 +6,8 @@ import { ProfileAvatar, ProfileName } from "@/components/profile/identity";
 export function Hero() {
     return (
         <section className="flex min-h-screen flex-col items-center justify-center pb-16">
-            <ProfileAvatar layoutId="avatar" size="lg" className="mb-8" />
-            <ProfileName layoutId="name" size="lg" className="mb-4" />
+            <ProfileAvatar size="lg" className="mb-8" />
+            <ProfileName size="lg" className="mb-4" />
 
             <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -15,9 +15,11 @@ export function Hero() {
                 transition={{ delay: 0.2 }}
                 className="text-muted-text text-xl font-light tracking-wide max-w-2xl text-center"
             >
-                Senior Frontend Architect & Motion Designer.
+                Computer Engineering student, Ateneo de Naga University
                 <br />
-                Building the Personal OS.
+                <span className="text-secondary-foreground/80 text-lg mt-2 block">
+                    Networks | Flutter Dev | AI Specialist | Musician
+                </span>
             </motion.p>
         </section>
     );

@@ -38,7 +38,7 @@ export default function StudioPage() {
                                 {/* Visualizer bars placeholder */}
                                 <div className="flex gap-1 h-6 items-end">
                                     {[1, 2, 3, 4].map(i => (
-                                        <div key={i} className="w-1 bg-primary animate-pulse" style={{ height: `${Math.random() * 100}%` }} />
+                                        <div key={i} className="w-1 bg-primary animate-pulse" style={{ height: `${[40, 80, 50, 90][i]}%` }} />
                                     ))}
                                 </div>
                             </div>
