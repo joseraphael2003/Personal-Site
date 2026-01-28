@@ -48,7 +48,9 @@ export function CursorGlow({ visible = true, dimmed = false }: { visible?: boole
 
     // Champagne (#F7E6CA) hints mixed with Wine palette
     // Core: Champagne hints -> Rose Wine -> Deep Wine -> Transparent
-    const gradientStyle = "radial-gradient(circle, rgba(247, 230, 202, 0.15) 0%, rgba(109, 27, 70, 0.4) 25%, rgba(54, 17, 39, 0.3) 50%, transparent 70%)";
+    // Champagne (#F7E6CA) hints mixed with Wine palette
+    // Core: Champagne hints -> Electric Wine -> Deep Wine -> Transparent
+    const gradientStyle = "radial-gradient(circle, rgba(247, 230, 202, 0.15) 0%, rgba(191, 48, 112, 0.4) 25%, rgba(142, 31, 87, 0.3) 50%, transparent 70%)";
     const size = 1200; // Even bigger
 
     const pulseAnim = {
@@ -71,7 +73,7 @@ export function CursorGlow({ visible = true, dimmed = false }: { visible?: boole
     return (
         <motion.div
             className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
-            animate={{ opacity: visible ? (dimmed ? 0.2 : 1) : 0 }}
+            animate={{ opacity: visible ? (dimmed ? 0.35 : 1) : 0 }}
             transition={{ duration: 0.5 }}
         >
             {/* 1. Main Gradient (Reduced champagne influence in core, mostly wine) */}
@@ -82,8 +84,8 @@ export function CursorGlow({ visible = true, dimmed = false }: { visible?: boole
                 style={{
                     width: size,
                     height: size,
-                    // Reduced champagne, mostly deep wine
-                    background: "radial-gradient(circle, rgba(109, 27, 70, 0.4) 0%, rgba(54, 17, 39, 0.3) 40%, transparent 70%)",
+                    // Updated to New Primary (Electric Wine) + Accent
+                    background: "radial-gradient(circle, rgba(191, 48, 112, 0.4) 0%, rgba(142, 31, 87, 0.3) 40%, transparent 70%)",
                     x,
                     y,
                     translateX: "-50%",
@@ -101,7 +103,7 @@ export function CursorGlow({ visible = true, dimmed = false }: { visible?: boole
                     style={{
                         width: size,
                         height: size,
-                        background: "radial-gradient(circle, rgba(109, 27, 70, 0.4) 0%, rgba(54, 17, 39, 0.3) 40%, transparent 70%)",
+                        background: "radial-gradient(circle, rgba(191, 48, 112, 0.4) 0%, rgba(142, 31, 87, 0.3) 40%, transparent 70%)",
                         x: xPos,
                         y: i === 1 ? yMirror : (i === 0 ? y : yMirror),
                         translateX: "-50%",

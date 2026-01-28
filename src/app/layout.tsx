@@ -1,3 +1,4 @@
+import { NoiseOverlay } from "@/components/ui/noise-overlay";
 import type { Metadata } from "next";
 import { Sora, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Jose Raphael Dichoso | Portfolio",
-  description: "Senior Frontend Architect & Motion Designer Portfolio",
+  description: "Computer Engineering student",
 };
 
 export default function RootLayout({
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body
         className={`${sora.className} ${geistMono.variable} antialiased`}
       >
+        <NoiseOverlay />
         {children}
       </body>
     </html>

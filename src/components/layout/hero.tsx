@@ -18,7 +18,7 @@ export function Hero() {
                 Computer Engineering student, Ateneo de Naga University
                 <br />
                 <span className="text-secondary-foreground/80 text-lg mt-2 block">
-                    Networks | Flutter Dev | AI Specialist | Musician
+                    Networks | AI-Assisted Developer | Musician
                 </span>
             </motion.p>
         </section>

@@ -3,11 +3,11 @@
 
 @theme {
   --color-background: #000000;
-  --color-surface: #200b1a;
-  --color-accent: #361127;
-  --color-primary: #491230;
+  --color-surface: #38132e;
+  --color-accent: #8e1f57;
+  --color-primary: #bf3070;
   --color-foreground: #ffffff;
-  --color-muted-text: #a1a1aa;
+  --color-muted-text: #c0c0c6;
 
   --font-sans: var(--font-sora);
   --font-mono: var(--font-geist-mono);
@@ -35,4 +35,8 @@ body {
 
 @utility bg-gradient-radial {
   background-image: radial-gradient(closest-side, var(--tw-gradient-stops));
+}
+
+@utility bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
 }

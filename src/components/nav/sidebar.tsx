@@ -8,44 +8,20 @@ import { cn } from "@/lib/utils";
 import {
     Home,
     Briefcase,
-    FileText,
-    Music,
-    PenTool,
-    ShoppingBag,
+    FolderGit2,
+    Terminal,
     Mail,
-    User
+    User,
+    GraduationCap
 } from "lucide-react";
 
 const NAV_ITEMS = [
     { label: "Home", href: "/", icon: Home },
-    { label: "About", href: "/about", icon: User },
-    { label: "Experience", href: "/resume", icon: Briefcase },
-    { label: "Projects", href: "/projects", icon: FileText }, // Swapped icon? Or kept same? User said "Experience" below About.
-    // Let's assume Projects uses FileText or similar. 
-    // Wait, User said "Add Experience below About".
-    // "Projects" was there.
-    // "Toolstack" was there.
-    // "Blogs" was there.
-    // "Shop" was there.
-    // "Songs" was there.
-    // "Playground" REMOVE.
-    // "Contact" was there.
-
-    // Adjusted list:
-    // Home
-    // About
-    // Experience (New) -> /resume seems appropriate for Experience? Or /experience?
-    // Projects
-    // Toolstack
-    // Blogs
-    // Shop
-    // Songs
-    // Contact
-
-    { label: "Toolstack", href: "/toolstack", icon: FileText }, // Reusing FileText for toolstack?
-    { label: "Blogs", href: "/blog", icon: PenTool },
-    { label: "Shop", href: "/shop", icon: ShoppingBag },
-    { label: "Songs", href: "/studio", icon: Music },
+    { label: "About", href: "/#core-infrastructure", icon: User },
+    { label: "Experience", href: "/#experience", icon: Briefcase },
+    { label: "Education", href: "/#education", icon: GraduationCap },
+    { label: "Projects", href: "/#projects", icon: FolderGit2 },
+    { label: "Toolstack", href: "/#toolstack", icon: Terminal },
     { label: "Contact", href: "/contact", icon: Mail },
 ];
 
@@ -88,7 +64,11 @@ export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {
                 }}
                 className="overflow-hidden"
             >
-                <Link href="/" className={cn("flex items-center px-4", isHovered ? "justify-start gap-4" : "justify-center")}>
+                <Link
+                    href="/"
+                    className={cn("flex items-center px-4", isHovered ? "justify-start gap-4" : "justify-center")}
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                >
                     <div className="shrink-0">
                         {/* Static Avatar (No layoutId/morph) */}
                         <ProfileAvatar
