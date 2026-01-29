@@ -3,7 +3,34 @@
 import { Scaffold } from "@/components/layout/scaffold";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Network, Cpu, Code, Users, ChevronRight, Award, GraduationCap, FolderGit2, Terminal } from "lucide-react";
+import {
+  Network,
+  Cpu,
+  Laptop,
+  Code,
+  Users,
+  ChevronRight,
+  GraduationCap,
+  Award,
+  FolderGit2,
+  Terminal,
+  RadioReceiver,
+  Sparkles,
+  FileCode2,
+  Sigma,
+  Rocket,
+  LayoutTemplate,
+  Braces,
+  Palette,
+  Database,
+  Smartphone,
+  TerminalSquare,
+  AudioWaveform,
+  Music4,
+  Clapperboard,
+  Image,
+  Zap
+} from "lucide-react";
 import { MemoryStream } from "@/components/content/memory-stream";
 
 const containerVariants = {
@@ -173,7 +200,7 @@ export function HomePage({ data }: { data: ProfileData }) {
                 Hardware
               </h3>
               <p className="text-muted-text leading-relaxed">
-                Experienced in L1/L2 computer hardware troubleshooting: laptop internal cleaning, thermal paste change, system issues. Trained in analog electronics throughout university courses.
+                Experienced in L1/L2 computer hardware troubleshooting: laptop internal cleaning, thermal paste change, system issues. Trained in analog and digital electronics throughout university courses.
               </p>
             </motion.div>
 
@@ -213,8 +240,8 @@ export function HomePage({ data }: { data: ProfileData }) {
       <div id="experience" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60 -mt-12 pt-24 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-20">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/20 border border-accent/30 text-accent-foreground text-sm font-mono uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Log Status: Archived
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
@@ -287,9 +314,9 @@ export function HomePage({ data }: { data: ProfileData }) {
       <div id="education" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60 -mt-12 pt-24 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-30">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/20 border border-accent/30 text-accent-foreground text-sm font-mono uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              Academic Records
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              Academic Records: Verified
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
               Education
@@ -373,12 +400,12 @@ export function HomePage({ data }: { data: ProfileData }) {
         </div>
       </div>
       {/* Glass Overlay "Projects" Section */}
-      <div id="projects" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60 -mt-12 pt-24 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-40">
+      <div id="projects" className="w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60 -mt-12 pt-24 pb-32 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-40">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/20 border border-accent/30 text-accent-foreground text-sm font-mono uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              Development Status
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              Development Status: Active
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
               Projects
@@ -402,12 +429,12 @@ export function HomePage({ data }: { data: ProfileData }) {
       </div>
 
       {/* Glass Overlay "Toolstack" Section */}
-      <div id="toolstack" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60 -mt-12 pt-24 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-50">
+      <div id="toolstack" className="w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60 -mt-12 pt-24 pb-32 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-50">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/20 border border-accent/30 text-accent-foreground text-sm font-mono uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              System Architecture
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              System Architecture: Stable
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
               Toolstack
@@ -419,13 +446,100 @@ export function HomePage({ data }: { data: ProfileData }) {
             </div>
           </header>
 
-          <div className="border-l-2 border-white/10 ml-3 pl-8 md:pl-12 py-12">
-            <div className="flex flex-col items-center justify-center p-12 border border-dashed border-white/10 rounded-2xl bg-white/5">
-              <Terminal className="w-16 h-16 text-muted-text/20 mb-4" />
-              <p className="text-muted-text font-mono">
-                    // UNDER DEVELOPMENT
-              </p>
+          <div className="border-l-2 border-white/10 ml-3 pl-8 md:pl-12 py-8 space-y-12">
+
+            {/* Group 1: ENGINEER */}
+            <div className="space-y-4">
+              <h3 className="font-mono text-sm text-primary/60 uppercase tracking-widest">
+                // ENGINEER &bull; SYSTEMS_&_AI
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {[
+                  { name: "Cisco iOS", icon: RadioReceiver, highlight: "border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.2)] text-blue-200" },
+                  { name: "Linux", icon: Terminal },
+                  { name: "Gemini Pro", icon: Sparkles },
+                  { name: "Python", icon: FileCode2 },
+                  { name: "KiCAD", icon: Cpu },
+                  { name: "Octave", icon: Sigma },
+                  { name: "Antigravity", icon: Rocket, highlight: "border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)] text-yellow-200" },
+                ].map((tool) => (
+                  <div
+                    key={tool.name}
+                    className={`
+                      relative overflow-hidden
+                      inline-flex items-center gap-2 px-5 py-2.5 rounded-full 
+                      bg-surface/40 bg-noise border 
+                      transition-all duration-300 hover:scale-105 hover:bg-surface/60
+                      ${tool.highlight ? tool.highlight : "border-white/5 hover:border-white/20"}
+                    `}
+                  >
+                    <tool.icon className={`w-5 h-5 ${tool.highlight ? "text-inherit" : "text-muted-text"}`} />
+                    <span className={`text-base font-medium ${tool.highlight ? "text-inherit" : "text-white/80"}`}>{tool.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Group 2: SHIP */}
+            <div className="space-y-4">
+              <h3 className="font-mono text-sm text-primary/60 uppercase tracking-widest">
+                // SHIP &bull; FULL_STACK
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {[
+                  { name: "Next.js", icon: LayoutTemplate },
+                  { name: "TypeScript", icon: Braces },
+                  { name: "Tailwind CSS", icon: Palette },
+                  { name: "Supabase", icon: Database },
+                  { name: "Flutter (Dart)", icon: Smartphone, highlight: "border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.2)] text-cyan-200" },
+                ].map((tool) => (
+                  <div
+                    key={tool.name}
+                    className={`
+                      relative overflow-hidden
+                      inline-flex items-center gap-2 px-5 py-2.5 rounded-full 
+                      bg-surface/40 bg-noise border 
+                      transition-all duration-300 hover:scale-105 hover:bg-surface/60
+                      ${tool.highlight ? tool.highlight : "border-white/5 hover:border-white/20"}
+                    `}
+                  >
+                    <tool.icon className={`w-5 h-5 ${tool.highlight ? "text-inherit" : "text-muted-text"}`} />
+                    <span className={`text-base font-medium ${tool.highlight ? "text-inherit" : "text-white/80"}`}>{tool.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Group 3: STUDIO */}
+            <div className="space-y-4">
+              <h3 className="font-mono text-sm text-primary/60 uppercase tracking-widest">
+                // STUDIO &bull; CREATIVE_SUITE
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {[
+                  { name: "FL Studio", icon: AudioWaveform, highlight: "border-orange-500/50 shadow-[0_0_15px_rgba(249,115,22,0.2)] text-orange-200" },
+                  { name: "Musescore", icon: Music4, highlight: "border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.2)] text-indigo-200" },
+                  { name: "DaVinci Resolve", icon: Clapperboard },
+                  { name: "Affinity Studio", icon: Image },
+                  { name: "Nano Banana Pro", icon: Zap },
+                ].map((tool) => (
+                  <div
+                    key={tool.name}
+                    className={`
+                      relative overflow-hidden
+                      inline-flex items-center gap-2 px-5 py-2.5 rounded-full 
+                      bg-surface/40 bg-noise border 
+                      transition-all duration-300 hover:scale-105 hover:bg-surface/60
+                      ${tool.highlight ? tool.highlight : "border-white/5 hover:border-white/20"}
+                    `}
+                  >
+                    <tool.icon className={`w-5 h-5 ${tool.highlight ? "text-inherit" : "text-muted-text"}`} />
+                    <span className={`text-base font-medium ${tool.highlight ? "text-inherit" : "text-white/80"}`}>{tool.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@
   --color-muted-text: #c0c0c6;
 
   --font-sans: var(--font-sora);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: var(--font-sora);
 }
 
 :root {

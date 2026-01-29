@@ -1,15 +1,10 @@
 import { NoiseOverlay } from "@/components/ui/noise-overlay";
 import type { Metadata } from "next";
-import { Sora, Geist_Mono } from "next/font/google";
+import { Sora } from "next/font/google"; // Removed Geist_Mono
 import "./globals.css";
 
 const sora = Sora({
   variable: "--font-sora",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -26,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sora.className} ${geistMono.variable} antialiased`}
+        className={`${sora.className} ${sora.variable} antialiased`}
       >
         <NoiseOverlay />
         {children}

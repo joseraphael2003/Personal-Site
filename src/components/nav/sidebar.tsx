@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProfileAvatar, ProfileName } from "@/components/profile/identity";
 import Link from "next/link";
@@ -27,6 +27,43 @@ const NAV_ITEMS = [
 
 export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {
     const [isHovered, setIsHovered] = useState(false);
+    const [activeSection, setActiveSection] = useState("");
+
+    // Handle scroll spy to detect active section
+    useEffect(() => {
+        const handleScroll = () => {
+            const sections = NAV_ITEMS.map(item => {
+                if (item.href === "/") return { id: "home", offset: 0 };
+                const id = item.href.replace("/#", "");
+                const element = document.getElementById(id);
+                if (element) {
+                    return { id, offset: element.offsetTop };
+                }
+                return null;
+            }).filter(Boolean) as { id: string, offset: number }[];
+
+            const scrollPosition = window.scrollY + window.innerHeight * 0.3; // Check a bit down the viewport
+
+            // Find the last section that is above the current scroll position
+            for (let i = sections.length - 1; i >= 0; i--) {
+                if (scrollPosition >= sections[i].offset) {
+                    setActiveSection(sections[i].id);
+                    break;
+                }
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        // Trigger once on mount
+        handleScroll();
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const isActive = (href: string) => {
+        if (href === "/" && activeSection === "home") return true;
+        const id = href.replace("/#", "");
+        return activeSection === id;
+    };
 
     return (
         <motion.aside
@@ -95,29 +132,52 @@ export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {
             <nav className="flex-1 overflow-y-auto px-2 no-scrollbar">
                 <ul className="space-y-1">
                     {/* Removed "Home" from list, using header instead */}
-                    {NAV_ITEMS.filter(item => item.label !== "Home").map((item) => (
-                        <li key={item.label}>
-                            <Link
-                                href={item.href}
-                                className={cn(
-                                    "flex items-center rounded-xl p-3 transition-colors group",
-                                    isHovered ? "justify-start gap-4 hover:bg-white/10" : "justify-center hover:bg-white/10"
-                                )}
-                            >
-                                <item.icon className="w-6 h-6 text-muted-text group-hover:text-white transition-colors shrink-0" />
-                                <motion.span
-                                    animate={{
-                                        width: isHovered ? "auto" : 0,
-                                        opacity: isHovered ? 1 : 0,
-                                        marginLeft: isHovered ? 12 : 0, // Adjusted margin
-                                    }}
-                                    className="text-muted-text group-hover:text-white font-light tracking-wide whitespace-nowrap overflow-hidden"
+                    {NAV_ITEMS.filter(item => item.label !== "Home").map((item) => {
+                        const active = isActive(item.href);
+                        return (
+                            <li key={item.label}>
+                                <Link
+                                    href={item.href}
+                                    className={cn(
+                                        "flex items-center rounded-xl p-3 transition-all duration-300 group relative overflow-hidden",
+                                        isHovered ? "justify-start gap-4" : "justify-center",
+                                        active
+                                            ? "bg-primary/20 text-primary shadow-[inset_0_0_20px_rgba(191,48,112,0.2)] border border-primary/20"
+                                            : "hover:bg-white/10 text-muted-text hover:text-white"
+                                    )}
                                 >
-                                    {item.label}
-                                </motion.span>
-                            </Link>
-                        </li>
-                    ))}
+                                    {/* Active Indicator Line (Left) */}
+                                    {active && (
+                                        <motion.div
+                                            initial={{ opacity: 0, scaleY: 0 }}
+                                            animate={{ opacity: 1, scaleY: 1 }}
+                                            exit={{ opacity: 0, scaleY: 0 }}
+                                            className="absolute left-0 top-0 bottom-0 w-1 bg-primary"
+                                        />
+                                    )}
+
+                                    <item.icon className={cn(
+                                        "w-6 h-6 transition-colors shrink-0",
+                                        active ? "text-primary" : "text-muted-text group-hover:text-white"
+                                    )} />
+
+                                    <motion.span
+                                        animate={{
+                                            width: isHovered ? "auto" : 0,
+                                            opacity: isHovered ? 1 : 0,
+                                            marginLeft: isHovered ? 12 : 0,
+                                        }}
+                                        className={cn(
+                                            "font-medium tracking-wide whitespace-nowrap overflow-hidden transition-colors",
+                                            active ? "text-primary font-bold" : "text-muted-text group-hover:text-white font-light"
+                                        )}
+                                    >
+                                        {item.label}
+                                    </motion.span>
+                                </Link>
+                            </li>
+                        );
+                    })}
                 </ul>
             </nav>
         </motion.aside>
