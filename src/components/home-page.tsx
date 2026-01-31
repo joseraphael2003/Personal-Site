@@ -141,24 +141,23 @@ export function HomePage({ data }: { data: ProfileData }) {
   return (
     <Scaffold>
       {/* Glass Overlay "Core Infrastructure" Section */}
-      <div id="core-infrastructure" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 will-change-transform">
+      <div id="core-infrastructure" className="min-h-screen w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-12">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               System Status: Online
             </div>
-            <h2 className="text-2xl md:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-xl md:text-5xl font-bold text-white tracking-tight">
               Core Infrastructure
             </h2>
             <div className="relative max-w-2xl">
-              <p className="text-base md:text-xl text-muted-text leading-relaxed pb-4">
+              <p className="text-xs md:text-xl text-muted-text leading-relaxed pb-4">
                 &gt; The underlying kernel of my technical background. Initializing user parameters and loading modules.
               </p>
             </div>
 
             {/* Scroll Progress Bar - Aligned to full width (module margins) */}
-            <div className="relative w-full h-[4px]">
+            <div className="relative w-full h-[4px] hidden md:block">
               <motion.div
                 className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-accent"
                 style={{
@@ -188,7 +187,7 @@ export function HomePage({ data }: { data: ProfileData }) {
                 <Network className="w-6 h-6 text-primary" />
                 Networks
               </h3>
-              <p className="text-muted-text leading-relaxed">
+              <p className="text-[13px] md:text-lg text-muted-text leading-relaxed">
                 Aspiring network engineer. Particular interest in data center operations: VITRO Academy Graduate - Certified Data Center Specialist. Proficiency in Cisco technologies and operating systems.
               </p>
             </motion.div>
@@ -199,7 +198,7 @@ export function HomePage({ data }: { data: ProfileData }) {
                 <Cpu className="w-6 h-6 text-primary" />
                 Hardware
               </h3>
-              <p className="text-muted-text leading-relaxed">
+              <p className="text-[13px] md:text-lg text-muted-text leading-relaxed">
                 Experienced in L1/L2 computer hardware troubleshooting: laptop internal cleaning, thermal paste change, system issues. Trained in analog and digital electronics throughout university courses.
               </p>
             </motion.div>
@@ -210,7 +209,7 @@ export function HomePage({ data }: { data: ProfileData }) {
                 <Code className="w-6 h-6 text-primary" />
                 Software
               </h3>
-              <p className="text-muted-text leading-relaxed">
+              <p className="text-[13px] md:text-lg text-muted-text leading-relaxed">
                 AI-assisted full stack developer. Developed a coffee-centric app: µBrew. Learned through Cisco Academy: C++, Python, Database Admin, and Linux OS. This portfolio website is a living deployment of my responsive design philosophy.
               </p>
             </motion.div>
@@ -221,7 +220,7 @@ export function HomePage({ data }: { data: ProfileData }) {
                 <Users className="w-6 h-6 text-primary" />
                 Leadership
               </h3>
-              <p className="text-muted-text leading-relaxed">
+              <p className="text-[13px] md:text-lg text-muted-text leading-relaxed">
                 Former Vice-President, Marching Band Leader, Trombone Section Leader, and Band Librarian managing 40+ members. Orchestrated complex group dynamics, maintaining operational morale, and managing high-integrity digital repositories with &quot;note-by-note&quot; organization and precision.
               </p>
             </motion.div>
@@ -237,24 +236,24 @@ export function HomePage({ data }: { data: ProfileData }) {
       </div>
 
       {/* Glass Overlay "Runtime Logs" (Experience) Section */}
-      <div id="experience" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 -mt-8 md:-mt-12 pt-24 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-20 will-change-transform">
+      <div id="experience" className="min-h-screen w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 pt-24 relative z-20 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Log Status: Archived
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-xl md:text-5xl font-bold text-white tracking-tight">
               Experience
             </h2>
             <div className="relative max-w-2xl">
-              <p className="text-xl text-muted-text leading-relaxed pb-4">
+              <p className="text-[13px] md:text-xl text-muted-text leading-relaxed pb-4">
                 &gt; Accessing chronological data records. Executed modules and key milestones.
               </p>
             </div>
 
             {/* Experience Scroll Progress Bar */}
-            <div className="relative w-full h-[4px]">
+            <div className="relative w-full h-[4px] hidden md:block">
               <motion.div
                 className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-accent"
                 style={{
@@ -285,13 +284,17 @@ export function HomePage({ data }: { data: ProfileData }) {
                 </span>
                 <div className="space-y-2">
                   <span className="font-mono text-sm text-primary">{job.dates}</span>
-                  <h3 className="text-lg md:text-2xl font-bold text-white">{job.company}</h3>
-                  <p className="text-muted-text text-sm md:text-lg">{job.role}</p>
+                  <h3 className="text-lg md:text-2xl font-bold text-white">
+                    {job.role === "Trombone Section Leader" ? "Trombone Section Leader and Band Librarian" : job.role}
+                  </h3>
+                  <p className="text-muted-text text-[13px] md:text-lg">
+                    {job.company === "Ateneo de Naga University" && job.role.includes("Band") ? "Ateneo de Naga Symphonic Band" : job.company}
+                  </p>
                   <ul className="space-y-3 pt-2">
                     {job.techStack?.map((point: string, i: number) => (
-                      <li key={i} className="flex items-start gap-3 text-muted-text/80 leading-relaxed">
-                        <ChevronRight className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                        <span>{point}</span>
+                      <li key={i} className="flex items-start gap-3 text-muted-text/80 leading-relaxed text-[13px] md:text-lg">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/50 shrink-0" />
+                        {point}
                       </li>
                     ))}
                   </ul>
@@ -311,24 +314,24 @@ export function HomePage({ data }: { data: ProfileData }) {
       </div>
 
       {/* Glass Overlay "Education" Section */}
-      <div id="education" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 -mt-8 md:-mt-12 pt-24 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-30 will-change-transform">
+      <div id="education" className="min-h-screen w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 pt-24 relative z-30 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Academic Records: Verified
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-xl md:text-5xl font-bold text-white tracking-tight">
               Education
             </h2>
             <div className="relative max-w-2xl">
-              <p className="text-xl text-muted-text leading-relaxed pb-4">
+              <p className="text-[13px] md:text-xl text-muted-text leading-relaxed pb-4">
                 &gt; Increasing Knowledge Base...
               </p>
             </div>
 
             {/* Education Scroll Progress Bar */}
-            <div className="relative w-full h-[4px]">
+            <div className="relative w-full h-[4px] hidden md:block">
               <motion.div
                 className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-accent"
                 style={{
@@ -360,27 +363,15 @@ export function HomePage({ data }: { data: ProfileData }) {
                 <div className="space-y-2">
                   <span className="font-mono text-sm text-primary">{edu.yearStart} - {edu.yearEnd}</span>
                   <h3 className="text-lg md:text-2xl font-bold text-white">{edu.degree}</h3>
-                  <p className="text-muted-text text-sm md:text-lg">{edu.school}</p>
+                  <p className="text-muted-text text-[13px] md:text-lg">{edu.school}</p>
                   <ul className="space-y-3 pt-2">
                     {edu.achievements?.map((point: string, i: number) => {
                       const isVitro = point.includes("VITRO");
-                      const IconComp = i === 0 ? GraduationCap : Award;
+                      const isCisco = point.includes("CCNA");
                       return (
-                        <li key={i} className="flex items-start gap-3 text-muted-text/80 leading-relaxed">
-                          <IconComp className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                          <span>
-                            {point}
-                            {isVitro && (
-                              <a
-                                href="https://www.linkedin.com/posts/vitrodc_vitro25-vitroacademy-activity-7379695082590883840-iwZE?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFHx_o0Bmeh6Vi1Gg2tr6xBMI1dBbQ7zXC0"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-primary hover:text-primary/80 ml-2 inline-flex items-center gap-1 transition-colors hover:underline"
-                              >
-                                [See more]
-                              </a>
-                            )}
-                          </span>
+                        <li key={i} className={`flex items-start gap-3 leading-relaxed text-[13px] md:text-lg ${isVitro || isCisco ? "text-white" : "text-muted-text/80"}`}>
+                          <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${isVitro || isCisco ? "bg-accent animate-pulse" : "bg-primary/50"}`} />
+                          {point}
                         </li>
                       );
                     })}
@@ -400,7 +391,7 @@ export function HomePage({ data }: { data: ProfileData }) {
         </div>
       </div>
       {/* Glass Overlay "Projects" Section */}
-      <div id="projects" className="w-full rounded-t-3xl glass-panel border-t border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 -mt-8 md:-mt-12 pt-24 pb-32 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-40 will-change-transform">
+      <div id="projects" className="w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 pt-24 pb-32 relative z-40 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
@@ -408,10 +399,10 @@ export function HomePage({ data }: { data: ProfileData }) {
               Development Status: Active
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-              Projects
+              Featured Projects
             </h2>
             <div className="relative max-w-2xl">
-              <p className="text-xl text-muted-text leading-relaxed pb-4">
+              <p className="text-[13px] md:text-xl text-muted-text leading-relaxed pb-4">
                 &gt; Accessing repository data...
               </p>
             </div>
@@ -429,7 +420,7 @@ export function HomePage({ data }: { data: ProfileData }) {
       </div>
 
       {/* Glass Overlay "Toolstack" Section */}
-      <div id="toolstack" className="w-full rounded-t-3xl glass-panel border-t border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 -mt-8 md:-mt-12 pt-24 pb-32 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-50 will-change-transform">
+      <div id="toolstack" className="min-h-screen w-full glass-panel border-white/10 p-4 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 pt-24 pb-32 relative z-50 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
@@ -437,10 +428,10 @@ export function HomePage({ data }: { data: ProfileData }) {
               System Architecture: Stable
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-              Toolstack
+              Technical Arsenal
             </h2>
             <div className="relative max-w-2xl">
-              <p className="text-xl text-muted-text leading-relaxed pb-4">
+              <p className="text-[13px] md:text-xl text-muted-text leading-relaxed pb-4">
                 &gt; Analyzing kernel capabilities...
               </p>
             </div>
@@ -542,7 +533,7 @@ export function HomePage({ data }: { data: ProfileData }) {
 
           </div>
         </div>
-      </div>
+      </div >
 
     </Scaffold >
   );

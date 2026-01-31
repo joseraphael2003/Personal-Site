@@ -51,7 +51,7 @@ export function Scaffold({ children }: { children: React.ReactNode }) {
                 <main className="relative z-10 w-full">
                     {/* Spacer to push content below the full-screen Hero initially */}
                     {/* This ensures the user sees the Hero first, then scrolls "up" (content moves up) */}
-                    <div className="h-[75vh] md:h-screen w-full pointer-events-none" />
+                    <div className="min-h-screen w-full pointer-events-none" />
 
                     {/* The Actual Content (Glass Overlay, Projects, etc.) */}
                     <div className={cn(

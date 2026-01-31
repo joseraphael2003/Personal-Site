@@ -16,16 +16,16 @@ export function ProfileAvatar({ layoutId, className, size = "lg", transition }: 
     return (
         <motion.div
             layoutId={layoutId}
-            className={`relative overflow-hidden rounded-full border-2 border-primary/50 shadow-2xl bg-surface ${className}`}
+            className={`
+                relative overflow-hidden rounded-full border-2 border-primary/50 shadow-2xl bg-surface 
+                ${size === "lg" ? "w-56 h-56 md:w-[480px] md:h-[480px]" : "w-12 h-12"} 
+                ${className}
+            `}
             initial={false}
             transition={transition || {
                 type: "spring",
                 stiffness: 120,
                 damping: 25,
-            }}
-            style={{
-                width: size === "lg" ? "min(480px, 80vw)" : 48,
-                height: size === "lg" ? "min(480px, 80vw)" : 48,
             }}
         >
             <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent opacity-50" />
@@ -42,7 +42,11 @@ export function ProfileName({ layoutId, className, size = "lg", transition }: { 
     return (
         <motion.h1
             layoutId={layoutId}
-            className={`font-bold tracking-tight text-white ${className}`}
+            className={`
+                font-bold tracking-tight text-white 
+                ${size === "lg" ? "text-2xl md:text-[5rem]" : "text-xl"} 
+                ${className}
+            `}
             initial={false}
             transition={transition || {
                 type: "spring",
@@ -50,7 +54,6 @@ export function ProfileName({ layoutId, className, size = "lg", transition }: { 
                 damping: 25,
             }}
             style={{
-                fontSize: size === "lg" ? "clamp(2.5rem, 8vw, 5rem)" : "1.25rem",
                 lineHeight: 1,
             }}
         >

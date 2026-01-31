@@ -13,11 +13,11 @@ export function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-muted-text text-base md:text-xl font-light tracking-wide max-w-2xl text-center"
+                className="text-muted-text text-sm md:text-xl font-light tracking-wide max-w-2xl text-center"
             >
                 Computer Engineering student, Ateneo de Naga University
                 <br />
-                <span className="text-secondary-foreground/80 text-sm md:text-lg mt-2 block">
+                <span className="text-secondary-foreground/80 text-xs md:text-lg mt-2 block">
                     Networks | AI-Assisted Developer | Musician
                 </span>
             </motion.p>
