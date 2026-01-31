@@ -141,18 +141,18 @@ export function HomePage({ data }: { data: ProfileData }) {
   return (
     <Scaffold>
       {/* Glass Overlay "Core Infrastructure" Section */}
-      <div id="core-infrastructure" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60">
+      <div id="core-infrastructure" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-12">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               System Status: Online
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl md:text-5xl font-bold text-white tracking-tight">
               Core Infrastructure
             </h2>
             <div className="relative max-w-2xl">
-              <p className="text-xl text-muted-text leading-relaxed pb-4">
+              <p className="text-base md:text-xl text-muted-text leading-relaxed pb-4">
                 &gt; The underlying kernel of my technical background. Initializing user parameters and loading modules.
               </p>
             </div>
@@ -183,7 +183,7 @@ export function HomePage({ data }: { data: ProfileData }) {
             animate={isSettled ? "visible" : "hidden"}
           >
             <motion.div className="space-y-6" variants={itemVariants}>
-              <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+              <h3 className="text-lg md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-primary font-mono">01.</span>
                 <Network className="w-6 h-6 text-primary" />
                 Networks
@@ -237,7 +237,7 @@ export function HomePage({ data }: { data: ProfileData }) {
       </div>
 
       {/* Glass Overlay "Runtime Logs" (Experience) Section */}
-      <div id="experience" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60 -mt-12 pt-24 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-20">
+      <div id="experience" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 -mt-8 md:-mt-12 pt-24 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-20 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
@@ -273,7 +273,7 @@ export function HomePage({ data }: { data: ProfileData }) {
           </header>
 
           <motion.div
-            className="space-y-12 relative border-l-2 border-white/10 ml-3 pl-8 md:pl-12 py-4"
+            className="space-y-12 relative border-l-2 border-white/10 ml-3 pl-4 md:pl-12 py-4"
             variants={containerVariants}
             initial="hidden"
             animate={isExperienceSettled ? "visible" : "hidden"}
@@ -285,8 +285,8 @@ export function HomePage({ data }: { data: ProfileData }) {
                 </span>
                 <div className="space-y-2">
                   <span className="font-mono text-sm text-primary">{job.dates}</span>
-                  <h3 className="text-2xl font-bold text-white">{job.company}</h3>
-                  <p className="text-muted-text text-lg">{job.role}</p>
+                  <h3 className="text-lg md:text-2xl font-bold text-white">{job.company}</h3>
+                  <p className="text-muted-text text-sm md:text-lg">{job.role}</p>
                   <ul className="space-y-3 pt-2">
                     {job.techStack?.map((point: string, i: number) => (
                       <li key={i} className="flex items-start gap-3 text-muted-text/80 leading-relaxed">
@@ -311,7 +311,7 @@ export function HomePage({ data }: { data: ProfileData }) {
       </div>
 
       {/* Glass Overlay "Education" Section */}
-      <div id="education" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60 -mt-12 pt-24 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-30">
+      <div id="education" className="min-h-screen w-full rounded-t-3xl glass-panel border-t border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 -mt-8 md:-mt-12 pt-24 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-30 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
@@ -347,7 +347,7 @@ export function HomePage({ data }: { data: ProfileData }) {
           </header>
 
           <motion.div
-            className="space-y-12 relative border-l-2 border-white/10 ml-3 pl-8 md:pl-12 py-4"
+            className="space-y-12 relative border-l-2 border-white/10 ml-3 pl-4 md:pl-12 py-4"
             variants={containerVariants}
             initial="hidden"
             animate={isEducationSettled ? "visible" : "hidden"}
@@ -359,8 +359,8 @@ export function HomePage({ data }: { data: ProfileData }) {
                 </span>
                 <div className="space-y-2">
                   <span className="font-mono text-sm text-primary">{edu.yearStart} - {edu.yearEnd}</span>
-                  <h3 className="text-2xl font-bold text-white">{edu.degree}</h3>
-                  <p className="text-muted-text text-lg">{edu.school}</p>
+                  <h3 className="text-lg md:text-2xl font-bold text-white">{edu.degree}</h3>
+                  <p className="text-muted-text text-sm md:text-lg">{edu.school}</p>
                   <ul className="space-y-3 pt-2">
                     {edu.achievements?.map((point: string, i: number) => {
                       const isVitro = point.includes("VITRO");
@@ -400,7 +400,7 @@ export function HomePage({ data }: { data: ProfileData }) {
         </div>
       </div>
       {/* Glass Overlay "Projects" Section */}
-      <div id="projects" className="w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60 -mt-12 pt-24 pb-32 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-40">
+      <div id="projects" className="w-full rounded-t-3xl glass-panel border-t border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 -mt-8 md:-mt-12 pt-24 pb-32 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-40 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
@@ -417,7 +417,7 @@ export function HomePage({ data }: { data: ProfileData }) {
             </div>
           </header>
 
-          <div className="border-l-2 border-white/10 ml-3 pl-8 md:pl-12 py-12">
+          <div className="border-l-2 border-white/10 ml-3 pl-4 md:pl-12 py-12">
             <div className="flex flex-col items-center justify-center p-12 border border-dashed border-white/10 rounded-2xl bg-white/5">
               <FolderGit2 className="w-16 h-16 text-muted-text/20 mb-4" />
               <p className="text-muted-text font-mono">
@@ -429,7 +429,7 @@ export function HomePage({ data }: { data: ProfileData }) {
       </div>
 
       {/* Glass Overlay "Toolstack" Section */}
-      <div id="toolstack" className="w-full rounded-t-3xl glass-panel border-t border-white/10 p-12 backdrop-blur-xl bg-black/60 -mt-12 pt-24 pb-32 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-50">
+      <div id="toolstack" className="w-full rounded-t-3xl glass-panel border-t border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 -mt-8 md:-mt-12 pt-24 pb-32 shadow-[0_-20px_40px_-15px_rgba(0,0,0,1)] relative z-50 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
@@ -446,7 +446,7 @@ export function HomePage({ data }: { data: ProfileData }) {
             </div>
           </header>
 
-          <div className="border-l-2 border-white/10 ml-3 pl-8 md:pl-12 py-8 space-y-12">
+          <div className="border-l-2 border-white/10 ml-3 pl-4 md:pl-12 py-8 space-y-12">
 
             {/* Group 1: ENGINEER */}
             <div className="space-y-4">
@@ -467,14 +467,14 @@ export function HomePage({ data }: { data: ProfileData }) {
                     key={tool.name}
                     className={`
                       relative overflow-hidden
-                      inline-flex items-center gap-2 px-5 py-2.5 rounded-full 
+                      inline-flex items-center gap-2 px-3 py-1.5 md:px-5 md:py-2.5 rounded-full 
                       bg-surface/40 bg-noise border 
                       transition-all duration-300 hover:scale-105 hover:bg-surface/60
                       ${tool.highlight ? tool.highlight : "border-white/5 hover:border-white/20"}
                     `}
                   >
-                    <tool.icon className={`w-5 h-5 ${tool.highlight ? "text-inherit" : "text-muted-text"}`} />
-                    <span className={`text-base font-medium ${tool.highlight ? "text-inherit" : "text-white/80"}`}>{tool.name}</span>
+                    <tool.icon className={`w-4 h-4 md:w-5 md:h-5 ${tool.highlight ? "text-inherit" : "text-muted-text"}`} />
+                    <span className={`text-sm md:text-base font-medium ${tool.highlight ? "text-inherit" : "text-white/80"}`}>{tool.name}</span>
                   </div>
                 ))}
               </div>
@@ -497,14 +497,14 @@ export function HomePage({ data }: { data: ProfileData }) {
                     key={tool.name}
                     className={`
                       relative overflow-hidden
-                      inline-flex items-center gap-2 px-5 py-2.5 rounded-full 
+                      inline-flex items-center gap-2 px-3 py-1.5 md:px-5 md:py-2.5 rounded-full 
                       bg-surface/40 bg-noise border 
                       transition-all duration-300 hover:scale-105 hover:bg-surface/60
                       ${tool.highlight ? tool.highlight : "border-white/5 hover:border-white/20"}
                     `}
                   >
-                    <tool.icon className={`w-5 h-5 ${tool.highlight ? "text-inherit" : "text-muted-text"}`} />
-                    <span className={`text-base font-medium ${tool.highlight ? "text-inherit" : "text-white/80"}`}>{tool.name}</span>
+                    <tool.icon className={`w-4 h-4 md:w-5 md:h-5 ${tool.highlight ? "text-inherit" : "text-muted-text"}`} />
+                    <span className={`text-sm md:text-base font-medium ${tool.highlight ? "text-inherit" : "text-white/80"}`}>{tool.name}</span>
                   </div>
                 ))}
               </div>
@@ -527,14 +527,14 @@ export function HomePage({ data }: { data: ProfileData }) {
                     key={tool.name}
                     className={`
                       relative overflow-hidden
-                      inline-flex items-center gap-2 px-5 py-2.5 rounded-full 
+                      inline-flex items-center gap-2 px-3 py-1.5 md:px-5 md:py-2.5 rounded-full 
                       bg-surface/40 bg-noise border 
                       transition-all duration-300 hover:scale-105 hover:bg-surface/60
                       ${tool.highlight ? tool.highlight : "border-white/5 hover:border-white/20"}
                     `}
                   >
-                    <tool.icon className={`w-5 h-5 ${tool.highlight ? "text-inherit" : "text-muted-text"}`} />
-                    <span className={`text-base font-medium ${tool.highlight ? "text-inherit" : "text-white/80"}`}>{tool.name}</span>
+                    <tool.icon className={`w-4 h-4 md:w-5 md:h-5 ${tool.highlight ? "text-inherit" : "text-muted-text"}`} />
+                    <span className={`text-sm md:text-base font-medium ${tool.highlight ? "text-inherit" : "text-white/80"}`}>{tool.name}</span>
                   </div>
                 ))}
               </div>

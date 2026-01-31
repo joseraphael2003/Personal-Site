@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, LayoutGroup } from "framer-motion";
 import { Hero } from "@/components/layout/hero";
 import { Sidebar } from "@/components/nav/sidebar";
+import { MobileNav } from "@/components/nav/mobile-nav";
 import { cn } from "@/lib/utils";
 import { CursorGlow } from "@/components/ui/cursor-glow";
 
@@ -40,16 +41,17 @@ export function Scaffold({ children }: { children: React.ReactNode }) {
                     <Hero />
                 </div>
 
-                {/* Sidebar Layer - Appears on top when scrolled */}
+                {/* Sidebar Layer (Desktop) & Mobile Nav (Bottom) */}
                 <div className="relative z-50">
                     <Sidebar isScrolled={scrolled} />
+                    <MobileNav isScrolled={scrolled} />
                 </div>
 
                 {/* Scrollable Content Layer - Slides OVER the Hero */}
                 <main className="relative z-10 w-full">
                     {/* Spacer to push content below the full-screen Hero initially */}
                     {/* This ensures the user sees the Hero first, then scrolls "up" (content moves up) */}
-                    <div className="h-screen w-full pointer-events-none" />
+                    <div className="h-[75vh] md:h-screen w-full pointer-events-none" />
 
                     {/* The Actual Content (Glass Overlay, Projects, etc.) */}
                     <div className={cn(

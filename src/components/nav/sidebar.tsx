@@ -83,7 +83,7 @@ export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             className={cn(
-                "fixed left-6 top-1/2 flex flex-col glass-panel rounded-3xl z-50 overflow-hidden transition-all duration-300 h-fit py-4",
+                "fixed left-6 top-1/2 hidden md:flex flex-col glass-panel rounded-3xl z-50 overflow-hidden transition-all duration-300 h-fit py-4",
                 !isScrolled && "pointer-events-none"
             )}
         >

@@ -24,8 +24,8 @@ export function ProfileAvatar({ layoutId, className, size = "lg", transition }: 
                 damping: 25,
             }}
             style={{
-                width: size === "lg" ? 480 : 48,
-                height: size === "lg" ? 480 : 48,
+                width: size === "lg" ? "min(480px, 80vw)" : 48,
+                height: size === "lg" ? "min(480px, 80vw)" : 48,
             }}
         >
             <div className="absolute inset-0 bg-gradient-to-br from-primary to-accent opacity-50" />
@@ -50,7 +50,7 @@ export function ProfileName({ layoutId, className, size = "lg", transition }: { 
                 damping: 25,
             }}
             style={{
-                fontSize: size === "lg" ? "5rem" : "1.25rem",
+                fontSize: size === "lg" ? "clamp(2.5rem, 8vw, 5rem)" : "1.25rem",
                 lineHeight: 1,
             }}
         >
