@@ -147,7 +147,7 @@ export function HomePage({ data }: { data: ProfileData }) {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
               System Status: Online
             </div>
-            <h2 className="text-xl md:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl md:text-5xl font-bold text-white tracking-tight">
               Core Infrastructure
             </h2>
             <div className="relative max-w-2xl">
@@ -193,7 +193,7 @@ export function HomePage({ data }: { data: ProfileData }) {
             </motion.div>
 
             <motion.div className="space-y-6" variants={itemVariants}>
-              <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+              <h3 className="text-lg md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-primary font-mono">02.</span>
                 <Cpu className="w-6 h-6 text-primary" />
                 Hardware
@@ -204,7 +204,7 @@ export function HomePage({ data }: { data: ProfileData }) {
             </motion.div>
 
             <motion.div className="space-y-6" variants={itemVariants}>
-              <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+              <h3 className="text-lg md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-primary font-mono">03.</span>
                 <Code className="w-6 h-6 text-primary" />
                 Software
@@ -215,7 +215,7 @@ export function HomePage({ data }: { data: ProfileData }) {
             </motion.div>
 
             <motion.div className="space-y-6" variants={itemVariants}>
-              <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+              <h3 className="text-lg md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-primary font-mono">04.</span>
                 <Users className="w-6 h-6 text-primary" />
                 Leadership
@@ -243,7 +243,7 @@ export function HomePage({ data }: { data: ProfileData }) {
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Log Status: Archived
             </div>
-            <h2 className="text-xl md:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl md:text-5xl font-bold text-white tracking-tight">
               Experience
             </h2>
             <div className="relative max-w-2xl">
@@ -321,7 +321,7 @@ export function HomePage({ data }: { data: ProfileData }) {
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Academic Records: Verified
             </div>
-            <h2 className="text-xl md:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl md:text-5xl font-bold text-white tracking-tight">
               Education
             </h2>
             <div className="relative max-w-2xl">
@@ -369,9 +369,21 @@ export function HomePage({ data }: { data: ProfileData }) {
                       const isVitro = point.includes("VITRO");
                       const isCisco = point.includes("CCNA");
                       return (
-                        <li key={i} className={`flex items-start gap-3 leading-relaxed text-[13px] md:text-lg ${isVitro || isCisco ? "text-white" : "text-muted-text/80"}`}>
+                        <li key={i} className={`flex items-start gap-3 leading-relaxed text-[13px] md:text-lg text-muted-text`}>
                           <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${isVitro || isCisco ? "bg-accent animate-pulse" : "bg-primary/50"}`} />
-                          {point}
+                          <span>
+                            {point}
+                            {isVitro && (
+                              <a
+                                href="https://www.linkedin.com/posts/vitrodc_vitro25-vitroacademy-activity-7379695082590883840-iwZE?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFHx_o0Bmeh6Vi1Gg2tr6xBMI1dBbQ7zXC0"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary hover:text-primary/80 ml-2 inline-flex items-center gap-1 transition-colors hover:underline"
+                              >
+                                [See more]
+                              </a>
+                            )}
+                          </span>
                         </li>
                       );
                     })}
@@ -398,7 +410,7 @@ export function HomePage({ data }: { data: ProfileData }) {
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Development Status: Active
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl md:text-5xl font-bold text-white tracking-tight">
               Featured Projects
             </h2>
             <div className="relative max-w-2xl">
@@ -427,8 +439,8 @@ export function HomePage({ data }: { data: ProfileData }) {
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               System Architecture: Stable
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-              Technical Arsenal
+            <h2 className="text-2xl md:text-5xl font-bold text-white tracking-tight">
+              Toolstack
             </h2>
             <div className="relative max-w-2xl">
               <p className="text-[13px] md:text-xl text-muted-text leading-relaxed pb-4">
