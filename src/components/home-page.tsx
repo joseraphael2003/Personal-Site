@@ -32,6 +32,8 @@ import {
   Zap
 } from "lucide-react";
 import { MemoryStream } from "@/components/content/memory-stream";
+import { projects } from "@/lib/data/projects";
+import { ProjectSpotlight } from "@/components/content/project-spotlight";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -68,7 +70,9 @@ type ProfileData = {
 };
 
 export function HomePage({ data }: { data: ProfileData }) {
-  const { experience, education, memories, projects, toolstack } = data;
+  // Note: 'projects' is imported from static file at line 35
+  // Renaming DB projects to avoid shadowing
+  const { experience, education, memories, projects: dbProjects, toolstack } = data;
   const { scrollY } = useScroll();
   const [innerHeight, setInnerHeight] = useState(1000); // Default to avoid divide by zero
   const [isSettled, setIsSettled] = useState(false);
@@ -420,13 +424,9 @@ export function HomePage({ data }: { data: ProfileData }) {
             </div>
           </header>
 
-          <div className="border-l-2 border-white/10 ml-3 pl-4 md:pl-12 py-12">
-            <div className="flex flex-col items-center justify-center p-12 border border-dashed border-white/10 rounded-2xl bg-white/5">
-              <FolderGit2 className="w-16 h-16 text-muted-text/20 mb-4" />
-              <p className="text-muted-text font-mono">
-                    // UNDER DEVELOPMENT
-              </p>
-            </div>
+          {/* Project Spotlight - Full width, no vertical line */}
+          <div className="mt-10 mb-8">
+            <ProjectSpotlight projects={projects} />
           </div>
         </div>
       </div>
