@@ -26,11 +26,11 @@ body {
 }
 
 @utility glass-panel {
-  @apply bg-surface/50 backdrop-blur-xl border border-accent/50 shadow-xl;
+  @apply bg-surface/50 backdrop-blur-sm border border-accent/50 shadow-xl;
 }
 
 @utility glass-card {
-  @apply bg-surface/30 backdrop-blur-lg border border-accent/30 hover:bg-surface/50 transition-colors duration-300;
+  @apply bg-surface/30 backdrop-blur-sm border border-accent/30 hover:bg-surface/50 transition-colors duration-300;
 }
 
 @utility bg-gradient-radial {

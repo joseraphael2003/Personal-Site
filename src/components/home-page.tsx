@@ -146,7 +146,7 @@ export function HomePage({ data }: { data: ProfileData }) {
   return (
     <Scaffold>
       {/* Glass Overlay "Core Infrastructure" Section */}
-      <div id="core-infrastructure" className="min-h-screen w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 will-change-transform">
+      <div id="core-infrastructure" className="min-h-screen w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-sm md:backdrop-blur-md bg-black/60 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-12">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
@@ -241,7 +241,7 @@ export function HomePage({ data }: { data: ProfileData }) {
       </div>
 
       {/* Glass Overlay "Runtime Logs" (Experience) Section */}
-      <div id="experience" className="min-h-screen w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 pt-24 relative z-20 will-change-transform">
+      <div id="experience" className="min-h-screen w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-sm md:backdrop-blur-md bg-black/60 pt-24 relative z-20 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
@@ -319,7 +319,7 @@ export function HomePage({ data }: { data: ProfileData }) {
       </div>
 
       {/* Glass Overlay "Education" Section */}
-      <div id="education" className="min-h-screen w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 pt-24 relative z-30 will-change-transform">
+      <div id="education" className="min-h-screen w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-sm md:backdrop-blur-md bg-black/60 pt-24 relative z-30 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
@@ -408,7 +408,7 @@ export function HomePage({ data }: { data: ProfileData }) {
         </div>
       </div>
       {/* Glass Overlay "Projects" Section */}
-      <div id="projects" className="w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 pt-24 pb-32 relative z-40 will-change-transform">
+      <div id="projects" className="w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-sm md:backdrop-blur-md bg-black/60 pt-24 pb-32 relative z-40 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">
@@ -433,7 +433,7 @@ export function HomePage({ data }: { data: ProfileData }) {
       </div>
 
       {/* Glass Overlay "Toolstack" Section */}
-      <div id="toolstack" className="min-h-screen w-full glass-panel border-white/10 p-4 md:p-12 backdrop-blur-md md:backdrop-blur-xl bg-black/60 pt-24 pb-32 relative z-50 will-change-transform">
+      <div id="toolstack" className="min-h-screen w-full glass-panel border-white/10 p-4 md:p-12 backdrop-blur-sm md:backdrop-blur-md bg-black/60 pt-24 pb-32 relative z-50 will-change-transform">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="space-y-4 relative">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-sm font-mono uppercase tracking-wider">

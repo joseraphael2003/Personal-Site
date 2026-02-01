@@ -67,7 +67,7 @@ export function MobileNav({ isScrolled = true }: { isScrolled?: boolean }) {
             "fixed bottom-6 left-4 right-4 z-50 md:hidden transition-all duration-500 transform",
             isScrolled ? "translate-y-0 opacity-100" : "translate-y-24 opacity-0 pointer-events-none"
         )}>
-            <div className="glass-panel bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-2 shadow-2xl">
+            <div className="glass-panel bg-black/80 backdrop-blur-md border border-white/10 rounded-2xl p-2 shadow-2xl">
                 <nav className="flex items-center justify-between px-2 overflow-x-auto no-scrollbar gap-1">
                     {NAV_ITEMS.map((item) => {
                         const active = isActive(item.href);

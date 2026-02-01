@@ -101,7 +101,7 @@ function ProjectCardItem({ project }: { project: Project }) {
 
                             {/* Gallery Navigation */}
                             {gallery.length > 1 && (
-                                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 z-30">
+                                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10 z-30">
                                     <button onClick={goGalleryPrev} type="button" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center p-0">
                                         <ChevronLeft className="w-4 h-4" />
                                     </button>
@@ -115,7 +115,7 @@ function ProjectCardItem({ project }: { project: Project }) {
                             <button
                                 type="button"
                                 onClick={() => setShowGallery(true)}
-                                className="absolute top-6 right-6 p-2 rounded-full bg-black/60 backdrop-blur-md text-white z-30 border border-white/10 hover:bg-black/80 transition-colors flex items-center gap-2 text-sm">
+                                className="absolute top-6 right-6 p-2 rounded-full bg-black/60 backdrop-blur-sm text-white z-30 border border-white/10 hover:bg-black/80 transition-colors flex items-center gap-2 text-sm">
                                 <Images className="w-4 h-4" /> View Photos
                             </button>
                         </div>
@@ -209,7 +209,7 @@ function ProjectCardItem({ project }: { project: Project }) {
                             {/* Close Button - Floating top right of the container */}
                             <button
                                 onClick={() => setShowGallery(false)}
-                                className="absolute top-2 right-2 p-2 rounded-full bg-black/50 border border-white/10 text-white z-50 backdrop-blur-md"
+                                className="absolute top-2 right-2 p-2 rounded-full bg-black/50 border border-white/10 text-white z-50 backdrop-blur-sm"
                             >
                                 <X className="w-5 h-5" />
                             </button>

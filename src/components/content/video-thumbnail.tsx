@@ -26,7 +26,7 @@ export function VideoThumbnail({ thumbnail, videoUrl, title }: VideoThumbnailPro
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                 {/* Play Button */}
-                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
                     <Play className="w-5 h-5 md:w-8 md:h-8 text-white fill-white ml-1" />
                 </div>
             </div>
