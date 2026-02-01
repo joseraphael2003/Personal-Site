@@ -30,10 +30,10 @@ export function MobileNav({ isScrolled = true }: { isScrolled?: boolean }) {
     // Handle scroll spy
     useEffect(() => {
         const handleScroll = () => {
-            // 1. Detect active section
             const sections = NAV_ITEMS.map(item => {
                 if (item.href === "/") return { id: "home", offset: 0 };
-                const id = item.href.replace("/#", "");
+                // Handle both /#section and #section formats
+                const id = item.href.replace(/^\/?#/, "");
                 const element = document.getElementById(id);
                 if (element) {
                     return { id, offset: element.offsetTop };
@@ -58,7 +58,8 @@ export function MobileNav({ isScrolled = true }: { isScrolled?: boolean }) {
 
     const isActive = (href: string) => {
         if (href === "/" && activeSection === "home") return true;
-        const id = href.replace("/#", "");
+        // Handle both /#section and #section formats
+        const id = href.replace(/^\/?#/, "");
         return activeSection === id;
     };
 

@@ -34,7 +34,7 @@ export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {
         const handleScroll = () => {
             const sections = NAV_ITEMS.map(item => {
                 if (item.href === "/") return { id: "home", offset: 0 };
-                const id = item.href.replace("/#", "");
+                const id = item.href.replace(/^\/?#/, "");
                 const element = document.getElementById(id);
                 if (element) {
                     return { id, offset: element.offsetTop };
@@ -61,7 +61,8 @@ export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {
 
     const isActive = (href: string) => {
         if (href === "/" && activeSection === "home") return true;
-        const id = href.replace("/#", "");
+        // Handle both /#section and #section formats
+        const id = href.replace(/^\/?#/, "");
         return activeSection === id;
     };
 
