@@ -25,8 +25,8 @@ async function main() {
     console.log("Inserting Experience...");
     await db.insert(schema.experience).values([
         {
-            company: "Laptop Technician",
-            role: "Freelance (Occasional)",
+            company: "Freelance (Occasional)",
+            role: "Laptop Technician",
             dates: "2023 - Present",
             description: "",
             // Storing full sentences in tech_stack as requested to revert style

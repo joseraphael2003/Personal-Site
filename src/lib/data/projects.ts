@@ -23,7 +23,7 @@ export const projects: Project[] = [
         category: "Mobile App",
         status: "Beta",
         description: "A coffee-centric utility app designed for the modern barista. Features a precision brew timer, recipe notebook, and bean inventory tracker. Built with a focus on ease-of-use and aesthetic minimalism.",
-        techStack: ["Flutter", "Dart", "Firebase", "Material 3"],
+        techStack: ["Flutter", "Dart", "Supabase", "Material 3"],
         links: {
             video: "https://youtu.be/LWc7ESAtwEQ", // Documentation Vlog #1
         },

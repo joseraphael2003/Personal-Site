@@ -23,6 +23,7 @@ import {
   Braces,
   Palette,
   Database,
+  DraftingCompass,
   Smartphone,
   TerminalSquare,
   AudioWaveform,
@@ -276,14 +277,14 @@ export function HomePage({ data }: { data: ProfileData }) {
           </header>
 
           <motion.div
-            className="space-y-12 relative border-l-2 border-white/10 ml-3 pl-4 md:pl-12 py-4"
+            className="space-y-12 relative border-l-2 border-white/10 ml-3 md:ml-6 py-4"
             variants={containerVariants}
             initial="hidden"
             animate={isExperienceSettled ? "visible" : "hidden"}
           >
             {experience.map((job, idx) => (
-              <motion.div key={job.id} className="relative" variants={itemVariants}>
-                <span className="absolute -left-[45px] md:-left-[61px] top-2 w-6 h-6 rounded-full bg-black border-2 border-primary flex items-center justify-center">
+              <motion.div key={job.id} className="relative pl-8 md:pl-12" variants={itemVariants}>
+                <span className="absolute -left-[13px] top-2 w-6 h-6 rounded-full bg-black border-2 border-primary flex items-center justify-center z-10">
                   <div className={`w-2 h-2 rounded-full ${idx === 0 ? "bg-primary" : "bg-primary/50"}`} />
                 </span>
                 <div className="space-y-2">
@@ -354,14 +355,14 @@ export function HomePage({ data }: { data: ProfileData }) {
           </header>
 
           <motion.div
-            className="space-y-12 relative border-l-2 border-white/10 ml-3 pl-4 md:pl-12 py-4"
+            className="space-y-12 relative border-l-2 border-white/10 ml-3 md:ml-6 py-4"
             variants={containerVariants}
             initial="hidden"
             animate={isEducationSettled ? "visible" : "hidden"}
           >
             {education.map((edu, idx) => (
-              <motion.div key={edu.id} className="relative" variants={itemVariants}>
-                <span className="absolute -left-[45px] md:-left-[61px] top-2 w-6 h-6 rounded-full bg-black border-2 border-primary flex items-center justify-center">
+              <motion.div key={edu.id} className="relative pl-8 md:pl-12" variants={itemVariants}>
+                <span className="absolute -left-[13px] top-2 w-6 h-6 rounded-full bg-black border-2 border-primary flex items-center justify-center z-10">
                   <div className="w-2 h-2 rounded-full bg-primary" />
                 </span>
                 <div className="space-y-2">
@@ -415,7 +416,7 @@ export function HomePage({ data }: { data: ProfileData }) {
               Development Status: Active
             </div>
             <h2 className="text-2xl md:text-5xl font-bold text-white tracking-tight">
-              Featured Projects
+              Technical Projects
             </h2>
             <div className="relative max-w-2xl">
               <p className="text-[13px] md:text-xl text-muted-text leading-relaxed pb-4">
@@ -453,7 +454,7 @@ export function HomePage({ data }: { data: ProfileData }) {
 
             {/* Group 1: ENGINEER */}
             <div className="space-y-4">
-              <h3 className="font-mono text-sm text-primary/60 uppercase tracking-widest">
+              <h3 className="font-mono text-sm text-primary uppercase tracking-widest">
                 // ENGINEER &bull; SYSTEMS_&_AI
               </h3>
               <div className="flex flex-wrap gap-3">
@@ -463,6 +464,7 @@ export function HomePage({ data }: { data: ProfileData }) {
                   { name: "Gemini Pro", icon: Sparkles },
                   { name: "Python", icon: FileCode2 },
                   { name: "KiCAD", icon: Cpu },
+                  { name: "AutoCAD", icon: DraftingCompass },
                   { name: "Octave", icon: Sigma },
                   { name: "Antigravity", icon: Rocket, highlight: "border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)] text-yellow-200" },
                 ].map((tool) => (
@@ -485,7 +487,7 @@ export function HomePage({ data }: { data: ProfileData }) {
 
             {/* Group 2: SHIP */}
             <div className="space-y-4">
-              <h3 className="font-mono text-sm text-primary/60 uppercase tracking-widest">
+              <h3 className="font-mono text-sm text-primary uppercase tracking-widest">
                 // SHIP &bull; FULL_STACK
               </h3>
               <div className="flex flex-wrap gap-3">
@@ -515,7 +517,7 @@ export function HomePage({ data }: { data: ProfileData }) {
 
             {/* Group 3: STUDIO */}
             <div className="space-y-4">
-              <h3 className="font-mono text-sm text-primary/60 uppercase tracking-widest">
+              <h3 className="font-mono text-sm text-primary uppercase tracking-widest">
                 // STUDIO &bull; CREATIVE_SUITE
               </h3>
               <div className="flex flex-wrap gap-3">

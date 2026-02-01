@@ -1,32 +1,54 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Project } from "@/lib/data/projects";
-import { ChevronLeft, ChevronRight, Github, Globe, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Github, Globe, Play, Clock, Images, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ProjectSpotlightProps {
     projects: Project[];
 }
 
 export function ProjectSpotlight({ projects }: ProjectSpotlightProps) {
-    const [activeIdx, setActiveIdx] = useState(0);
-    const [galleryIdx, setGalleryIdx] = useState(0);
-
-    // Reset gallery index when project changes
-    useEffect(() => {
-        setGalleryIdx(0);
-    }, [activeIdx]);
     if (!projects || projects.length === 0) {
         return <div className="text-white">No projects available</div>;
     }
 
-    const project = projects[activeIdx];
-    const hasMultiple = projects.length > 1;
-    const gallery = project?.assets?.gallery || [];
+    return (
+        <div className="w-full relative border-l-2 border-white/10 ml-3 md:ml-6 space-y-24 py-8">
+            {projects.map((project, index) => (
+                <div key={project.id} className="relative pl-8 md:pl-12">
+                    {/* Timeline Bullet - Centered on border-l-2 (left:0). w-6(24px). Center=12. Border-Center=1. Offset = -11px */}
+                    <span className="absolute -left-[13px] top-2 md:top-12 w-6 h-6 rounded-full bg-black border-2 border-primary flex items-center justify-center z-10">
+                        <div className="w-2 h-2 rounded-full bg-primary" />
+                    </span>
+
+                    {/* Card */}
+                    <ProjectCardItem project={project} />
+                </div>
+            ))}
+
+            {/* Coming Soon Indicator */}
+            <div className="relative pl-8 md:pl-12 opacity-50 hover:opacity-100 transition-opacity">
+                <span className="absolute -left-[13px] top-3 w-6 h-6 rounded-full bg-black border-2 border-white/20 flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-white/50" />
+                </span>
+                <div className="flex items-center gap-3 text-muted-text font-mono text-sm border border-white/5 bg-white/5 rounded-lg p-4 max-w-md">
+                    <Clock className="w-4 h-4" />
+                    <span>More projects initializing...</span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function ProjectCardItem({ project }: { project: Project }) {
+    const [galleryIdx, setGalleryIdx] = useState(0);
+    const [showGallery, setShowGallery] = useState(false);
+
+    const gallery = project.assets?.gallery || [];
     const hasGallery = gallery.length > 0;
 
-    const goNext = () => setActiveIdx((prev) => (prev + 1) % projects.length);
-    const goPrev = () => setActiveIdx((prev) => (prev - 1 + projects.length) % projects.length);
     const goGalleryNext = () => setGalleryIdx((prev) => (prev + 1) % gallery.length);
     const goGalleryPrev = () => setGalleryIdx((prev) => (prev - 1 + gallery.length) % gallery.length);
 
@@ -34,14 +56,24 @@ export function ProjectSpotlight({ projects }: ProjectSpotlightProps) {
     const prevGalleryImg = gallery[(galleryIdx - 1 + gallery.length) % gallery.length];
     const nextGalleryImg = gallery[(galleryIdx + 1) % gallery.length];
 
+    // === DESKTOP LAYOUT ===
     return (
         <div className="w-full">
-            {/* === DESKTOP VERSION === */}
+            {/* Desktop: Specific Layouts */}
             <div className="hidden lg:block">
                 {hasGallery ? (
-                    /* Two-Column Layout: Gallery (60%) + Info (40%) */
-                    <div className="relative w-full min-h-[650px] rounded-2xl overflow-hidden bg-surface border border-white/10 grid grid-cols-5">
-                        {/* Left Column: Gallery Images */}
+                    /* Two-Column Layout: Info (Left) + Gallery (Right) - SWAPPED per request */
+                    <div className="relative w-full min-h-[600px] rounded-2xl overflow-hidden bg-surface border border-white/10 grid grid-cols-5">
+                        {/* Left Column: Project Info (40%) */}
+                        <div className="col-span-2 p-10 space-y-6 flex flex-col justify-center bg-gradient-to-r from-black/90 to-black/60 z-20">
+                            <StatusBadge status={project.status} />
+                            <h3 className="text-4xl font-bold text-white">{project.title}</h3>
+                            <p className="text-base text-muted-text leading-relaxed">{project.description}</p>
+                            <TechStack stack={project.techStack} />
+                            <ProjectLinks links={project.links} />
+                        </div>
+
+                        {/* Right Column: Gallery Images (60%) */}
                         <div className="col-span-3 relative flex items-center justify-center overflow-hidden bg-black/60">
                             {/* Noise Overlay */}
                             <div
@@ -49,237 +81,205 @@ export function ProjectSpotlight({ projects }: ProjectSpotlightProps) {
                                 style={{ backgroundImage: "url('/noise.png')", backgroundRepeat: "repeat" }}
                             />
 
-                            {/* Bokeh/Blurred Background - Previous Image */}
+                            {/* Bokeh/Blurred Background */}
                             {gallery.length > 1 && (
                                 <>
-                                    <img
-                                        src={prevGalleryImg}
-                                        alt=""
-                                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/3 h-[400px] w-auto object-contain blur-xl opacity-30 scale-90"
-                                    />
-                                    <img
-                                        src={nextGalleryImg}
-                                        alt=""
-                                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 h-[400px] w-auto object-contain blur-xl opacity-30 scale-90"
-                                    />
+                                    <img src={prevGalleryImg} alt="" className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/3 h-[400px] w-auto object-contain blur-xl opacity-30 scale-90" />
+                                    <img src={nextGalleryImg} alt="" className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 h-[400px] w-auto object-contain blur-xl opacity-30 scale-90" />
                                 </>
                             )}
 
-                            {/* Dark gradient overlay for depth */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 z-[5]" />
+                            {/* Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-l from-black/40 via-transparent to-black/40 z-[5]" />
 
-                            {/* Main Gallery Image */}
+                            {/* Main Image */}
                             <img
                                 src={gallery[galleryIdx]}
-                                alt={`${project.title} screenshot ${galleryIdx + 1}`}
-                                className="relative z-20 max-h-[580px] w-auto object-contain rounded-xl shadow-2xl"
+                                alt={`${project.title} screenshot`}
+                                className="relative z-20 max-h-[500px] w-auto object-contain rounded-xl shadow-2xl"
                             />
 
                             {/* Gallery Navigation */}
                             {gallery.length > 1 && (
                                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 z-30">
-                                    <button type="button" onClick={goGalleryPrev}
-                                        className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
+                                    <button onClick={goGalleryPrev} type="button" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center p-0">
                                         <ChevronLeft className="w-4 h-4" />
                                     </button>
-                                    <span className="text-white/70 text-xs font-mono">
-                                        {galleryIdx + 1} / {gallery.length}
-                                    </span>
-                                    <button type="button" onClick={goGalleryNext}
-                                        className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
+                                    <span className="text-white/70 text-xs font-mono">{galleryIdx + 1} / {gallery.length}</span>
+                                    <button onClick={goGalleryNext} type="button" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center p-0">
                                         <ChevronRight className="w-4 h-4" />
                                     </button>
                                 </div>
                             )}
-                        </div>
-
-                        {/* Right Column: Project Info */}
-                        <div className="col-span-2 p-10 space-y-6 flex flex-col justify-center bg-gradient-to-l from-black/90 to-black/60">
-                            {/* Status */}
-                            <span className={`inline-block w-fit px-3 py-1 text-sm font-mono rounded-full border ${project.status === "Live"
-                                ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                                : "bg-amber-500/10 border-amber-500/30 text-amber-400"
-                                }`}>
-                                {project.status}
-                            </span>
-
-                            {/* Title */}
-                            <h3 className="text-4xl font-bold text-white">{project.title}</h3>
-
-                            {/* Description */}
-                            <p className="text-base text-muted-text leading-relaxed">{project.description}</p>
-
-                            {/* Tech Stack */}
-                            <div className="flex flex-wrap gap-2">
-                                {project.techStack.map((tech) => (
-                                    <span key={tech} className="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs text-white/80 font-mono">
-                                        {tech}
-                                    </span>
-                                ))}
-                            </div>
-
-                            {/* Links */}
-                            <div className="flex gap-4 pt-4">
-                                {project.links?.video && (
-                                    <a href={project.links.video} target="_blank" rel="noopener noreferrer"
-                                        className="px-5 py-2.5 bg-white text-black font-semibold rounded-lg hover:bg-white/90 flex items-center gap-2 text-sm">
-                                        <Play className="w-4 h-4 fill-black" /> Watch Log
-                                    </a>
-                                )}
-                                {project.links?.demo && (
-                                    <a href={project.links.demo} target="_blank" rel="noopener noreferrer"
-                                        className="px-5 py-2.5 bg-white/10 text-white font-semibold rounded-lg hover:bg-white/20 flex items-center gap-2 text-sm">
-                                        <Globe className="w-4 h-4" /> Live Demo
-                                    </a>
-                                )}
-                                {project.links?.repo && (
-                                    <a href={project.links.repo} target="_blank" rel="noopener noreferrer"
-                                        className="p-2.5 bg-white/5 text-white rounded-lg hover:bg-white/10">
-                                        <Github className="w-5 h-5" />
-                                    </a>
-                                )}
-                            </div>
-
-                            {/* Project Navigation (if multiple projects) */}
-                            {hasMultiple && (
-                                <div className="flex items-center gap-4 pt-6 border-t border-white/10 mt-auto">
-                                    <button type="button" onClick={goPrev}
-                                        className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center justify-center">
-                                        <ChevronLeft className="w-5 h-5" />
-                                    </button>
-                                    <div className="flex gap-2">
-                                        {projects.map((_, idx) => (
-                                            <button key={idx} type="button" onClick={() => setActiveIdx(idx)}
-                                                className={`w-2 h-2 rounded-full transition-colors ${idx === activeIdx ? "bg-white" : "bg-white/30"}`} />
-                                        ))}
-                                    </div>
-                                    <button type="button" onClick={goNext}
-                                        className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center justify-center">
-                                        <ChevronRight className="w-5 h-5" />
-                                    </button>
-                                </div>
-                            )}
+                            {/* View Photos Button */}
+                            <button
+                                type="button"
+                                onClick={() => setShowGallery(true)}
+                                className="absolute top-6 right-6 p-2 rounded-full bg-black/60 backdrop-blur-md text-white z-30 border border-white/10 hover:bg-black/80 transition-colors flex items-center gap-2 text-sm">
+                                <Images className="w-4 h-4" /> View Photos
+                            </button>
                         </div>
                     </div>
                 ) : (
-                    /* Full-Width Layout: No Gallery */
+                    /* Full-Width Layout: No Gallery (Personal Site) */
                     <div className="relative w-full min-h-[500px] rounded-2xl overflow-hidden bg-surface border border-white/10 flex items-center justify-center p-16">
-                        {/* Noise Overlay */}
-                        <div
-                            className="absolute inset-0 opacity-[0.03] pointer-events-none z-[1]"
-                            style={{ backgroundImage: "url('/noise.png')", backgroundRepeat: "repeat" }}
-                        />
-
-                        {/* Dark Gradient Background (matching gallery style) */}
+                        <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-[1]" style={{ backgroundImage: "url('/noise.png')", backgroundRepeat: "repeat" }} />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40" />
                         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
 
-                        {/* Content - Centered */}
                         <div className="relative z-10 max-w-3xl text-center space-y-6">
-                            {/* Status */}
-                            <span className={`inline-block px-4 py-1.5 text-sm font-mono rounded-full border ${project.status === "Live"
-                                ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                                : "bg-amber-500/10 border-amber-500/30 text-amber-400"
-                                }`}>
-                                {project.status}
-                            </span>
-
-                            {/* Title */}
+                            <StatusBadge status={project.status} />
                             <h3 className="text-5xl font-bold text-white">{project.title}</h3>
-
-                            {/* Description */}
                             <p className="text-lg text-muted-text leading-relaxed">{project.description}</p>
-
-                            {/* Tech Stack */}
-                            <div className="flex flex-wrap justify-center gap-2">
-                                {project.techStack.map((tech) => (
-                                    <span key={tech} className="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs text-white/80 font-mono">
-                                        {tech}
-                                    </span>
-                                ))}
+                            <div className="flex justify-center flex-wrap gap-2">
+                                {project.techStack.map(t => <span key={t} className="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs text-white/80 font-mono">{t}</span>)}
                             </div>
-
-                            {/* Links */}
-                            <div className="flex justify-center gap-4 pt-4">
-                                {project.links?.demo && (
-                                    <a href={project.links.demo} target="_blank" rel="noopener noreferrer"
-                                        className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 flex items-center gap-2">
-                                        <Globe className="w-4 h-4" /> Visit Site
-                                    </a>
-                                )}
-                                {project.links?.repo && (
-                                    <a href={project.links.repo} target="_blank" rel="noopener noreferrer"
-                                        className="px-6 py-3 bg-white/10 text-white font-semibold rounded-lg hover:bg-white/20 flex items-center gap-2">
-                                        <Github className="w-5 h-5" /> View Source
-                                    </a>
-                                )}
+                            <div className="flex justify-center pt-4">
+                                <ProjectLinks links={project.links} />
                             </div>
-
-                            {/* Project Navigation (if multiple projects) */}
-                            {hasMultiple && (
-                                <div className="flex items-center justify-center gap-4 pt-8 border-t border-white/10">
-                                    <button type="button" onClick={goPrev}
-                                        className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center justify-center">
-                                        <ChevronLeft className="w-5 h-5" />
-                                    </button>
-                                    <div className="flex gap-2">
-                                        {projects.map((_, idx) => (
-                                            <button key={idx} type="button" onClick={() => setActiveIdx(idx)}
-                                                className={`w-2 h-2 rounded-full transition-colors ${idx === activeIdx ? "bg-white" : "bg-white/30"}`} />
-                                        ))}
-                                    </div>
-                                    <button type="button" onClick={goNext}
-                                        className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center justify-center">
-                                        <ChevronRight className="w-5 h-5" />
-                                    </button>
-                                </div>
-                            )}
                         </div>
                     </div>
                 )}
             </div>
 
-            {/* === MOBILE VERSION (Vertical Stack) === */}
-            <div className="lg:hidden space-y-12">
-                {projects.map((proj) => (
-                    <div key={proj.id} className="space-y-4">
-                        {/* Image (only if has gallery) */}
-                        {proj.assets?.gallery && proj.assets.gallery.length > 0 && (
-                            <div className="aspect-video rounded-xl overflow-hidden border border-white/10 bg-surface">
-                                <img src={proj.assets.gallery[0]} alt={proj.title} className="w-full h-full object-cover" />
-                            </div>
-                        )}
+            {/* Mobile Layout: Vertical Stack */}
+            <div className="lg:hidden space-y-3">
+                <div className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between">
+                        <span className="font-mono text-sm text-primary">{project.category}</span>
+                        <StatusBadge status={project.status} />
+                    </div>
+                    {/* Title: Matched 'Experience' (text-lg md:text-2xl font-bold) */}
+                    <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">
+                        {project.title}
+                    </h3>
+                </div>
 
-                        {/* Info */}
-                        <div className="w-full space-y-2">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-xl font-bold text-white">{proj.title}</h3>
-                                <span className={`px-2 py-0.5 text-[10px] font-mono rounded-full border ${proj.status === "Live"
-                                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                                    : "bg-primary/10 border-primary/30 text-primary"
-                                    }`}>
-                                    {proj.status}
-                                </span>
-                            </div>
-                            <p className="text-sm text-muted-text">{proj.description}</p>
-                            <div className="flex gap-3 pt-2">
-                                {proj.links?.video && (
-                                    <a href={proj.links.video} target="_blank" rel="noopener noreferrer"
-                                        className="text-xs font-mono text-white underline underline-offset-4">
-                                        WATCH LOG
-                                    </a>
-                                )}
-                                {proj.links?.demo && (
-                                    <a href={proj.links.demo} target="_blank" rel="noopener noreferrer"
-                                        className="text-xs font-mono text-white underline underline-offset-4">
-                                        VISIT
-                                    </a>
-                                )}
+                {/* Description: Matched 'Experience' (text-[13px] md:text-lg) */}
+                <p className="text-[13px] text-muted-text leading-relaxed">
+                    {project.description}
+                </p>
+
+                <TechStack stack={project.techStack} />
+
+                {/* Touch-Friendly Action Grid */}
+                <div className="pt-4 grid grid-cols-2 gap-3">
+                    {/* View Photos Button (Mobile Only) */}
+                    {hasGallery && (
+                        <button
+                            type="button"
+                            onClick={() => setShowGallery(true)}
+                            className="col-span-2 flex items-center justify-center gap-2 p-3 rounded-lg bg-white/5 text-white font-medium text-sm border border-white/10 hover:bg-white/10">
+                            <Images className="w-4 h-4" /> View Photos
+                        </button>
+                    )}
+
+                    {project.links?.video && (
+                        <a href={project.links.video} target="_blank" rel="noopener noreferrer"
+                            className="col-span-2 flex items-center justify-center gap-2 p-3 rounded-lg bg-white text-black font-semibold text-sm">
+                            <Play className="w-4 h-4 fill-black" /> Watch Log
+                        </a>
+                    )}
+                    {project.links?.demo && (
+                        <a href={project.links.demo} target="_blank" rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 p-3 rounded-lg bg-white/10 text-white font-semibold text-sm border border-white/10">
+                            <Globe className="w-4 h-4" /> Live Demo
+                        </a>
+                    )}
+                    {project.links?.repo && (
+                        <a href={project.links.repo} target="_blank" rel="noopener noreferrer"
+                            className={`flex items-center justify-center gap-2 p-3 rounded-lg bg-white/5 text-white font-medium text-sm border border-white/10 ${!project.links.demo ? 'col-span-2' : ''}`}>
+                            <Github className="w-4 h-4" /> Source
+                        </a>
+                    )}
+                </div>
+            </div>
+
+            {/* Mobile Fullscreen Gallery Modal (Swipeable) */}
+            <AnimatePresence>
+                {showGallery && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+                    >
+                        {/* Container taking max 80% screen height */}
+                        <div className="relative w-full max-w-lg h-[80vh] flex flex-col">
+                            {/* Close Button - Floating top right of the container */}
+                            <button
+                                onClick={() => setShowGallery(false)}
+                                className="absolute top-2 right-2 p-2 rounded-full bg-black/50 border border-white/10 text-white z-50 backdrop-blur-md"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+
+                            {/* Swipeable Image Canvas */}
+                            <div className="flex-1 relative flex items-center justify-center overflow-hidden rounded-xl bg-surface/50 border border-white/5">
+                                <AnimatePresence mode="wait">
+                                    <motion.img
+                                        key={galleryIdx}
+                                        src={gallery[galleryIdx]}
+                                        drag="x"
+                                        dragConstraints={{ left: 0, right: 0 }}
+                                        dragElastic={0.2}
+                                        onDragEnd={(_, { offset, velocity }) => {
+                                            const swipe = offset.x; // negative = left (next)
+                                            if (swipe < -50) goGalleryNext();
+                                            else if (swipe > 50) goGalleryPrev();
+                                        }}
+                                        draggable={false}
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="max-w-full max-h-full object-contain pointer-events-auto cursor-grab active:cursor-grabbing"
+                                    />
+                                </AnimatePresence>
+
+                                {/* Hint Overlay (subtle) */}
+                                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 pointer-events-none">
+                                    {gallery.map((_, i) => (
+                                        <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all ${i === galleryIdx ? "bg-white w-3" : "bg-white/20"}`} />
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
+
+// Helpers
+const StatusBadge = ({ status }: { status: string }) => (
+    <span className={`inline-block w-fit px-3 py-1 text-sm font-mono rounded-full border ${status === "Live" ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400" : "bg-amber-500/10 border-amber-500/30 text-amber-400"
+        }`}>{status}</span>
+);
+
+const TechStack = ({ stack }: { stack: string[] }) => (
+    <div className="flex flex-wrap gap-2">
+        {stack.map(t => <span key={t} className="px-3 py-1 bg-white/5 border border-white/10 rounded text-xs text-white/80 font-mono">{t}</span>)}
+    </div>
+);
+
+const ProjectLinks = ({ links, isMobile = false }: { links: any, isMobile?: boolean }) => (
+    <div className={`flex gap-4 ${isMobile ? 'pt-2' : ''}`}>
+        {links?.video && (
+            <a href={links.video} target="_blank" rel="noopener noreferrer" className="px-5 py-2.5 bg-white text-black font-semibold rounded-lg hover:bg-white/90 flex items-center gap-2 text-sm">
+                <Play className="w-4 h-4 fill-black" /> Watch Log
+            </a>
+        )}
+        {links?.demo && (
+            <a href={links.demo} target="_blank" rel="noopener noreferrer" className="px-5 py-2.5 bg-white/10 text-white font-semibold rounded-lg hover:bg-white/20 flex items-center gap-2 text-sm">
+                <Globe className="w-4 h-4" /> Live Demo
+            </a>
+        )}
+        {links?.repo && (
+            <a href={links.repo} target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white/5 text-white rounded-lg hover:bg-white/10">
+                <Github className="w-5 h-5" />
+            </a>
+        )}
+    </div>
+);
