@@ -466,6 +466,7 @@ export function HomePage({ data }: { data: ProfileData }) {
                   { name: "Python", icon: FileCode2 },
                   { name: "KiCAD", icon: Cpu },
                   { name: "AutoCAD", icon: DraftingCompass },
+                  { name: "Electronics", icon: Zap },
                   { name: "Octave", icon: Sigma },
                   { name: "Antigravity", icon: Rocket, highlight: "border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)] text-yellow-200" },
                 ].map((tool) => (

@@ -138,7 +138,16 @@ async function main() {
             tags: ["React", "Next.js", "Tailwind", "Motion"],
             techStack: ["React 19", "Next.js 15", "Drizzle ORM", "Supabase"],
             linkRepo: "https://github.com/joseraphael2003/portfolio",
-            imageUrl: "/projects/portfolio.png" // Placeholder
+            imageUrl: "/projects/portfolio.png"
+        },
+        {
+            title: "Power Supply",
+            tagline: "Electronics Course Project",
+            description: "A custom power supply built with an 18-0-18V 6A transformer. Features custom-designed modules: bridge rectifier, two fixed voltage regulators, and a variable regulator. Outputs include slow-charge USB-A, fast-charge USB-A, and fast-charge USB-C.",
+            tags: ["KiCAD", "Electronics"],
+            techStack: ["KiCAD", "Electronics", "PCB Design"],
+            linkRepo: null,
+            imageUrl: "/projects/power-supply/psu-1.png"
         }
     ]);
 

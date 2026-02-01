@@ -1,7 +1,7 @@
 export interface Project {
     id: string;
     title: string;
-    category: "Mobile App" | "Web App" | "AI/ML";
+    category: "Mobile App" | "Web App" | "AI/ML" | "Hardware";
     status: "Live" | "Beta" | "Concept";
     description: string;
     techStack: string[];
@@ -49,6 +49,23 @@ export const projects: Project[] = [
         assets: {
             thumbnail: "",
             gallery: []
+        }
+    },
+    {
+        id: "power-supply",
+        title: "Power Supply",
+        category: "Hardware",
+        status: "Live",
+        description: "A custom power supply built with an 18-0-18V 6A transformer. Features custom-designed modules: bridge rectifier, two fixed voltage regulators, and a variable regulator. Outputs include slow-charge USB-A, fast-charge USB-A, and fast-charge USB-C.",
+        techStack: ["KiCAD", "Electronics"],
+        links: {},
+        assets: {
+            thumbnail: "/projects/power-supply/psu-1.png",
+            gallery: [
+                "/projects/power-supply/psu-1.png",
+                "/projects/power-supply/psu-2.jpg",
+                "/projects/power-supply/psu-3.png"
+            ]
         }
     }
 ];
