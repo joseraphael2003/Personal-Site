@@ -22,7 +22,7 @@ const NAV_ITEMS = [
     { label: "Education", href: "/#education", icon: GraduationCap },
     { label: "Projects", href: "/#projects", icon: FolderGit2 },
     { label: "Toolstack", href: "/#toolstack", icon: Terminal },
-    { label: "Contact", href: "/contact", icon: Mail },
+    { label: "Contact", href: "#contact", icon: Mail },
 ];
 
 export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {

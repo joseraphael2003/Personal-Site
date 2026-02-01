@@ -21,7 +21,7 @@ const NAV_ITEMS = [
     { id: "education", label: "Edu", href: "/#education", icon: GraduationCap },
     { id: "projects", label: "Proj", href: "/#projects", icon: FolderGit2 },
     { id: "toolstack", label: "Tools", href: "/#toolstack", icon: Terminal },
-    { label: "Contact", href: "/contact", icon: Mail },
+    { label: "Contact", href: "#contact", icon: Mail },
 ];
 
 export function MobileNav({ isScrolled = true }: { isScrolled?: boolean }) {

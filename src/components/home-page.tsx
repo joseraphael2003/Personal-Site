@@ -1,6 +1,7 @@
 "use client";
 
 import { Scaffold } from "@/components/layout/scaffold";
+import { ContactSection } from "@/components/content/contact-section";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
@@ -547,7 +548,12 @@ export function HomePage({ data }: { data: ProfileData }) {
 
           </div>
         </div>
-      </div >
+      </div>
+
+      {/* Glass Overlay "Contact" Section */}
+      <div id="contact" className="min-h-screen w-full glass-panel border-white/10 p-6 md:p-12 backdrop-blur-sm md:backdrop-blur-md bg-black/60 pt-24 pb-32 relative z-[60] will-change-transform">
+        <ContactSection />
+      </div>
 
     </Scaffold >
   );
