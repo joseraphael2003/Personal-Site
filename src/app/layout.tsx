@@ -1,4 +1,5 @@
 import { NoiseOverlay } from "@/components/ui/noise-overlay";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Sora } from "next/font/google"; // Removed Geist_Mono
 import "./globals.css";
@@ -25,6 +26,7 @@ export default function RootLayout({
       >
         <NoiseOverlay />
         {children}
+        <Analytics />
       </body>
     </html>
   );
