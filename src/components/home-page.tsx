@@ -1,7 +1,7 @@
 "use client";
 
 import { Scaffold } from "@/components/layout/scaffold";
-import { ContactSection } from "@/components/content/contact-section";
+import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
@@ -33,9 +33,12 @@ import {
   Image,
   Zap
 } from "lucide-react";
-import { MemoryStream } from "@/components/content/memory-stream";
 import { projects } from "@/lib/data/projects";
-import { ProjectSpotlight } from "@/components/content/project-spotlight";
+
+// Lazy-load heavy below-fold components (code splitting)
+const MemoryStream = dynamic(() => import("@/components/content/memory-stream").then(m => ({ default: m.MemoryStream })), { ssr: false });
+const ProjectSpotlight = dynamic(() => import("@/components/content/project-spotlight").then(m => ({ default: m.ProjectSpotlight })), { ssr: false });
+const ContactSection = dynamic(() => import("@/components/content/contact-section").then(m => ({ default: m.ContactSection })), { ssr: false });
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -82,16 +85,13 @@ export function HomePage({ data }: { data: ProfileData }) {
   const [isEducationSettled, setIsEducationSettled] = useState(false);
 
   useEffect(() => {
-    // Initialize height
     setInnerHeight(window.innerHeight);
-
     const handleResize = () => setInnerHeight(window.innerHeight);
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Map scroll to progress (0 to 100% as we scroll one viewport height)
-  // Input: [0, innerHeight] -> Output: [0, 1]
   const rawProgress = useTransform(scrollY, [0, innerHeight * 0.9], [0, 1]);
   const progressWidth = useSpring(useTransform(rawProgress, (v) => `${v * 100}%`), {
     stiffness: 60,
@@ -115,32 +115,12 @@ export function HomePage({ data }: { data: ProfileData }) {
     restDelta: 0.001
   });
 
-  // Track settling state
+  // Track settling state — one-shot: once settled, stays settled (no re-renders on scroll back)
   useEffect(() => {
     return scrollY.on("change", (latest) => {
-      // Core Infrastructure
-      if (latest > innerHeight * 0.9 && !isSettled) {
-        setIsSettled(true);
-      }
-      else if (latest < innerHeight * 0.8 && isSettled) {
-        setIsSettled(false);
-      }
-
-      // Experience
-      if (latest > innerHeight * 1.8 && !isExperienceSettled) {
-        setIsExperienceSettled(true);
-      }
-      else if (latest < innerHeight * 1.7 && isExperienceSettled) {
-        setIsExperienceSettled(false);
-      }
-
-      // Education
-      if (latest > innerHeight * 2.7 && !isEducationSettled) {
-        setIsEducationSettled(true);
-      }
-      else if (latest < innerHeight * 2.6 && isEducationSettled) {
-        setIsEducationSettled(false);
-      }
+      if (latest > innerHeight * 0.9 && !isSettled) setIsSettled(true);
+      if (latest > innerHeight * 1.8 && !isExperienceSettled) setIsExperienceSettled(true);
+      if (latest > innerHeight * 2.7 && !isEducationSettled) setIsEducationSettled(true);
     });
   }, [scrollY, innerHeight, isSettled, isExperienceSettled, isEducationSettled]);
 

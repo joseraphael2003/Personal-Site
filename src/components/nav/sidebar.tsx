@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProfileAvatar, ProfileName } from "@/components/profile/identity";
 import Link from "next/link";
@@ -28,35 +28,41 @@ const NAV_ITEMS = [
 export function Sidebar({ isScrolled = true }: { isScrolled?: boolean }) {
     const [isHovered, setIsHovered] = useState(false);
     const [activeSection, setActiveSection] = useState("");
+    const rafRef = useRef<number>(0);
 
     // Handle scroll spy to detect active section
     useEffect(() => {
         const handleScroll = () => {
-            const sections = NAV_ITEMS.map(item => {
-                if (item.href === "/") return { id: "home", offset: 0 };
-                const id = item.href.replace(/^\/?#/, "");
-                const element = document.getElementById(id);
-                if (element) {
-                    return { id, offset: element.offsetTop };
-                }
-                return null;
-            }).filter(Boolean) as { id: string, offset: number }[];
+            if (rafRef.current) return;
+            rafRef.current = requestAnimationFrame(() => {
+                const sections = NAV_ITEMS.map(item => {
+                    if (item.href === "/") return { id: "home", offset: 0 };
+                    const id = item.href.replace(/^\/?#/, "");
+                    const element = document.getElementById(id);
+                    if (element) {
+                        return { id, offset: element.offsetTop };
+                    }
+                    return null;
+                }).filter(Boolean) as { id: string, offset: number }[];
 
-            const scrollPosition = window.scrollY + window.innerHeight * 0.3; // Check a bit down the viewport
+                const scrollPosition = window.scrollY + window.innerHeight * 0.3;
 
-            // Find the last section that is above the current scroll position
-            for (let i = sections.length - 1; i >= 0; i--) {
-                if (scrollPosition >= sections[i].offset) {
-                    setActiveSection(sections[i].id);
-                    break;
+                for (let i = sections.length - 1; i >= 0; i--) {
+                    if (scrollPosition >= sections[i].offset) {
+                        setActiveSection(sections[i].id);
+                        break;
+                    }
                 }
-            }
+                rafRef.current = 0;
+            });
         };
 
-        window.addEventListener("scroll", handleScroll);
-        // Trigger once on mount
+        window.addEventListener("scroll", handleScroll, { passive: true });
         handleScroll();
-        return () => window.removeEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        };
     }, []);
 
     const isActive = (href: string) => {

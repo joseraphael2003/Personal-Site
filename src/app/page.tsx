@@ -1,8 +1,8 @@
 import { getProfileData } from "@/db/queries";
 import { HomePage } from "@/components/home-page";
 
-// Option to revalidate data periodically or on every request
-export const revalidate = 0; // Dynamic for dev; change to 3600 for prod
+// ISR: Serve cached HTML, revalidate every hour
+export const revalidate = 3600;
 
 export default async function Page() {
   const data = await getProfileData();

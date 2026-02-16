@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -26,34 +26,41 @@ const NAV_ITEMS = [
 
 export function MobileNav({ isScrolled = true }: { isScrolled?: boolean }) {
     const [activeSection, setActiveSection] = useState("");
+    const rafRef = useRef<number>(0);
 
     // Handle scroll spy
     useEffect(() => {
         const handleScroll = () => {
-            const sections = NAV_ITEMS.map(item => {
-                if (item.href === "/") return { id: "home", offset: 0 };
-                // Handle both /#section and #section formats
-                const id = item.href.replace(/^\/?#/, "");
-                const element = document.getElementById(id);
-                if (element) {
-                    return { id, offset: element.offsetTop };
-                }
-                return null;
-            }).filter(Boolean) as { id: string, offset: number }[];
+            if (rafRef.current) return;
+            rafRef.current = requestAnimationFrame(() => {
+                const sections = NAV_ITEMS.map(item => {
+                    if (item.href === "/") return { id: "home", offset: 0 };
+                    const id = item.href.replace(/^\/?#/, "");
+                    const element = document.getElementById(id);
+                    if (element) {
+                        return { id, offset: element.offsetTop };
+                    }
+                    return null;
+                }).filter(Boolean) as { id: string, offset: number }[];
 
-            const scrollPosition = window.scrollY + window.innerHeight * 0.4;
+                const scrollPosition = window.scrollY + window.innerHeight * 0.4;
 
-            for (let i = sections.length - 1; i >= 0; i--) {
-                if (scrollPosition >= sections[i].offset) {
-                    setActiveSection(sections[i].id);
-                    break;
+                for (let i = sections.length - 1; i >= 0; i--) {
+                    if (scrollPosition >= sections[i].offset) {
+                        setActiveSection(sections[i].id);
+                        break;
+                    }
                 }
-            }
+                rafRef.current = 0;
+            });
         };
 
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
         handleScroll();
-        return () => window.removeEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        };
     }, []);
 
     const isActive = (href: string) => {
