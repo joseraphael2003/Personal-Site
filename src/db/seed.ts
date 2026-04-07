@@ -25,6 +25,16 @@ async function main() {
     console.log("Inserting Experience...");
     await db.insert(schema.experience).values([
         {
+            company: "Freelance Part-Time",
+            role: "AI Operations Virtual Assistant",
+            dates: "Jan. 2026 - Present",
+            description: "",
+            techStack: [
+                "Follows strict SOPs to generate high-quality scripts that are funneled into generative AI workflows.",
+                "AI generated contents are integrated together through video editing and other AI tools."
+            ]
+        },
+        {
             company: "Freelance (Occasional)",
             role: "Laptop Technician",
             dates: "2023 - Present",
@@ -43,7 +53,7 @@ async function main() {
             techStack: [
                 "Also served as Marching Major in 2022-2023 and Vice President in 2023-2024.",
                 "Demonstrated leadership and coaching capabilities in a 40+ member band: sustaining high operational reliability, team coordination and morale for university and city events.",
-                "Appointed as Band Librarian: handling the integrity of the band’s piece repository, directed research and arranging/transcription projects to expand the performance catalogue."
+                "Appointed as Band Librarian: handling the integrity of the band's piece repository, directed research and arranging/transcription projects to expand the performance catalogue."
             ]
         }
     ]);
@@ -128,9 +138,18 @@ async function main() {
         }
     ]);
 
-    // 5. Insert Projects (Placeholder)
+    // 5. Insert Projects
     console.log("Inserting Projects...");
     await db.insert(schema.projects).values([
+        {
+            title: "OpsDeck",
+            tagline: "AI-Powered Operations Dashboard",
+            description: "AI-powered operations dashboard that automates the extraction of data from invoices/receipts while triaging support emails/tickets. An n8n automation intakes data from a Telegram bot, and Google Drive folders. Analyzed data is streamlined into one visual dashboard.",
+            tags: ["Next.js", "Tailwind", "Supabase", "Vercel AI SDK", "n8n"],
+            techStack: ["Next.js", "Tailwind", "Supabase", "Vercel AI SDK", "n8n"],
+            linkRepo: null,
+            imageUrl: "/projects/opsdeck/opsdeck-dashboard.png"
+        },
         {
             title: "Portfolio v2",
             tagline: "The Personal OS",

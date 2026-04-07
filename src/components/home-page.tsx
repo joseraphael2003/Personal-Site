@@ -448,7 +448,9 @@ export function HomePage({ data }: { data: ProfileData }) {
                   { name: "AutoCAD", icon: DraftingCompass },
                   { name: "Electronics", icon: Zap },
                   { name: "Octave", icon: Sigma },
-                  { name: "Antigravity", icon: Rocket, highlight: "border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)] text-yellow-200" },
+                  { name: "Claude Code", icon: TerminalSquare, highlight: "border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)] text-yellow-200" },
+                  { name: "Opencode", icon: Code, highlight: "border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)] text-yellow-200" },
+                  { name: "Antigravity", icon: Rocket },
                 ].map((tool) => (
                   <div
                     key={tool.name}

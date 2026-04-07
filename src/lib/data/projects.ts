@@ -18,6 +18,25 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        id: "opsdeck",
+        title: "OpsDeck",
+        category: "Web App",
+        status: "Live",
+        description: "AI-powered operations dashboard that automates the extraction of data from invoices/receipts while triaging support emails/tickets. An n8n automation intakes data from a Telegram bot, and Google Drive folders. Analyzed data is streamlined into one visual dashboard. App was built for my purpose of learning n8n integration.",
+        techStack: ["Next.js", "Tailwind", "Supabase", "Vercel AI SDK", "n8n"],
+        links: {},
+        assets: {
+            thumbnail: "/projects/opsdeck/opsdeck-dashboard.png",
+            gallery: [
+                "/projects/opsdeck/opsdeck-dashboard.png",
+                "/projects/opsdeck/opsdeck-transactions.png",
+                "/projects/opsdeck/opsdeck-tickets.png",
+                "/projects/opsdeck/opsdeck-activity.png",
+                "/projects/opsdeck/opsdeck-n8n.png"
+            ]
+        }
+    },
+    {
         id: "mubrew",
         title: "µBrew",
         category: "Mobile App",
