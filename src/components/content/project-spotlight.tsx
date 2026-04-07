@@ -58,7 +58,7 @@ function ProjectCardItem({ project }: { project: Project }) {
 
     // === DESKTOP LAYOUT ===
     return (
-        <div className="w-full">
+        <div className="w-full relative">
             {/* Desktop: Specific Layouts */}
             <div className="hidden lg:block">
                 {hasGallery ? (
@@ -195,74 +195,67 @@ function ProjectCardItem({ project }: { project: Project }) {
                 </div>
             </div>
 
-            {/* Inline Gallery Overlay (Opens within the project card area) */}
+            {/* Gallery Overlay — covers this card only */}
             <AnimatePresence>
                 {showGallery && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-start justify-center overflow-y-auto"
-                        onClick={() => setShowGallery(false)}
+                        className="absolute inset-0 z-[60] bg-black/95 backdrop-blur-md rounded-2xl flex flex-col items-center justify-center p-4 md:p-8 border border-white/10"
                     >
-                        {/* Gallery Container — auto-height based on image aspect ratio */}
-                        <div
-                            className="relative w-full max-w-3xl mx-auto my-8 md:my-16 px-4"
-                            onClick={(e) => e.stopPropagation()}
+                        {/* Close Button */}
+                        <button
+                            onClick={() => setShowGallery(false)}
+                            className="absolute top-3 right-3 p-2 rounded-full bg-white/10 border border-white/10 text-white z-50 hover:bg-white/20 transition-colors"
                         >
-                            {/* Close Button */}
-                            <button
-                                onClick={() => setShowGallery(false)}
-                                className="absolute -top-2 right-2 md:right-0 p-2 rounded-full bg-black/60 border border-white/10 text-white z-50 backdrop-blur-sm hover:bg-black/80 transition-colors"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
+                            <X className="w-5 h-5" />
+                        </button>
 
-                            {/* Image — natural aspect ratio */}
-                            <div className="relative rounded-xl overflow-hidden border border-white/10 bg-surface/50">
-                                <AnimatePresence mode="wait">
-                                    <motion.img
-                                        key={galleryIdx}
-                                        src={gallery[galleryIdx]}
-                                        alt={`${project.title} screenshot ${galleryIdx + 1}`}
-                                        drag="x"
-                                        dragConstraints={{ left: 0, right: 0 }}
-                                        dragElastic={0.2}
-                                        onDragEnd={(_, { offset }) => {
-                                            if (offset.x < -50) goGalleryNext();
-                                            else if (offset.x > 50) goGalleryPrev();
-                                        }}
-                                        draggable={false}
-                                        initial={{ opacity: 0, scale: 0.97 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.97 }}
-                                        transition={{ duration: 0.2 }}
-                                        className="w-full h-auto object-contain cursor-grab active:cursor-grabbing"
-                                    />
-                                </AnimatePresence>
-                            </div>
-
-                            {/* Navigation & Indicators */}
-                            {gallery.length > 1 && (
-                                <div className="flex items-center justify-center gap-4 pt-4">
-                                    <button onClick={goGalleryPrev} type="button" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
-                                        <ChevronLeft className="w-4 h-4" />
-                                    </button>
-                                    <div className="flex items-center gap-2">
-                                        {gallery.map((_, i) => (
-                                            <button
-                                                key={i}
-                                                onClick={() => setGalleryIdx(i)}
-                                                className={`rounded-full transition-all ${i === galleryIdx ? "w-3 h-1.5 bg-white" : "w-1.5 h-1.5 bg-white/30 hover:bg-white/50"}`}
-                                            />
-                                        ))}
-                                    </div>
-                                    <button onClick={goGalleryNext} type="button" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
-                                        <ChevronRight className="w-4 h-4" />
-                                    </button>
-                                </div>
-                            )}
+                        {/* Image — fills card width, natural aspect ratio */}
+                        <div className="relative w-full max-h-full flex-1 flex items-center justify-center overflow-hidden rounded-xl">
+                            <AnimatePresence mode="wait">
+                                <motion.img
+                                    key={galleryIdx}
+                                    src={gallery[galleryIdx]}
+                                    alt={`${project.title} screenshot ${galleryIdx + 1}`}
+                                    drag="x"
+                                    dragConstraints={{ left: 0, right: 0 }}
+                                    dragElastic={0.2}
+                                    onDragEnd={(_, { offset }) => {
+                                        if (offset.x < -50) goGalleryNext();
+                                        else if (offset.x > 50) goGalleryPrev();
+                                    }}
+                                    draggable={false}
+                                    initial={{ opacity: 0, scale: 0.97 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.97 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="max-w-full max-h-full object-contain cursor-grab active:cursor-grabbing rounded-lg"
+                                />
+                            </AnimatePresence>
                         </div>
+
+                        {/* Navigation & Indicators */}
+                        {gallery.length > 1 && (
+                            <div className="flex items-center justify-center gap-4 pt-4">
+                                <button onClick={goGalleryPrev} type="button" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
+                                    <ChevronLeft className="w-4 h-4" />
+                                </button>
+                                <div className="flex items-center gap-2">
+                                    {gallery.map((_, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => setGalleryIdx(i)}
+                                            className={`rounded-full transition-all ${i === galleryIdx ? "w-3 h-1.5 bg-white" : "w-1.5 h-1.5 bg-white/30 hover:bg-white/50"}`}
+                                        />
+                                    ))}
+                                </div>
+                                <button onClick={goGalleryNext} type="button" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
+                                    <ChevronRight className="w-4 h-4" />
+                                </button>
+                            </div>
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>
