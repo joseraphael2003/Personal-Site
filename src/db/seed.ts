@@ -151,6 +151,15 @@ async function main() {
             imageUrl: "/projects/opsdeck/opsdeck-dashboard.png"
         },
         {
+            title: "Naga City Incident Heat Map",
+            tagline: "Public Safety Data Visualization",
+            description: "Data-driven web app that visualizes real public safety incidents (traffic accidents, crimes, fires, drug operations) from local news on an interactive map, built with React + Kepler.gl. Currently in the process of manually geo-mapping exact coordinates (long/lat) of gathered incidents.",
+            tags: ["React", "Vite", "Kepler.gl", "Python"],
+            techStack: ["React", "Vite", "Kepler.gl", "Python"],
+            linkRepo: null,
+            imageUrl: "/projects/heatmap/heatmap-1.png"
+        },
+        {
             title: "Portfolio v2",
             tagline: "The Personal OS",
             description: "A Next.js 15 application featuring a morphing UI, glassmorphism, and persistent state animations.",

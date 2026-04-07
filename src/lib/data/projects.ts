@@ -1,8 +1,8 @@
 export interface Project {
     id: string;
     title: string;
-    category: "Mobile App" | "Web App" | "AI/ML" | "Hardware";
-    status: "Live" | "Beta" | "Concept";
+    category: "Mobile App" | "Web App" | "AI/ML" | "Hardware" | "Data Viz";
+    status: "Live" | "Beta" | "Concept" | "In Development" | "Work in Progress" | "Discontinued";
     description: string;
     techStack: string[];
     links: {
@@ -21,7 +21,7 @@ export const projects: Project[] = [
         id: "opsdeck",
         title: "OpsDeck",
         category: "Web App",
-        status: "Live",
+        status: "Work in Progress",
         description: "AI-powered operations dashboard that automates the extraction of data from invoices/receipts while triaging support emails/tickets. An n8n automation intakes data from a Telegram bot, and Google Drive folders. Analyzed data is streamlined into one visual dashboard. App was built for my purpose of learning n8n integration.",
         techStack: ["Next.js", "Tailwind", "Supabase", "Vercel AI SDK", "n8n"],
         links: {},
@@ -37,10 +37,25 @@ export const projects: Project[] = [
         }
     },
     {
+        id: "naga-heatmap",
+        title: "Naga City Incident Heat Map",
+        category: "Data Viz",
+        status: "Work in Progress",
+        description: "Data-driven web app that visualizes real public safety incidents (traffic accidents, crimes, fires, drug operations) from local news on an interactive map, built with React + Kepler.gl. Currently in the process of manually geo-mapping exact coordinates (long/lat) of gathered incidents.",
+        techStack: ["React", "Vite", "Kepler.gl", "Python"],
+        links: {},
+        assets: {
+            thumbnail: "/projects/heatmap/heatmap-1.png",
+            gallery: [
+                "/projects/heatmap/heatmap-1.png"
+            ]
+        }
+    },
+    {
         id: "mubrew",
         title: "µBrew",
         category: "Mobile App",
-        status: "Beta",
+        status: "Discontinued",
         description: "A coffee-centric utility app designed for the modern barista. Features a precision brew timer, recipe notebook, and bean inventory tracker. Built with a focus on ease-of-use and aesthetic minimalism.",
         techStack: ["Flutter", "Dart", "Supabase", "Material 3"],
         links: {

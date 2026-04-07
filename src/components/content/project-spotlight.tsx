@@ -195,55 +195,73 @@ function ProjectCardItem({ project }: { project: Project }) {
                 </div>
             </div>
 
-            {/* Mobile Fullscreen Gallery Modal (Swipeable) */}
+            {/* Inline Gallery Overlay (Opens within the project card area) */}
             <AnimatePresence>
                 {showGallery && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+                        className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-start justify-center overflow-y-auto"
+                        onClick={() => setShowGallery(false)}
                     >
-                        {/* Container taking max 80% screen height */}
-                        <div className="relative w-full max-w-lg h-[80vh] flex flex-col">
-                            {/* Close Button - Floating top right of the container */}
+                        {/* Gallery Container — auto-height based on image aspect ratio */}
+                        <div
+                            className="relative w-full max-w-3xl mx-auto my-8 md:my-16 px-4"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Close Button */}
                             <button
                                 onClick={() => setShowGallery(false)}
-                                className="absolute top-2 right-2 p-2 rounded-full bg-black/50 border border-white/10 text-white z-50 backdrop-blur-sm"
+                                className="absolute -top-2 right-2 md:right-0 p-2 rounded-full bg-black/60 border border-white/10 text-white z-50 backdrop-blur-sm hover:bg-black/80 transition-colors"
                             >
                                 <X className="w-5 h-5" />
                             </button>
 
-                            {/* Swipeable Image Canvas */}
-                            <div className="flex-1 relative flex items-center justify-center overflow-hidden rounded-xl bg-surface/50 border border-white/5">
+                            {/* Image — natural aspect ratio */}
+                            <div className="relative rounded-xl overflow-hidden border border-white/10 bg-surface/50">
                                 <AnimatePresence mode="wait">
                                     <motion.img
                                         key={galleryIdx}
                                         src={gallery[galleryIdx]}
+                                        alt={`${project.title} screenshot ${galleryIdx + 1}`}
                                         drag="x"
                                         dragConstraints={{ left: 0, right: 0 }}
                                         dragElastic={0.2}
-                                        onDragEnd={(_, { offset, velocity }) => {
-                                            const swipe = offset.x; // negative = left (next)
-                                            if (swipe < -50) goGalleryNext();
-                                            else if (swipe > 50) goGalleryPrev();
+                                        onDragEnd={(_, { offset }) => {
+                                            if (offset.x < -50) goGalleryNext();
+                                            else if (offset.x > 50) goGalleryPrev();
                                         }}
                                         draggable={false}
-                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        initial={{ opacity: 0, scale: 0.97 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        exit={{ opacity: 0, scale: 0.97 }}
                                         transition={{ duration: 0.2 }}
-                                        className="max-w-full max-h-full object-contain pointer-events-auto cursor-grab active:cursor-grabbing"
+                                        className="w-full h-auto object-contain cursor-grab active:cursor-grabbing"
                                     />
                                 </AnimatePresence>
-
-                                {/* Hint Overlay (subtle) */}
-                                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 pointer-events-none">
-                                    {gallery.map((_, i) => (
-                                        <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all ${i === galleryIdx ? "bg-white w-3" : "bg-white/20"}`} />
-                                    ))}
-                                </div>
                             </div>
+
+                            {/* Navigation & Indicators */}
+                            {gallery.length > 1 && (
+                                <div className="flex items-center justify-center gap-4 pt-4">
+                                    <button onClick={goGalleryPrev} type="button" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
+                                        <ChevronLeft className="w-4 h-4" />
+                                    </button>
+                                    <div className="flex items-center gap-2">
+                                        {gallery.map((_, i) => (
+                                            <button
+                                                key={i}
+                                                onClick={() => setGalleryIdx(i)}
+                                                className={`rounded-full transition-all ${i === galleryIdx ? "w-3 h-1.5 bg-white" : "w-1.5 h-1.5 bg-white/30 hover:bg-white/50"}`}
+                                            />
+                                        ))}
+                                    </div>
+                                    <button onClick={goGalleryNext} type="button" className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
+                                        <ChevronRight className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </motion.div>
                 )}
@@ -253,10 +271,18 @@ function ProjectCardItem({ project }: { project: Project }) {
 }
 
 // Helpers
-const StatusBadge = ({ status }: { status: string }) => (
-    <span className={`inline-block w-fit px-3 py-1 text-sm font-mono rounded-full border ${status === "Live" ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400" : "bg-amber-500/10 border-amber-500/30 text-amber-400"
-        }`}>{status}</span>
-);
+const StatusBadge = ({ status }: { status: string }) => {
+    let classes = "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"; // Default: Live
+    if (status === "Beta") classes = "bg-amber-500/10 border-amber-500/30 text-amber-400";
+    if (status === "Work in Progress") classes = "bg-amber-500/10 border-amber-500/30 text-amber-400";
+    if (status === "In Development") classes = "bg-sky-500/10 border-sky-500/30 text-sky-400";
+    if (status === "Concept") classes = "bg-purple-500/10 border-purple-500/30 text-purple-400";
+    if (status === "Discontinued") classes = "bg-red-500/10 border-red-500/30 text-red-400";
+
+    return (
+        <span className={`inline-block w-fit px-3 py-1 text-sm font-mono rounded-full border ${classes}`}>{status}</span>
+    );
+};
 
 const TechStack = ({ stack }: { stack: string[] }) => (
     <div className="flex flex-wrap gap-2">
@@ -283,3 +309,4 @@ const ProjectLinks = ({ links, isMobile = false }: { links: any, isMobile?: bool
         )}
     </div>
 );
+
