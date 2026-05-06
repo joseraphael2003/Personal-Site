@@ -2,7 +2,7 @@ export interface Project {
     id: string;
     title: string;
     category: "Mobile App" | "Web App" | "AI/ML" | "Hardware" | "Data Viz";
-    status: "Live" | "Beta" | "Concept" | "In Development" | "Work in Progress" | "Discontinued";
+    status: "Live" | "Beta" | "Concept" | "In Development" | "Work in Progress" | "Discontinued" | "Favorite";
     description: string;
     techStack: string[];
     links: {
@@ -17,6 +17,25 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+    {
+        id: "mnemosyne",
+        title: "Mnemosyne",
+        category: "AI/ML",
+        status: "Favorite",
+        description: "Local-first memory system for AI agents that stores facts, decisions, and insights from conversations — retrieving them by semantic meaning rather than exact keywords. Features a Desktop app (Tauri + React), MCP SDK integration for Opencode/Gemini CLI, and typed memory relations.",
+        techStack: ["Python", "SQLite", "ChromaDB", "Tauri", "React", "MCP SDK"],
+        links: {},
+        assets: {
+            thumbnail: "/projects/mnemosyne/mnemosyne-1.png",
+            gallery: [
+                "/projects/mnemosyne/mnemosyne-1.png",
+                "/projects/mnemosyne/mnemosyne-2.png",
+                "/projects/mnemosyne/mnemosyne-3.png",
+                "/projects/mnemosyne/mnemosyne-4.png",
+                "/projects/mnemosyne/mnemosyne-5.png",
+            ]
+        }
+    },
     {
         id: "opsdeck",
         title: "OpsDeck",
@@ -102,23 +121,4 @@ export const projects: Project[] = [
             ]
         }
     },
-    {
-        id: "mnemosyne",
-        title: "Mnemosyne",
-        category: "AI/ML",
-        status: "Live",
-        description: "Local-first memory system for AI agents that stores facts, decisions, and insights from conversations — retrieving them by semantic meaning rather than exact keywords. Features a Desktop app (Tauri + React), MCP SDK integration for Opencode/Gemini CLI, and typed memory relations.",
-        techStack: ["Python", "SQLite", "ChromaDB", "Tauri", "React", "MCP SDK"],
-        links: {},
-        assets: {
-            thumbnail: "/projects/mnemosyne/mnemosyne-1.png",
-            gallery: [
-                "/projects/mnemosyne/mnemosyne-1.png",
-                "/projects/mnemosyne/mnemosyne-2.png",
-                "/projects/mnemosyne/mnemosyne-3.png",
-                "/projects/mnemosyne/mnemosyne-4.png",
-                "/projects/mnemosyne/mnemosyne-5.png",
-            ]
-        }
-    }
 ];

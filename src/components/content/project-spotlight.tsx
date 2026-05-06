@@ -271,6 +271,7 @@ const StatusBadge = ({ status }: { status: string }) => {
     if (status === "In Development") classes = "bg-sky-500/10 border-sky-500/30 text-sky-400";
     if (status === "Concept") classes = "bg-purple-500/10 border-purple-500/30 text-purple-400";
     if (status === "Discontinued") classes = "bg-red-500/10 border-red-500/30 text-red-400";
+    if (status === "Favorite") classes = "bg-rose-500/10 border-rose-500/30 text-rose-400";
 
     return (
         <span className={`inline-block w-fit px-3 py-1 text-sm font-mono rounded-full border ${classes}`}>{status}</span>
