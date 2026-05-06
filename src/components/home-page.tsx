@@ -176,7 +176,7 @@ export function HomePage({ data }: { data: ProfileData }) {
                 Networks
               </h3>
               <p className="text-[13px] md:text-lg text-muted-text leading-relaxed">
-                Aspiring network engineer. Particular interest in data center operations: VITRO Academy Graduate - Certified Data Center Specialist. Proficiency in Cisco technologies and operating systems.
+                Particular interest in data center operations: VITRO Academy Graduate - Certified Data Center Specialist. Proficiency in Cisco technologies and operating systems.
               </p>
             </motion.div>
 
@@ -198,7 +198,7 @@ export function HomePage({ data }: { data: ProfileData }) {
                 Software
               </h3>
               <p className="text-[13px] md:text-lg text-muted-text leading-relaxed">
-                AI-assisted full stack developer. Developed a coffee-centric app: µBrew. Learned through Cisco Academy: C++, Python, Database Admin, and Linux OS. This portfolio website is a living deployment of my responsive design philosophy.
+                AI systems developer. Built Mnemosyne — a local-first semantic memory system for AI agents with vector search, typed relations, and MCP SDK integration. Experienced in full stack development from concept to deployment.
               </p>
             </motion.div>
 
