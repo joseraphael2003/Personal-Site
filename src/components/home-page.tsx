@@ -31,7 +31,9 @@ import {
   Music4,
   Clapperboard,
   Image,
-  Zap
+  Zap,
+  AppWindow,
+  Atom
 } from "lucide-react";
 import { projects } from "@/lib/data/projects";
 
@@ -444,6 +446,8 @@ export function HomePage({ data }: { data: ProfileData }) {
                   { name: "Linux", icon: Terminal },
                   { name: "Gemini Pro", icon: Sparkles },
                   { name: "Python", icon: FileCode2 },
+                  { name: "SQLite", icon: Database },
+                  { name: "ChromaDB", icon: Database },
                   { name: "KiCAD", icon: Cpu },
                   { name: "AutoCAD", icon: DraftingCompass },
                   { name: "Electronics", icon: Zap },
@@ -451,6 +455,7 @@ export function HomePage({ data }: { data: ProfileData }) {
                   { name: "Claude Code", icon: TerminalSquare, highlight: "border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)] text-yellow-200" },
                   { name: "Opencode", icon: Code, highlight: "border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)] text-yellow-200" },
                   { name: "Antigravity", icon: Rocket },
+                  { name: "MCP SDK", icon: TerminalSquare, highlight: "border-yellow-500/50 shadow-[0_0_15px_rgba(234,179,8,0.2)] text-yellow-200" },
                 ].map((tool) => (
                   <div
                     key={tool.name}
@@ -477,8 +482,10 @@ export function HomePage({ data }: { data: ProfileData }) {
               <div className="flex flex-wrap gap-3">
                 {[
                   { name: "Next.js", icon: LayoutTemplate },
+                  { name: "React", icon: Atom },
                   { name: "TypeScript", icon: Braces },
                   { name: "Tailwind CSS", icon: Palette },
+                  { name: "Tauri", icon: AppWindow },
                   { name: "Supabase", icon: Database },
                   { name: "Flutter (Dart)", icon: Smartphone, highlight: "border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.2)] text-cyan-200" },
                 ].map((tool) => (
