@@ -30,8 +30,8 @@ async function main() {
             dates: "Jan. 2026 - May 2026",
             description: "",
             techStack: [
-                "Follows strict SOPs to generate high-quality scripts that are funneled into generative AI workflows.",
-                "AI generated contents are integrated together through video editing and other AI tools."
+                "Followed strict SOPs to generate high-quality scripts that were funneled into generative AI workflows.",
+                "AI generated contents were integrated together through video editing and other AI tools."
             ]
         },
         {
