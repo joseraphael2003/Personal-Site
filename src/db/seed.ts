@@ -27,7 +27,7 @@ async function main() {
         {
             company: "Freelance Part-Time",
             role: "AI Operations Virtual Assistant",
-            dates: "Jan. 2026 - Present",
+            dates: "Jan. 2026 - May 2026",
             description: "",
             techStack: [
                 "Follows strict SOPs to generate high-quality scripts that are funneled into generative AI workflows.",
