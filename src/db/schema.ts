@@ -1,4 +1,4 @@
-import { pgTable, text, serial, boolean, timestamp, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, integer } from "drizzle-orm/pg-core";
 
 export const experience = pgTable("experience", {
     id: serial("id").primaryKey(),
@@ -54,14 +54,5 @@ export const memories = pgTable("memories", {
     src: text("src").notNull(),
     year: text("year"), // "2023", "2025"
     tag: text("tag"), // "PARADE", "SOLO"
-    createdAt: timestamp("created_at").defaultNow(),
-});
-
-export const tracks = pgTable("tracks", {
-    id: serial("id").primaryKey(),
-    title: text("title").notNull(),
-    audioUrl: text("audio_url").notNull(),
-    coverArt: text("cover_art"),
-    isLicensed: boolean("is_licensed").default(false),
     createdAt: timestamp("created_at").defaultNow(),
 });

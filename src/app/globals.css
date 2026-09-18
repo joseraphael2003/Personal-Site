@@ -1,42 +1,6 @@
 @import "tailwindcss";
-@plugin "tailwindcss-animate";
-
-@theme {
-  --color-background: #000000;
-  --color-surface: #38132e;
-  --color-accent: #8e1f57;
-  --color-primary: #bf3070;
-  --color-foreground: #ffffff;
-  --color-muted-text: #c0c0c6;
-
-  --font-sans: var(--font-sora);
-  --font-mono: var(--font-sora);
-}
-
-:root {
-  --background: #000000;
-  --foreground: #ffffff;
-}
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sora), sans-serif;
-  @apply min-h-screen antialiased selection:bg-primary selection:text-white;
-}
-
-@utility glass-panel {
-  @apply bg-surface/50 backdrop-blur-sm border border-accent/50 shadow-xl;
-}
-
-@utility glass-card {
-  @apply bg-surface/30 backdrop-blur-sm border border-accent/30 hover:bg-surface/50 transition-colors duration-300;
-}
-
-@utility bg-gradient-radial {
-  background-image: radial-gradient(closest-side, var(--tw-gradient-stops));
-}
-
-@utility bg-noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  background: #0a0a0a;
+  color: #ededed;
 }

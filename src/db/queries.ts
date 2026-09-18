@@ -1,6 +1,6 @@
 import { db } from "./index";
 import * as schema from "./schema";
-import { asc, desc } from "drizzle-orm";
+import { asc } from "drizzle-orm";
 
 export async function getProfileData() {
     const [experience, education, memories, projects, toolstack] = await Promise.all([

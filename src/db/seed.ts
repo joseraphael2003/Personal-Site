@@ -18,9 +18,7 @@ async function main() {
     await db.delete(schema.projects);
     await db.delete(schema.toolstack);
     await db.delete(schema.memories);
-    // Not clearing tracks for now as it wasn't part of this scope yet
 
-    // 2. Insert Experience
     // 2. Insert Experience
     console.log("Inserting Experience...");
     await db.insert(schema.experience).values([
