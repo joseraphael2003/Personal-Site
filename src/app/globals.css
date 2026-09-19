@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
+@theme {
+  --font-pixel: var(--font-dot-gothic), monospace;
+  --font-mono: var(--font-space-mono), monospace;
+}
+
 body {
-  background: #0a0a0a;
+  background-color: #090a0c;
   color: #ededed;
 }

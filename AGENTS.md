@@ -12,7 +12,8 @@
 
 ## 3. Tech Stack & Environment
 - **Framework**: Next.js 16 (App Router, Turbopack)
-- **UI / Styling**: React 19, Tailwind CSS v4 (`@tailwindcss/postcss`), Lucide Icons, Framer Motion
+- **UI / Styling**: React 19, Tailwind CSS v4 (`@tailwindcss/postcss`), Base UI (`@base-ui/react`), Lucide Icons, Framer Motion
+- **Typography**: `DotGothic16` (Display / Headers via `font-pixel`) + `Space Mono` (Body / Specs via `font-mono`)
 - **Database & Storage**: Neon Serverless PostgreSQL + Neon Object Storage (`uploads` private bucket)
 - **ORM / Query Layer**: Drizzle ORM (`drizzle-orm`, `drizzle-kit`, `pg`)
 - **Analytics**: Vercel Analytics & Speed Insights
