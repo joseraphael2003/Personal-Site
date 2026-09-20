@@ -1,0 +1,176 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import { FileText, Mail, Copy, Check, Github, Linkedin } from "lucide-react";
+import { profile } from "@/data/portfolio";
+import { EmailModal } from "@/components/ui/email-modal";
+
+export function Hero() {
+  const [copied, setCopied] = useState(false);
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Fallback for environments where clipboard API is restricted
+      window.location.href = `mailto:${profile.email}`;
+    }
+  };
+
+  return (
+    <section className="relative w-full border-b border-neutral-800/80 bg-[#090a0c] pt-12 sm:pt-20 pb-16 sm:pb-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column (60%): Editorial Thesis Stack */}
+          <div className="lg:col-span-7 space-y-6 font-mono">
+            {/* 1. Status Badge */}
+            <div className="inline-flex items-center gap-2 rounded-sm border border-neutral-800 bg-neutral-900/90 px-2.5 py-1 text-xs text-neutral-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="font-bold uppercase tracking-wider text-emerald-400">
+                {profile.status}
+              </span>
+            </div>
+
+            {/* 2. Display Headline */}
+            <h1 className="font-pixel text-4xl sm:text-5xl lg:text-6xl text-neutral-100 tracking-wide leading-none">
+              {profile.headline}
+            </h1>
+
+            {/* 3. Executive Bio (from resume) */}
+            <p className="text-sm sm:text-base text-neutral-300 max-w-xl leading-relaxed">
+              {profile.bio}
+            </p>
+
+            {/* 4. Contact Details Bar */}
+            <div className="pt-1 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-neutral-400">
+              {/* Email with Click-to-Copy */}
+              <div className="relative inline-flex items-center">
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="cursor-pointer group inline-flex items-center gap-1.5 text-neutral-200 hover:text-emerald-400 transition-colors font-medium"
+                  title="Click to copy email address"
+                >
+                  {copied ? (
+                    <Check className="h-4 w-4 text-emerald-400" />
+                  ) : (
+                    <Copy className="h-4 w-4 text-neutral-500 group-hover:text-emerald-400 transition-colors" />
+                  )}
+                  <span>{profile.email}</span>
+                </button>
+
+                {/* Floating "Copied to clipboard" feedback badge */}
+                {copied && (
+                  <div
+                    role="status"
+                    className="absolute -top-7 left-0 rounded-sm border border-emerald-500/40 bg-neutral-950 px-2 py-0.5 text-xs text-emerald-400 font-bold shadow-lg animate-in fade-in zoom-in-95 duration-150"
+                  >
+                    Copied to clipboard!
+                  </div>
+                )}
+              </div>
+
+              {/* Minimalist GitHub Link with Label */}
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub Profile"
+                className="cursor-pointer text-neutral-400 hover:text-emerald-400 hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm"
+                title="GitHub Profile"
+              >
+                <Github className="h-4 w-4" />
+                <span>GitHub</span>
+              </a>
+
+              {/* Minimalist LinkedIn Link with Label */}
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn Profile"
+                className="cursor-pointer text-neutral-400 hover:text-emerald-400 hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm"
+                title="LinkedIn Profile"
+              >
+                <Linkedin className="h-4 w-4" />
+                <span>LinkedIn</span>
+              </a>
+            </div>
+
+            {/* 5. Primary Action CTAs */}
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              {/* Get Resume CTA */}
+              <a
+                href="/resume%20for%20site.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center gap-2"
+              >
+                <FileText className="h-4 w-4" />
+                <span>Get Resume</span>
+              </a>
+
+              {/* Quick Email Modal Trigger */}
+              <button
+                type="button"
+                onClick={() => setEmailModalOpen(true)}
+                className="cursor-pointer rounded-sm border border-neutral-700 bg-neutral-900/60 px-5 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-neutral-800/80 transition-colors inline-flex items-center gap-2"
+              >
+                <Mail className="h-4 w-4 text-emerald-400" />
+                <span>Quick Email</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column (40%): Styled 4:5 Portrait Frame */}
+          <div className="lg:col-span-5 flex justify-center">
+            <div className="relative w-full max-w-[320px] sm:max-w-[340px] rounded-sm border border-neutral-800 bg-[#0f1115] p-3 shadow-2xl">
+              {/* Frame Surface with 4:5 Aspect Ratio */}
+              <div className="relative aspect-4/5 w-full overflow-hidden rounded-sm border border-neutral-800 bg-[#0a0c0f]">
+                <Image
+                  src="/profile.png"
+                  alt={profile.name}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 340px"
+                  className="object-cover object-top"
+                />
+
+                {/* Technical Corner Reticles Overlay */}
+                <div
+                  className="pointer-events-none absolute top-2 left-2 h-3 w-3 border-t-2 border-l-2 border-emerald-500/50 z-10"
+                  aria-hidden="true"
+                />
+                <div
+                  className="pointer-events-none absolute top-2 right-2 h-3 w-3 border-t-2 border-r-2 border-emerald-500/50 z-10"
+                  aria-hidden="true"
+                />
+                <div
+                  className="pointer-events-none absolute bottom-2 left-2 h-3 w-3 border-b-2 border-l-2 border-emerald-500/50 z-10"
+                  aria-hidden="true"
+                />
+                <div
+                  className="pointer-events-none absolute bottom-2 right-2 h-3 w-3 border-b-2 border-r-2 border-emerald-500/50 z-10"
+                  aria-hidden="true"
+                />
+              </div>
+
+              {/* Caption Footer */}
+              <div className="pt-2 px-1 text-xs font-mono text-neutral-400 flex items-center justify-between">
+                <span>PORTRAIT FRAME</span>
+                <span className="text-neutral-500 text-xs">RATIO 4:5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Formspree Quick Email Modal Dialog */}
+      <EmailModal open={emailModalOpen} onOpenChange={setEmailModalOpen} />
+    </section>
+  );
+}

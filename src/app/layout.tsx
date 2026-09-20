@@ -19,8 +19,8 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jose Raphael Dichoso | Portfolio",
-  description: "Computer Engineering student — Networks, Systems, Hardware",
+  title: "Jose Raphael V. Dichoso | Portfolio",
+  description: "Freelance Full-Stack Developer and Computer Engineering student at Ateneo de Naga University. Building autonomous automation pipelines and web systems.",
 };
 
 export default function RootLayout({

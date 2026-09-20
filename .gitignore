@@ -43,3 +43,6 @@ next-env.d.ts
 # agent / planning logs
 .sisyphus/
 .neon
+
+# staging assets
+public/temp/

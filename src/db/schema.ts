@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, integer, jsonb } from "drizzle-orm/pg-core";
 
 export const experience = pgTable("experience", {
     id: serial("id").primaryKey(),
@@ -55,4 +55,12 @@ export const memories = pgTable("memories", {
     year: text("year"), // "2023", "2025"
     tag: text("tag"), // "PARADE", "SOLO"
     createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Cached payloads from external APIs (currently the GitHub contributions calendar)
+// keyed by a stable string so the cron route can upsert atomically.
+export const githubCache = pgTable("github_cache", {
+    key: text("key").primaryKey(),
+    data: jsonb("data").notNull(),
+    updatedAt: timestamp("updated_at").defaultNow(),
 });
