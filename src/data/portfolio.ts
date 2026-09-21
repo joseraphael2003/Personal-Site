@@ -83,6 +83,7 @@ export interface CertificationItem {
   credentialId?: string;
   badgeUrl: string;
   verifyUrl?: string;
+  moreUrl?: string;
   skills?: string[];
   honors?: string;
   earner?: string;
@@ -389,6 +390,8 @@ export const certifications: CertificationItem[] = [
     year: "2025",
     badgeUrl: "/certifications/vitro-1.png",
     honors: "Top 10% Class Honors",
+    moreUrl:
+      "https://www.linkedin.com/posts/jdichoso2003_vitro25-vitroacademy-activity-7379857518933487616-To3N?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFHx_o0Bmeh6Vi1Gg2tr6xBMI1dBbQ7zXC0",
   },
   {
     id: "ccna-introduction-to-networks",

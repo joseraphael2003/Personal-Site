@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { profile } from "@/data/portfolio";
+import { useEmailModal } from "@/components/providers/email-modal-provider";
 import { Copy, Check, Github, Linkedin, Mail, MapPin, ArrowUpRight } from "lucide-react";
 
 export function Footer() {
   const [copied, setCopied] = useState(false);
+  const { openEmailModal } = useEmailModal();
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(profile.email);
@@ -46,13 +48,14 @@ export function Footer() {
               )}
             </button>
 
-            <a
-              href={`mailto:${profile.email}`}
+            <button
+              type="button"
+              onClick={openEmailModal}
               className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-3 text-sm font-bold text-black hover:bg-emerald-400 transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
             >
-              <Mail className="h-4 w-4" />
+              <Mail className="h-4 w-4 text-black" />
               <span>Send Email</span>
-            </a>
+            </button>
           </div>
         </div>
 
@@ -64,9 +67,6 @@ export function Footer() {
             <div className="flex items-center gap-1.5 text-neutral-500 text-xs">
               <MapPin className="h-3.5 w-3.5 text-emerald-400" />
               <span>{profile.location}</span>
-            </div>
-            <div className="text-xs text-neutral-500">
-              Ateneo de Naga University · Class of 2027
             </div>
           </div>
 

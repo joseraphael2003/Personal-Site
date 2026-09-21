@@ -3,11 +3,13 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { profile } from "@/data/portfolio";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { useEmailModal } from "@/components/providers/email-modal-provider";
+import { Menu, X, Mail } from "lucide-react";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
+  const { openEmailModal } = useEmailModal();
 
   const navLinks = [
     { label: "Work", id: "work" },
@@ -92,13 +94,14 @@ export function Header() {
 
         {/* Right: Availability & Action */}
         <div className="hidden sm:flex items-center gap-4">
-          <a
-            href="#contact"
-            onClick={(e) => handleScrollTo(e, "contact")}
-            className="cursor-pointer rounded-sm bg-emerald-500 px-3.5 py-1.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 transition-colors"
+          <button
+            type="button"
+            onClick={openEmailModal}
+            className="cursor-pointer rounded-sm bg-emerald-500 px-3.5 py-1.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 transition-colors inline-flex items-center gap-1.5 shadow-sm"
           >
-            Hire Me
-          </a>
+            <Mail className="h-3.5 w-3.5 text-black" />
+            <span>Quick Email</span>
+          </button>
         </div>
 
         {/* Mobile menu button */}
@@ -134,14 +137,17 @@ export function Header() {
           </div>
 
           <div className="pt-2 border-t border-neutral-800 flex justify-end items-center text-sm">
-            <a
-              href="#contact"
-              onClick={(e) => handleScrollTo(e, "contact")}
-              className="text-emerald-400 flex items-center gap-1 font-bold cursor-pointer"
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                openEmailModal();
+              }}
+              className="text-emerald-400 flex items-center gap-1.5 font-bold cursor-pointer"
             >
-              <span>Get in Touch</span>
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
+              <Mail className="h-3.5 w-3.5" />
+              <span>Quick Email</span>
+            </button>
           </div>
         </div>
       )}

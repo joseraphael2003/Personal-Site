@@ -4,8 +4,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased] - 2026-09-20
+## [Unreleased] - 2026-09-21
 
+### Added
+- Global `EmailModalProvider` (`src/components/providers/email-modal-provider.tsx`) allowing Hero, Header ("Quick Email"), and Footer ("Send Email") to trigger the Formspree email composer without prop drilling.
+- Clean `LightboxModal` component (`src/components/ui/lightbox-modal.tsx`) using Base UI Dialog for uncluttered, high-res popup views of project and musical performance images.
+- Draggable marquee reels on project cards with screenshot galleries (*OpsDeck*).
+- Active "See More" link on the VITRO Data Center certification card pointing directly to verified LinkedIn credential post.
+- Route-level Escape key listener on `/projects` navigating smoothly back to `/` ("Return to Overview") when no modal is open.
+
+### Changed
+- Swapped Hero CTA button styles: "Quick Email" is now the primary solid emerald button (`bg-emerald-500 text-black font-bold`), and "Get Resume" is the secondary grey outline button (`border-neutral-700 bg-neutral-900/60`).
+- Updated Hero GitHub and LinkedIn social link typography to match email button styling (`text-neutral-200 hover:text-white`).
+- Replaced Work timeline line-and-dots with clean left-accent borders (`border-l-emerald-500` active, `border-l-neutral-700` historical).
+- Replaced Work full-length outline banner with a compact solid emerald button (`bg-emerald-500 text-black font-bold`).
+- Upgraded Work accordion transition to spring physics (`stiffness: 150, damping: 22`) for smooth expansion without layout snap.
+- Upgraded Projects "View Complete Project Archive" button to full-width solid emerald styling.
+- Renamed navbar "Hire Me" button to "Quick Email" across desktop and mobile menus, wired to the Formspree modal.
+- Converted footer "Send Email" CTA into a direct trigger for the Formspree modal.
+
+### Removed
+- Removed bloat caption `PORTRAIT FRAMERATIO 4:5` from Hero portrait frame.
+- Removed `[CURRENT ROLE]` and `[PRIOR ROLE]` text badges from Work role cards.
+- Removed `Confidential Commercial Asset` fallback text from commissioned project cards.
+- Removed Other Involvement subheader text paragraph.
+- Removed Other Involvement 3 subcontainer highlights per card, focusing layout directly on descriptions and media.
+- Removed bloat telemetry badges `LIVE ARCHIVE // N CAPTURES` and `VERIFIED` from Other Involvement cards.
+- Removed `Ateneo de Naga University · Class of 2027` text from Footer identity column.
+
+---
+
+## [Remodel v1] - 2026-09-20
 ### Added
 - Real portrait integration (`public/profile.png`) rendered via Next.js `<Image>` inside a 4:5 aspect ratio frame with emerald technical reticles.
 - "GitHub" and "LinkedIn" text labels beside their SVG icons in the Hero contact row.

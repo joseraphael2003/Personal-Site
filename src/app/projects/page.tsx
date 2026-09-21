@@ -1,12 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { archiveProjects, Project } from "@/data/portfolio";
 import { ArrowLeft, Github, ExternalLink, Filter } from "lucide-react";
 
 export default function ProjectsArchivePage() {
+  const router = useRouter();
   const [activeCategory, setActiveCategory] = useState<string>("All");
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Only navigate back if no modal/dialog is currently active
+      if (e.key === "Escape" && !document.querySelector("[role='dialog']")) {
+        router.push("/");
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [router]);
 
   const categories = ["All", "COMMISSIONED", "PERSONAL"];
 

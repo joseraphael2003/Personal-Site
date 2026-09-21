@@ -3,14 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { flagshipProjects, Project } from "@/data/portfolio";
-import { GalleryModal } from "@/components/ui/gallery-modal";
-import { Images, ArrowUpRight, ArrowRight, Github, ExternalLink } from "lucide-react";
+import { DraggableMarquee } from "@/components/ui/draggable-marquee";
+import { LightboxModal } from "@/components/ui/lightbox-modal";
+import { Github, ExternalLink, ArrowRight, ArrowUpRight } from "lucide-react";
 
 export function Projects() {
-  const [activeGallery, setActiveGallery] = useState<{
-    title: string;
-    images: { src: string; caption: string }[];
-  } | null>(null);
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; caption?: string } | null>(null);
 
   return (
     <section id="projects" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-16 sm:py-24">
@@ -81,24 +79,19 @@ export function Projects() {
                   ))}
                 </div>
 
+                {/* Image Marquee Reel */}
+                {hasImages && (
+                  <div className="pt-2">
+                    <DraggableMarquee
+                      items={galleryList}
+                      speed={0.35}
+                      onItemClick={(origIdx) => setLightboxImage(galleryList[origIdx])}
+                    />
+                  </div>
+                )}
                 {/* Actions Row */}
-                <div className="pt-3 border-t border-neutral-800/60 flex flex-wrap items-center gap-4 text-sm">
-                  {hasImages && (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setActiveGallery({
-                          title: project.title,
-                          images: galleryList,
-                        })
-                      }
-                      className="cursor-pointer rounded-sm border border-neutral-700 bg-neutral-900 px-3 py-1.5 text-sm text-emerald-400 hover:bg-neutral-800 hover:text-white transition-colors inline-flex items-center gap-1.5 font-bold"
-                    >
-                      <Images className="h-4 w-4" />
-                      <span>See Images {galleryList.length > 1 ? `(${galleryList.length})` : ""}</span>
-                    </button>
-                  )}
-
+                {(project.repoUrl || project.liveUrl) && (
+                  <div className="pt-3 border-t border-neutral-800/60 flex flex-wrap items-center gap-4 text-sm">
                   {project.repoUrl && (
                     <a
                       href={project.repoUrl}
@@ -125,34 +118,31 @@ export function Projects() {
                     </a>
                   )}
 
-                  {!hasImages && !project.repoUrl && !project.liveUrl && (
-                    <span className="text-xs text-neutral-600">Confidential Commercial Asset</span>
-                  )}
+                  </div>
+                )}
                 </div>
-              </div>
             );
           })}
         </div>
 
-        {/* See All Projects Link */}
-        <div className="pt-4 flex justify-center font-mono">
+        {/* See All Projects Link (Full Width Solid Emerald Button) */}
+        <div className="pt-4 font-mono">
           <Link
             href="/projects"
-            className="cursor-pointer rounded-sm border border-neutral-700 bg-[#0f1115] px-6 py-3 text-sm text-neutral-200 hover:border-emerald-500 hover:text-white transition-colors inline-flex items-center gap-2 shadow-sm font-bold"
+            className="w-full cursor-pointer rounded-sm bg-emerald-500 px-6 py-3.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center justify-center gap-2"
           >
             <span>View Complete Project Archive (8 Projects)</span>
-            <ArrowRight className="h-4 w-4 text-emerald-400" />
+            <ArrowRight className="h-4 w-4 text-black" />
           </Link>
         </div>
       </div>
 
-      {/* Gallery Modal */}
-      {activeGallery && (
-        <GalleryModal
-          open={!!activeGallery}
-          onOpenChange={(open) => !open && setActiveGallery(null)}
-          title={activeGallery.title}
-          images={activeGallery.images}
+      {/* Lightbox Modal */}
+      {lightboxImage && (
+        <LightboxModal
+          open={!!lightboxImage}
+          onOpenChange={(open) => !open && setLightboxImage(null)}
+          image={lightboxImage}
         />
       )}
     </section>

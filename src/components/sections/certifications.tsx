@@ -83,6 +83,16 @@ export function Certifications() {
                     <span>Verify on Credly</span>
                     <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
+                ) : cert.moreUrl ? (
+                  <a
+                    href={cert.moreUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors group cursor-pointer"
+                  >
+                    <span>See More</span>
+                    <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
                 ) : (
                   <span className="text-xs text-neutral-500">Official Institutional Credential</span>
                 )}

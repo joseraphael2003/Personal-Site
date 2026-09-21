@@ -1,10 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { involvement } from "@/data/portfolio";
 import { DraggableMarquee } from "@/components/ui/draggable-marquee";
-import { Music, Calendar, Disc3, Radio, CheckCircle2 } from "lucide-react";
+import { LightboxModal } from "@/components/ui/lightbox-modal";
+import { Music, Calendar, Disc3, Radio } from "lucide-react";
 
 export function OtherInvolvement() {
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; caption?: string } | null>(null);
   if (!involvement || involvement.length === 0) return null;
 
   const getIcon = (id: string) => {
@@ -26,9 +29,6 @@ export function OtherInvolvement() {
           <h2 className="font-pixel text-2xl sm:text-3xl text-neutral-100 uppercase tracking-wide">
             OTHER INVOLVEMENT
           </h2>
-          <p className="text-sm sm:text-base text-neutral-400 max-w-2xl leading-relaxed">
-            Executive ensemble leadership, live guitar performance, and studio recording across collegiate and indie music projects.
-          </p>
         </div>
 
         {/* Involvements List */}
@@ -63,35 +63,28 @@ export function OtherInvolvement() {
                 {item.description}
               </p>
 
-              {/* Highlights */}
-              {item.highlights && item.highlights.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-                  {item.highlights.map((highlight, hIdx) => (
-                    <div
-                      key={hIdx}
-                      className="rounded-sm border border-neutral-800/80 bg-[#090a0c] p-3 text-xs sm:text-sm text-neutral-300 flex items-start gap-2.5 leading-relaxed"
-                    >
-                      <CheckCircle2 className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                      <span>{highlight}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
 
               {/* Photo Reel Gallery */}
               {item.gallery && item.gallery.length > 0 && (
                 <div className="space-y-2 pt-3 border-t border-neutral-800/80">
-                  <div className="flex items-center justify-between text-[11px] font-mono text-neutral-500">
-                    <span>LIVE ARCHIVE // {item.gallery.length} CAPTURES (DRAG TO SCRUB)</span>
-                    <span className="text-emerald-400 font-bold">VERIFIED</span>
-                  </div>
-                  <DraggableMarquee items={item.gallery} speed={0.35} />
+                  <DraggableMarquee
+                    items={item.gallery}
+                    speed={0.35}
+                    onItemClick={(origIdx) => setLightboxImage(item.gallery[origIdx])}
+                  />
                 </div>
               )}
             </div>
           ))}
         </div>
       </div>
+      {lightboxImage && (
+        <LightboxModal
+          open={!!lightboxImage}
+          onOpenChange={(open) => !open && setLightboxImage(null)}
+          image={lightboxImage}
+        />
+      )}
     </section>
   );
 }

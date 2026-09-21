@@ -4,11 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import { FileText, Mail, Copy, Check, Github, Linkedin } from "lucide-react";
 import { profile } from "@/data/portfolio";
-import { EmailModal } from "@/components/ui/email-modal";
+import { useEmailModal } from "@/components/providers/email-modal-provider";
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
-  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const { openEmailModal } = useEmailModal();
 
   const handleCopyEmail = async () => {
     try {
@@ -80,7 +80,7 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub Profile"
-                className="cursor-pointer text-neutral-400 hover:text-emerald-400 hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm"
+                className="cursor-pointer text-neutral-200 hover:text-white hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
                 title="GitHub Profile"
               >
                 <Github className="h-4 w-4" />
@@ -93,7 +93,7 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn Profile"
-                className="cursor-pointer text-neutral-400 hover:text-emerald-400 hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm"
+                className="cursor-pointer text-neutral-200 hover:text-white hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
                 title="LinkedIn Profile"
               >
                 <Linkedin className="h-4 w-4" />
@@ -103,26 +103,26 @@ export function Hero() {
 
             {/* 5. Primary Action CTAs */}
             <div className="pt-2 flex flex-wrap items-center gap-3">
-              {/* Get Resume CTA */}
+              {/* Quick Email Modal Trigger (Primary Green Action) */}
+              <button
+                type="button"
+                onClick={openEmailModal}
+                className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center gap-2"
+              >
+                <Mail className="h-4 w-4 text-black" />
+                <span>Quick Email</span>
+              </button>
+
+              {/* Get Resume CTA (Secondary Grey Action) */}
               <a
                 href="/resume%20for%20site.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center gap-2"
-              >
-                <FileText className="h-4 w-4" />
-                <span>Get Resume</span>
-              </a>
-
-              {/* Quick Email Modal Trigger */}
-              <button
-                type="button"
-                onClick={() => setEmailModalOpen(true)}
                 className="cursor-pointer rounded-sm border border-neutral-700 bg-neutral-900/60 px-5 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-neutral-800/80 transition-colors inline-flex items-center gap-2"
               >
-                <Mail className="h-4 w-4 text-emerald-400" />
-                <span>Quick Email</span>
-              </button>
+                <FileText className="h-4 w-4 text-emerald-400" />
+                <span>Get Resume</span>
+              </a>
             </div>
           </div>
 
@@ -159,18 +159,11 @@ export function Hero() {
                 />
               </div>
 
-              {/* Caption Footer */}
-              <div className="pt-2 px-1 text-xs font-mono text-neutral-400 flex items-center justify-between">
-                <span>PORTRAIT FRAME</span>
-                <span className="text-neutral-500 text-xs">RATIO 4:5</span>
-              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Formspree Quick Email Modal Dialog */}
-      <EmailModal open={emailModalOpen} onOpenChange={setEmailModalOpen} />
     </section>
   );
 }

@@ -3,6 +3,7 @@ import { DotGothic16, Space_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import { EmailModalProvider } from "@/components/providers/email-modal-provider";
 
 const dotGothic = DotGothic16({
   weight: "400",
@@ -31,7 +32,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dotGothic.variable} ${spaceMono.variable}`}>
       <body className="font-mono bg-[#090a0c] text-neutral-200 antialiased selection:bg-emerald-500/20 selection:text-emerald-300 min-h-screen">
-        {children}
+        <EmailModalProvider>
+          {children}
+        </EmailModalProvider>
         <Analytics />
         <SpeedInsights />
       </body>
