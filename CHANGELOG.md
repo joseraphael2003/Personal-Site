@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased] - 2026-09-22
 
 ### Added
+- **Hero Mobile Compact Avatar**: Integrated a 64×64px portrait avatar directly beside the name and headline on mobile devices (`lg:hidden`) featuring retro green micro-corner reticles, bringing immediate identity into the first screen fold.
+- **Mobile Multi-Viewport Automation**: Added `.sisyphus/evidence/pw-mobile.js` verifying zero horizontal overflow, avatar visibility toggles, section spacing, and marquee interactions across 390px, 360px, and 1280px viewports.
 - **Project Repository (`/projects`)**: Complete overhaul to match Overview flagship cards layout, complete with indexed headers (`01 //`), badges, tech stack chips, action links, and embedded interactive `DraggableMarquee` reels for all projects with screenshots (*OpsDeck*, *Mnemosyne*, *MuBrew*, *Modular Bench Power Supply*, *Naga City Incident Heat Map*).
 - **Reddit Apify Actor**: Added custom autonomous web scraping actor developed with TypeScript, Crawlee, and residential proxy rotation to Project Repository.
 - **Interactive Resizable Modal**: Enabled native two-axis resizing (`resize overflow-auto`) on `EmailModal` with responsive min/max constraints, natural textarea vertical expansion (`resize-y`), and a tactile bottom-right corner resize grip.
@@ -17,11 +19,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Clean `LightboxModal` component (`src/components/ui/lightbox-modal.tsx`) using Base UI Dialog for uncluttered, high-res popup views of project and musical performance images.
 - Route-level Escape key listener on `/projects` navigating smoothly back to `/` ("Return to Overview") when no modal is open.
 ### Changed
+- **Universal Section Spacing Tuning**: Reduced vertical padding from `py-16 sm:py-24` down to `py-10 sm:py-16 lg:py-24` across content sections and `py-10 sm:py-14 lg:py-20` on the footer, eliminating empty travel gutters on mobile while preserving exact 96px/80px desktop rhythm.
+- **Universal Card Padding Compaction**: Reduced card padding from `p-5 sm:p-7` / `p-6 sm:p-8` down to `p-4 sm:p-6 lg:p-7` / `lg:p-8` across role, project, skills, cert, education, and involvement cards, gaining 16px of horizontal text width on phones while strictly preserving desktop padding.
+- **Wrap-Safe Metadata Headers**: Updated Project and Work card headers to `flex flex-row flex-wrap sm:flex-nowrap items-start sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-2.5 sm:pb-3`, allowing long titles to wrap gracefully on mobile without crushing badges or dates, while retaining single-line nowrap alignment on desktop.
+- **Tech Stack Compact Spec Layout**: Reorganized category rows to stacked label + compact tags on mobile (`flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 sm:gap-4 lg:gap-3`) with `px-2 py-0.5 text-xs` chips, dropping ledger height on phones from 770px down to 498px while preserving desktop column constraints.
+- **Marquee Responsive Thumbnail Scale**: Sized marquee thumbnail containers to `w-32 sm:w-40 lg:w-44` (`draggable-marquee.tsx:270`), presenting a clean 128px width on mobile screens inside compact cards.
 - Swapped Hero CTA button styles: "Quick Email" is now the primary solid emerald button (`bg-emerald-500 text-black font-bold`), and "Get Resume" is the secondary grey outline button (`border-neutral-700 bg-neutral-900/60`).
 - Updated Hero GitHub and LinkedIn social link typography to match email button styling (`text-neutral-200 hover:text-white`).
 - **Work Timeline Geometric Centering**: Re-centered micro-square pixel nodes directly over the 1px rail border (`-left-[29.5px] sm:-left-[37.5px]` active, `-left-[28.5px] sm:-left-[36.5px]` historical), eliminating the 2px leftward bias.
 - **Marquee Dragging Physics**: Fixed seamless repeat pitch calculation (`singleSetWidth = widths + gap * firstSetChildren.length`) without arbitrary multipliers across `buildWrap`, `getProgressInLoop`, and `setProgressInLoop`; added low-speed release momentum damping and `onPress` coordinate synchronization to eliminate photo skipping.
-- **Certifications**: Updated VITRO honors to `"Top 10% of five universities"`.
 - **Involvement**: Added `"Marching Leader"` to Ateneo de Naga University Symphonic Band leadership roles.
 - **Work**: Under Integrya Technologies entry, replaced AWS/Slack bullet with client meeting minutes and action items documentation bullet.
 - Restored Work technical vertical line rail with **Option A Micro-Square (Data Pixel) Nodes**: solid emerald square for active role and dark neutral square with subtle border for historical roles.
@@ -36,6 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Converted footer "Send Email" CTA into a direct trigger for the Formspree modal.
 
 ### Removed
+- **Hero Mobile Portrait Block**: Removed the 400px bottom photo block on mobile screens (`hidden lg:flex`), allowing visitors to view bio, status, and CTAs without an oversized visual dead-end.
 - **Marquee Images**: Removed visual captions across all thumbnail previews and stripped caption block from `LightboxModal` for edge-to-edge viewing.
 - **Project Repository Header**: Removed `COMPLETE ARCHIVE` eyebrow and bloat description paragraph.
 - **Project Repository**: Removed `portfolio-v2` (`Personal Portfolio v2`) from project archive listings.

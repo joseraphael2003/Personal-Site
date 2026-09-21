@@ -13,7 +13,7 @@ export function Certifications() {
   if (!certifications || certifications.length === 0) return null;
 
   return (
-    <section id="certifications" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-16 sm:py-24">
+    <section id="certifications" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-10 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-10 font-mono">
         {/* Section Header */}
         <div className="border-b border-neutral-800 pb-4">
@@ -30,7 +30,7 @@ export function Certifications() {
             return (
               <div
                 key={cert.id}
-                className={`rounded-sm border border-neutral-800 bg-[#0f1115] p-6 flex flex-col justify-between space-y-5 hover:border-neutral-700 transition-colors shadow-sm ${
+                className={`rounded-sm border border-neutral-800 bg-[#0f1115] p-4 sm:p-5 lg:p-6 flex flex-col justify-between space-y-5 hover:border-neutral-700 transition-colors shadow-sm ${
                   isFeatured ? "md:col-span-6" : "md:col-span-3"
                 }`}
               >

@@ -16,10 +16,10 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" className="w-full border-t border-neutral-800 bg-[#07080a] py-16 sm:py-20 font-mono text-neutral-400">
+    <footer id="contact" className="w-full border-t border-neutral-800 bg-[#07080a] py-10 sm:py-14 lg:py-20 font-mono text-neutral-400">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-12">
         {/* Main CTA Block */}
-        <div className="rounded-sm border border-neutral-800 bg-[#0c0e12] p-6 sm:p-10 space-y-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="rounded-sm border border-neutral-800 bg-[#0c0e12] p-4 sm:p-6 lg:p-10 space-y-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl">
             <h2 className="font-pixel text-2xl sm:text-4xl text-neutral-100 tracking-wide">
               LET&apos;S TALK!

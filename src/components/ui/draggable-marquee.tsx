@@ -267,7 +267,7 @@ export function DraggableMarquee({
               aria-hidden={index >= items.length ? "true" : undefined}
               tabIndex={index >= items.length ? -1 : 0}
             >
-              <div className="relative aspect-video w-36 sm:w-44 bg-neutral-900">
+              <div className="relative aspect-video w-32 sm:w-40 lg:w-44 bg-neutral-900">
                 <Image
                   src={item.src}
                   alt={item.caption || "Thumbnail"}

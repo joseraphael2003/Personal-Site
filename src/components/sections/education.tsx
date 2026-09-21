@@ -6,7 +6,7 @@ export function Education() {
   if (!item) return null;
 
   return (
-    <section id="education" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-16 sm:py-24">
+    <section id="education" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-10 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-10 font-mono">
         {/* Section Header */}
         <div className="border-b border-neutral-800 pb-4">
@@ -17,7 +17,7 @@ export function Education() {
 
         {/* Focused Full-Width Degree Card */}
         <div>
-          <div className="rounded-sm border border-neutral-800 bg-[#0f1115] p-6 sm:p-8 space-y-5 hover:border-neutral-700 transition-colors">
+          <div className="rounded-sm border border-neutral-800 bg-[#0f1115] p-4 sm:p-6 lg:p-8 space-y-5 hover:border-neutral-700 transition-colors">
             {/* Header Row */}
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 border-b border-neutral-800 pb-4">
               <div>

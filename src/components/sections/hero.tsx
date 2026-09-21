@@ -38,11 +38,43 @@ export function Hero() {
               </span>
             </div>
 
-            {/* 2. Display Headline */}
-            <h1 className="font-pixel text-4xl sm:text-5xl lg:text-6xl text-neutral-100 tracking-wide leading-none">
-              {profile.headline}
-            </h1>
+            {/* 2. Display Headline with Compact Mobile Avatar */}
+            <div className="flex items-center gap-3.5 sm:gap-5 lg:block min-w-0">
+              {/* Compact Avatar (Mobile / Tablet only) */}
+              <div className="lg:hidden relative h-16 w-16 shrink-0 rounded-sm border border-neutral-800 bg-[#0f1115] p-1 shadow-md">
+                <div className="relative h-full w-full overflow-hidden rounded-sm bg-[#0a0c0f]">
+                  <Image
+                    src="/profile.png"
+                    alt={profile.name}
+                    fill
+                    priority
+                    sizes="64px"
+                    className="object-cover object-top"
+                  />
+                  {/* Technical Micro Reticles */}
+                  <div
+                    className="pointer-events-none absolute top-1 left-1 h-2 w-2 border-t-2 border-l-2 border-emerald-400 z-10"
+                    aria-hidden="true"
+                  />
+                  <div
+                    className="pointer-events-none absolute top-1 right-1 h-2 w-2 border-t-2 border-r-2 border-emerald-400 z-10"
+                    aria-hidden="true"
+                  />
+                  <div
+                    className="pointer-events-none absolute bottom-1 left-1 h-2 w-2 border-b-2 border-l-2 border-emerald-400 z-10"
+                    aria-hidden="true"
+                  />
+                  <div
+                    className="pointer-events-none absolute bottom-1 right-1 h-2 w-2 border-b-2 border-r-2 border-emerald-400 z-10"
+                    aria-hidden="true"
+                  />
+                </div>
+              </div>
 
+              <h1 className="font-pixel text-3xl sm:text-4xl lg:text-6xl text-neutral-100 tracking-wide leading-tight lg:leading-none min-w-0">
+                {profile.headline}
+              </h1>
+            </div>
             {/* 3. Executive Bio (from resume) */}
             <p className="text-sm sm:text-base text-neutral-300 max-w-xl leading-relaxed">
               {profile.bio}
@@ -129,8 +161,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right Column (40%): Styled 4:5 Portrait Frame */}
-          <div className="lg:col-span-5 flex justify-center">
+          {/* Right Column (40%): Styled 4:5 Portrait Frame (Desktop Only) */}
+          <div className="hidden lg:flex lg:col-span-5 justify-center">
             <div className="relative w-full max-w-[320px] sm:max-w-[340px] rounded-sm border border-neutral-800 bg-[#0f1115] p-3 shadow-2xl">
               {/* Frame Surface with 4:5 Aspect Ratio */}
               <div className="relative aspect-4/5 w-full overflow-hidden rounded-sm border border-neutral-800 bg-[#0a0c0f]">
@@ -138,8 +170,7 @@ export function Hero() {
                   src="/profile.png"
                   alt={profile.name}
                   fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 340px"
+                  sizes="340px"
                   className="object-cover object-top"
                 />
 

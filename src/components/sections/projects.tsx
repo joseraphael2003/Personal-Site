@@ -11,7 +11,7 @@ export function Projects() {
   const [lightboxImage, setLightboxImage] = useState<{ src: string; caption?: string } | null>(null);
 
   return (
-    <section id="projects" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-16 sm:py-24">
+    <section id="projects" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-10 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-12">
         {/* Section Header */}
         <div className="border-b border-neutral-800 pb-4 font-mono">
@@ -34,10 +34,10 @@ export function Projects() {
             return (
               <div
                 key={project.id}
-                className="rounded-sm border border-neutral-800 bg-[#0f1115] p-5 sm:p-7 space-y-4 hover:border-neutral-700 transition-colors font-mono"
+                className="rounded-sm border border-neutral-800 bg-[#0f1115] p-4 sm:p-6 lg:p-7 space-y-4 hover:border-neutral-700 transition-colors font-mono"
               >
                 {/* Project Header Row */}
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-3">
+                <div className="flex flex-row flex-wrap sm:flex-nowrap items-start sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-2.5 sm:pb-3">
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-neutral-500">0{idx + 1} {"//"}</span>

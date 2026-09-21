@@ -22,7 +22,7 @@ export function OtherInvolvement() {
   };
 
   return (
-    <section id="involvement" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-16 sm:py-24">
+    <section id="involvement" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-10 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-12 font-mono">
         {/* Section Header */}
         <div className="space-y-2 border-b border-neutral-800 pb-4">
@@ -36,7 +36,7 @@ export function OtherInvolvement() {
           {involvement.map((item) => (
             <div
               key={item.id}
-              className="rounded-sm border border-neutral-800 bg-[#0f1115] p-6 sm:p-8 space-y-6 hover:border-neutral-700 transition-colors shadow-sm"
+              className="rounded-sm border border-neutral-800 bg-[#0f1115] p-4 sm:p-6 lg:p-8 space-y-6 hover:border-neutral-700 transition-colors shadow-sm"
             >
               {/* Header Row */}
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 border-b border-neutral-800 pb-4">

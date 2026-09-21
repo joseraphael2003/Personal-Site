@@ -12,7 +12,7 @@ export function Work() {
   const historicalRoles = workExperience.slice(1);
 
   return (
-    <section id="work" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-16 sm:py-24">
+    <section id="work" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-10 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-10 font-mono">
         {/* Section Header */}
         <div className="border-b border-neutral-800 pb-4">
@@ -32,9 +32,9 @@ export function Work() {
                 aria-hidden="true"
               />
 
-              <div className="rounded-sm border border-neutral-800 bg-[#0f1115] p-5 sm:p-7 space-y-4 hover:border-neutral-700 transition-colors shadow-sm">
+              <div className="rounded-sm border border-neutral-800 bg-[#0f1115] p-4 sm:p-6 lg:p-7 space-y-4 hover:border-neutral-700 transition-colors shadow-sm">
                 {/* Meta Row */}
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-3">
+                <div className="flex flex-row flex-wrap sm:flex-nowrap items-start sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-2.5 sm:pb-3">
                   <div>
                     <h3 className="font-pixel text-lg sm:text-xl text-neutral-100">
                       {currentRole.role}
@@ -99,9 +99,9 @@ export function Work() {
                       aria-hidden="true"
                     />
 
-                    <div className="rounded-sm border border-neutral-800 bg-[#0f1115] p-5 sm:p-7 space-y-4 hover:border-neutral-700 transition-colors shadow-sm">
+                    <div className="rounded-sm border border-neutral-800 bg-[#0f1115] p-4 sm:p-6 lg:p-7 space-y-4 hover:border-neutral-700 transition-colors shadow-sm">
                       {/* Meta Row */}
-                      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-3">
+                      <div className="flex flex-row flex-wrap sm:flex-nowrap items-start sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-2.5 sm:pb-3">
                         <div>
                           <h3 className="font-pixel text-lg sm:text-xl text-neutral-100">
                             {role.role}
