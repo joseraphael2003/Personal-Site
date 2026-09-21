@@ -27,9 +27,12 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column (60%): Editorial Thesis Stack */}
           <div className="lg:col-span-7 space-y-6 font-mono">
-            {/* 1. Status Badge */}
-            <div className="inline-flex items-center gap-2 rounded-sm border border-neutral-800 bg-neutral-900/90 px-2.5 py-1 text-xs text-neutral-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            {/* 1. Status Badge (Enlarged + Dual Sonar Radar Ping + Emerald Technical Glow) */}
+            <div className="inline-flex items-center gap-2.5 rounded-sm border border-emerald-500/40 bg-emerald-950/20 px-3.5 py-1.5 text-sm text-emerald-300 shadow-[0_0_12px_rgba(52,211,153,0.18)]">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              </span>
               <span className="font-bold uppercase tracking-wider text-emerald-400">
                 {profile.status}
               </span>

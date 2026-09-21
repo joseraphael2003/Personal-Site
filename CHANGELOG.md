@@ -4,19 +4,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased] - 2026-09-21
+## [Unreleased] - 2026-09-22
 
 ### Added
+- **Project Repository (`/projects`)**: Complete overhaul to match Overview flagship cards layout, complete with indexed headers (`01 //`), badges, tech stack chips, action links, and embedded interactive `DraggableMarquee` reels for all projects with screenshots (*OpsDeck*, *Mnemosyne*, *MuBrew*, *Modular Bench Power Supply*, *Naga City Incident Heat Map*).
+- **Reddit Apify Actor**: Added custom autonomous web scraping actor developed with TypeScript, Crawlee, and residential proxy rotation to Project Repository.
+- **Interactive Resizable Modal**: Enabled native two-axis resizing (`resize overflow-auto`) on `EmailModal` with responsive min/max constraints, natural textarea vertical expansion (`resize-y`), and a tactile bottom-right corner resize grip.
+- **Hero Attention Drawer**: Upgraded "Available for Work" status badge with enlarged scale (`text-sm px-3.5 py-1.5`), dual sonar radar ping (`animate-ping`), and luminescent emerald glow aura (`shadow-[0_0_12px_rgba(52,211,153,0.18)]`).
 - **Certifications**: Featured full-width VITRO Data Center Specialist card (`src/components/sections/certifications.tsx`) with an embedded 4-photo `DraggableMarquee` reel and full-size interactive `LightboxModal`.
 - Added normalized photo assets `public/certifications/vitro-3.jpg` and `vitro-4.jpg` featuring cohort graduation celebration and logo wall ceremony.
 - Global `EmailModalProvider` (`src/components/providers/email-modal-provider.tsx`) allowing Hero, Header ("Quick Email"), and Footer ("Send Email") to trigger the Formspree email composer without prop drilling.
 - Clean `LightboxModal` component (`src/components/ui/lightbox-modal.tsx`) using Base UI Dialog for uncluttered, high-res popup views of project and musical performance images.
-- Draggable marquee reels on project cards with screenshot galleries (*OpsDeck*).
-- Active "See More" link on the VITRO Data Center certification card pointing directly to verified LinkedIn credential post.
 - Route-level Escape key listener on `/projects` navigating smoothly back to `/` ("Return to Overview") when no modal is open.
 ### Changed
 - Swapped Hero CTA button styles: "Quick Email" is now the primary solid emerald button (`bg-emerald-500 text-black font-bold`), and "Get Resume" is the secondary grey outline button (`border-neutral-700 bg-neutral-900/60`).
 - Updated Hero GitHub and LinkedIn social link typography to match email button styling (`text-neutral-200 hover:text-white`).
+- **Work Timeline Geometric Centering**: Re-centered micro-square pixel nodes directly over the 1px rail border (`-left-[29.5px] sm:-left-[37.5px]` active, `-left-[28.5px] sm:-left-[36.5px]` historical), eliminating the 2px leftward bias.
+- **Marquee Dragging Physics**: Fixed seamless repeat pitch calculation (`singleSetWidth = widths + gap * firstSetChildren.length`) without arbitrary multipliers across `buildWrap`, `getProgressInLoop`, and `setProgressInLoop`; added low-speed release momentum damping and `onPress` coordinate synchronization to eliminate photo skipping.
+- **Certifications**: Updated VITRO honors to `"Top 10% of five universities"`.
+- **Involvement**: Added `"Marching Leader"` to Ateneo de Naga University Symphonic Band leadership roles.
+- **Work**: Under Integrya Technologies entry, replaced AWS/Slack bullet with client meeting minutes and action items documentation bullet.
 - Restored Work technical vertical line rail with **Option A Micro-Square (Data Pixel) Nodes**: solid emerald square for active role and dark neutral square with subtle border for historical roles.
 - Positioned Work historical timeline nodes with clipping-safe negative margin gutter compensation (`-ml-8 sm:-ml-10 pl-8 sm:pl-10`) preventing clipping inside `<motion.div overflow-hidden>`.
 - Removed colored left borders on Work cards, standardizing on uniform subtle borders (`border border-neutral-800`).
@@ -29,6 +36,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Converted footer "Send Email" CTA into a direct trigger for the Formspree modal.
 
 ### Removed
+- **Marquee Images**: Removed visual captions across all thumbnail previews and stripped caption block from `LightboxModal` for edge-to-edge viewing.
+- **Project Repository Header**: Removed `COMPLETE ARCHIVE` eyebrow and bloat description paragraph.
+- **Project Repository**: Removed `portfolio-v2` (`Personal Portfolio v2`) from project archive listings.
+- **Formspree Modal**: Removed subtext `"Direct dispatch to Jose Raphael V. Dichoso"` and footer text `"Formspree verified endpoint"`.
 - Removed bloat caption `PORTRAIT FRAMERATIO 4:5` from Hero portrait frame.
 - Removed `[CURRENT ROLE]` and `[PRIOR ROLE]` text badges from Work role cards.
 - Removed `Confidential Commercial Asset` fallback text from commissioned project cards.
@@ -36,7 +47,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Removed Other Involvement 3 subcontainer highlights per card, focusing layout directly on descriptions and media.
 - Removed bloat telemetry badges `LIVE ARCHIVE // N CAPTURES` and `VERIFIED` from Other Involvement cards.
 - Removed `Ateneo de Naga University · Class of 2027` text from Footer identity column.
-
 ---
 
 ## [Remodel v1] - 2026-09-20

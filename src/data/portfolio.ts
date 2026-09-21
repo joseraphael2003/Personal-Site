@@ -137,7 +137,7 @@ export const workExperience: WorkRole[] = [
       "Built full-stack project management system with automated meeting minutes extraction.",
     bullets: [
       "Built a full-stack project management system (Django, React, PostgreSQL) that automates extraction of actionable work items from company-format meeting minutes and QA documents.",
-      "Implemented role-based access control and Slack integration, then deployed the platform to AWS.",
+      "Documented official meeting minutes and action items during live online client conferences to ensure project deliverables remained aligned across teams.",
     ],
   },
   {
@@ -286,6 +286,13 @@ export const archiveProjects: Project[] = [
     year: "2026",
     techStack: ["Python", "React", "SQLite", "ChromaDB", "MCP API", "FastAPI"],
     primaryImage: "/projects/mnemosyne/mnemosyne-1.png",
+    galleryImages: [
+      { src: "/projects/mnemosyne/mnemosyne-1.png", caption: "Mnemosyne Overview" },
+      { src: "/projects/mnemosyne/mnemosyne-2.png", caption: "Semantic Memory Retrieval" },
+      { src: "/projects/mnemosyne/mnemosyne-3.png", caption: "Markdown Knowledge Graph" },
+      { src: "/projects/mnemosyne/mnemosyne-4.png", caption: "LLM Context Extraction" },
+      { src: "/projects/mnemosyne/mnemosyne-5.png", caption: "MCP API Integration" },
+    ],
     repoUrl: null,
     liveUrl: null,
   },
@@ -300,6 +307,13 @@ export const archiveProjects: Project[] = [
     year: "2026",
     techStack: ["Flutter", "Dart", "Supabase", "PostgreSQL"],
     primaryImage: "/projects/mubrew/mubrew-1.jpg",
+    galleryImages: [
+      { src: "/projects/mubrew/mubrew-1.jpg", caption: "MuBrew Mobile Dashboard" },
+      { src: "/projects/mubrew/mubrew-2.jpg", caption: "Brew Ratio Calculator" },
+      { src: "/projects/mubrew/mubrew-3.jpg", caption: "Extraction Timer & Graph" },
+      { src: "/projects/mubrew/mubrew-4.jpg", caption: "Bean Inventory Logging" },
+      { src: "/projects/mubrew/mubrew-5.jpg", caption: "Historical Brew Log" },
+    ],
     repoUrl: null,
   },
   {
@@ -313,6 +327,11 @@ export const archiveProjects: Project[] = [
     year: "2025",
     techStack: ["KiCAD EDA", "PCB Design", "Analog Electronics", "Voltage Regulation"],
     primaryImage: "/projects/power-supply/psu-1.png",
+    galleryImages: [
+      { src: "/projects/power-supply/psu-1.png", caption: "Power Supply Front Panel" },
+      { src: "/projects/power-supply/psu-2.jpg", caption: "Modular PCB Sub-boards" },
+      { src: "/projects/power-supply/psu-3.png", caption: "Bench Testing & Voltage Calibration" },
+    ],
     repoUrl: null,
     liveUrl: null,
   },
@@ -327,19 +346,22 @@ export const archiveProjects: Project[] = [
     year: "2025",
     techStack: ["React", "Vite", "Kepler.gl", "Python", "Geospatial Analysis"],
     primaryImage: "/projects/heatmap/heatmap-1.png",
+    galleryImages: [
+      { src: "/projects/heatmap/heatmap-1.png", caption: "Naga City Incident Heat Map" },
+    ],
     repoUrl: null,
     liveUrl: null,
   },
   {
-    id: "portfolio-v2",
-    title: "Personal Portfolio v2",
-    tagline: "Previous Iteration Developer Showcase",
+    id: "reddit-apify-actor",
+    title: "Reddit Account & Engagement Scraper",
+    tagline: "Custom Apify Actor for Distributed Social Scraping",
     description:
-      "Interactive resume and project showcase built with Next.js, Framer Motion, and Tailwind CSS. Precursor to the current high-density systems remodel.",
-    category: "PERSONAL",
+      "An autonomous web scraping actor developed with TypeScript, Crawlee, and residential proxy rotation. Built to ingest Reddit user profiles, engagement metrics, posts, and nested comment structures at scale while reliably bypassing rate limits.",
+    category: "COMMISSIONED",
     confidential: false,
     year: "2026",
-    techStack: ["Next.js", "Tailwind CSS", "Framer Motion", "Supabase"],
+    techStack: ["TypeScript", "Apify SDK", "Crawlee", "Node.js", "Residential Proxies"],
     primaryImage: null,
     repoUrl: null,
     liveUrl: null,
@@ -390,7 +412,7 @@ export const certifications: CertificationItem[] = [
     issuer: "VITRO Inc. Academy",
     year: "2025",
     badgeUrl: "/certifications/vitro-1.png",
-    honors: "Top 10% Class Honors",
+    honors: "Top 10% of five universities",
     moreUrl:
       "https://www.linkedin.com/posts/jdichoso2003_vitro25-vitroacademy-activity-7379857518933487616-To3N?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFHx_o0Bmeh6Vi1Gg2tr6xBMI1dBbQ7zXC0",
     galleryImages: [
@@ -442,7 +464,7 @@ export const involvement: InvolvementItem[] = [
   {
     id: "symphonic-band",
     organization: "Ateneo de Naga University Symphonic Band",
-    role: "Vice President · Trombone Section Leader · Band Librarian",
+    role: "Vice President · Marching Leader · Trombone Section Leader · Band Librarian",
     period: "2022 - 2025",
     description:
       "Four years of executive and section leadership coordinating operational scheduling, rehearsals, and repertoire cataloging across a 40-member symphonic ensemble.",

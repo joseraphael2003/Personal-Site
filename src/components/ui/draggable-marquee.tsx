@@ -40,6 +40,7 @@ export function DraggableMarquee({
   // Duplicate items to enable continuous wrapping
   const duplicatedItems = useMemo(() => {
     if (!items.length) return [];
+    if (items.length <= 1) return items;
     return Array.from({ length: repeatCount }).flatMap(() => items);
   }, [items, repeatCount]);
 
@@ -68,14 +69,14 @@ export function DraggableMarquee({
     };
 
     const buildWrap = () => {
-      const min = singleSetWidth * -1.02;
+      const min = -singleSetWidth;
       const max = 0;
       wrapValue = gsap.utils.wrap(min, max);
     };
 
     const getProgressInLoop = () => {
       if (!singleSetWidth) return 0;
-      const min = singleSetWidth * -1.02;
+      const min = -singleSetWidth;
       const max = 0;
       const range = max - min;
       if (!range) return 0;
@@ -88,7 +89,7 @@ export function DraggableMarquee({
 
     const setProgressInLoop = (progress: number) => {
       if (!singleSetWidth) return;
-      const min = singleSetWidth * -1.02;
+      const min = -singleSetWidth;
       const max = 0;
       const range = max - min;
       x = min + range * progress;
@@ -113,7 +114,7 @@ export function DraggableMarquee({
         0
       );
 
-      singleSetWidth = widths + gap * Math.max(0, firstSetChildren.length - 1);
+      singleSetWidth = widths + gap * firstSetChildren.length;
       buildWrap();
 
       if (!Number.isFinite(prevProgress)) {
@@ -168,8 +169,13 @@ export function DraggableMarquee({
         this.x = x;
 
         if (dt > 0) {
-          const sampledVelocity = (dx / dt) * 36.67;
-          throwVelocity = gsap.utils.clamp(-60, 60, sampledVelocity * 2.8);
+          const sampledVelocity = (dx / dt) * 16.67;
+          // Apply minimal momentum only on high-speed intentional flicks
+          if (Math.abs(sampledVelocity) > 2) {
+            throwVelocity = gsap.utils.clamp(-25, 25, sampledVelocity * 0.8);
+          } else {
+            throwVelocity = 0;
+          }
         }
         lastDragX = this.x;
         lastDragTime = now;

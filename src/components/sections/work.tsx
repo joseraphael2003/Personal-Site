@@ -26,9 +26,9 @@ export function Work() {
           {/* 1. Current Active Role (Always Visible) */}
           {currentRole && (
             <div className="relative space-y-4">
-              {/* Active Role Node */}
+              {/* Active Role Node (Centered exactly over 1px rail border) */}
               <div
-                className="absolute -left-[31px] sm:-left-[39px] top-6 h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                className="absolute -left-[29.5px] sm:-left-[37.5px] top-6 h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"
                 aria-hidden="true"
               />
 
@@ -93,9 +93,9 @@ export function Work() {
               >
                 {historicalRoles.map((role, idx) => (
                   <div key={`${role.company}-${idx}`} className="relative space-y-4">
-                    {/* Historical Role Node */}
+                    {/* Historical Role Node (Centered exactly over 1px rail border) */}
                     <div
-                      className="absolute -left-[31px] sm:-left-[39px] top-6 h-2 w-2 bg-[#090a0c] border border-neutral-700"
+                      className="absolute -left-[28.5px] sm:-left-[36.5px] top-6 h-2 w-2 bg-[#090a0c] border border-neutral-700"
                       aria-hidden="true"
                     />
 

@@ -49,14 +49,6 @@ export function LightboxModal({ open, onOpenChange, image }: LightboxModalProps)
               />
             </div>
 
-            {/* Caption */}
-            {image.caption && (
-              <div className="w-full pt-3 px-1 text-center sm:text-left">
-                <p className="text-xs sm:text-sm font-mono text-neutral-300">
-                  {image.caption}
-                </p>
-              </div>
-            )}
           </Dialog.Popup>
         </div>
       </Dialog.Portal>

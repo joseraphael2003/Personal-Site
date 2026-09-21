@@ -3,12 +3,15 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { archiveProjects, Project } from "@/data/portfolio";
-import { ArrowLeft, Github, ExternalLink, Filter } from "lucide-react";
+import { archiveProjects, Project, GalleryItem } from "@/data/portfolio";
+import { ArrowLeft, Github, ExternalLink, Filter, ArrowUpRight } from "lucide-react";
+import { DraggableMarquee } from "@/components/ui/draggable-marquee";
+import { LightboxModal } from "@/components/ui/lightbox-modal";
 
 export default function ProjectsArchivePage() {
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [lightboxImage, setLightboxImage] = useState<GalleryItem | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -42,21 +45,15 @@ export default function ProjectsArchivePage() {
           </Link>
         </div>
 
-        {/* Page Title & Meta */}
-        <div className="space-y-3 border-b border-neutral-800 pb-6">
-          <div className="text-xs text-emerald-400 font-bold uppercase tracking-wider">
-            COMPLETE ARCHIVE
-          </div>
+        {/* Page Title (Clean, Zero Bloat) */}
+        <div className="border-b border-neutral-800 pb-4">
           <h1 className="font-pixel text-3xl sm:text-4xl text-neutral-100 uppercase tracking-wide">
             PROJECT REPOSITORY
           </h1>
-          <p className="text-sm sm:text-base text-neutral-400 max-w-2xl leading-relaxed">
-            Index of commercial tools, personal autonomous systems, mobile apps, and hardware lab builds.
-          </p>
         </div>
 
         {/* Category Filter Bar */}
-        <div className="flex flex-wrap items-center gap-2 pt-2">
+        <div className="flex flex-wrap items-center gap-2">
           <div className="flex items-center gap-1.5 text-sm text-neutral-500 mr-2">
             <Filter className="h-3.5 w-3.5" />
             <span>Filter:</span>
@@ -79,167 +76,122 @@ export default function ProjectsArchivePage() {
           </span>
         </div>
 
-        {/* Desktop Archive Table View */}
-        <div className="hidden md:block rounded-sm border border-neutral-800 bg-[#0f1115] overflow-hidden">
-          <div className="grid grid-cols-12 gap-4 border-b border-neutral-800 bg-neutral-900/60 p-4 text-sm font-bold text-neutral-400 uppercase tracking-wider">
-            <div className="col-span-1">Year</div>
-            <div className="col-span-4">Project &amp; Summary</div>
-            <div className="col-span-2">Category</div>
-            <div className="col-span-3">Tech Stack</div>
-            <div className="col-span-2 text-right">Links</div>
-          </div>
+        {/* Project Cards (Overview Flagship Style) */}
+        <div className="space-y-6">
+          {filteredProjects.map((project: Project, idx: number) => {
+            const galleryList: GalleryItem[] | null =
+              project.galleryImages && project.galleryImages.length > 0
+                ? project.galleryImages
+                : project.primaryImage
+                ? [{ src: project.primaryImage, caption: project.title }]
+                : null;
+            const hasImages = !!galleryList && galleryList.length > 0;
 
-          <div className="divide-y divide-neutral-800/60">
-            {filteredProjects.map((project: Project) => (
+            return (
               <div
                 key={project.id}
-                className="grid grid-cols-12 gap-4 p-4 text-sm items-center hover:bg-neutral-800/30 transition-colors"
+                className="rounded-sm border border-neutral-800 bg-[#0f1115] p-5 sm:p-7 space-y-4 hover:border-neutral-700 transition-colors font-mono shadow-sm"
               >
-                {/* Year */}
-                <div className="col-span-1 text-neutral-500 text-xs font-bold">
-                  {project.year}
-                </div>
-
-                {/* Title & Tagline */}
-                <div className="col-span-4 space-y-1">
-                  <div className="font-pixel text-base text-neutral-100 uppercase tracking-wide">
-                    {project.title}
+                {/* Project Header Row */}
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-3">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-neutral-500">
+                        {String(idx + 1).padStart(2, "0")} {"//"}
+                      </span>
+                      <h2 className="font-pixel text-xl sm:text-2xl text-neutral-100 uppercase tracking-wide">
+                        {project.title}
+                      </h2>
+                    </div>
+                    <p className="text-sm text-neutral-400 mt-1">{project.tagline}</p>
                   </div>
-                  <div className="text-xs text-neutral-400 leading-snug">
-                    {project.tagline}
-                  </div>
-                </div>
 
-                {/* Category */}
-                <div className="col-span-2">
-                  <span
-                    className={`inline-block rounded-sm px-2.5 py-0.5 text-xs font-bold font-mono uppercase tracking-wider ${
-                      project.category === "COMMISSIONED"
-                        ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-400"
-                        : "bg-neutral-800 border border-neutral-600 text-neutral-200"
-                    }`}
-                  >
-                    {project.category}
-                  </span>
-                </div>
-
-                {/* Tech Stack */}
-                <div className="col-span-3 flex flex-wrap gap-1">
-                  {project.techStack.map((t) => (
+                  <div className="flex items-center gap-2.5">
                     <span
-                      key={t}
-                      className="rounded-sm bg-neutral-950 px-1.5 py-0.5 text-xs text-neutral-400 border border-neutral-800/80"
+                      className={`inline-block rounded-sm px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider ${
+                        project.category === "COMMISSIONED"
+                          ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-400"
+                          : "bg-neutral-800 border border-neutral-600 text-neutral-200"
+                      }`}
                     >
-                      {t}
+                      {project.category}
+                    </span>
+                    <span className="text-sm text-neutral-500">{project.year}</span>
+                  </div>
+                </div>
+
+                {/* Description Body */}
+                <p className="text-sm text-neutral-300 leading-relaxed max-w-3xl">
+                  {project.description}
+                </p>
+
+                {/* Tech Stack Chips */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  {project.techStack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded-sm border border-neutral-800 bg-neutral-900 px-2 py-0.5 text-xs text-neutral-300"
+                    >
+                      {tech}
                     </span>
                   ))}
                 </div>
 
-                {/* Links */}
-                <div className="col-span-2 flex items-center justify-end gap-3 text-sm">
-                  {project.repoUrl && (
-                    <a
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-neutral-400 hover:text-emerald-400 transition-colors inline-flex items-center gap-1"
-                      title="GitHub Repository"
-                    >
-                      <Github className="h-4 w-4" />
-                      <span className="sr-only">GitHub</span>
-                    </a>
-                  )}
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-neutral-400 hover:text-emerald-400 transition-colors inline-flex items-center gap-1"
-                      title="Live System"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                      <span className="sr-only">Live Demo</span>
-                    </a>
-                  )}
-                  {!project.repoUrl && !project.liveUrl && (
-                    <span className="text-xs text-neutral-600">Client / Internal</span>
-                  )}
-                </div>
+                {/* Image Marquee Reel */}
+                {hasImages && galleryList && (
+                  <div className="pt-2">
+                    <DraggableMarquee
+                      items={galleryList}
+                      speed={0.35}
+                      onItemClick={(origIdx) => setLightboxImage(galleryList[origIdx])}
+                    />
+                  </div>
+                )}
+
+                {/* Actions Row */}
+                {(project.repoUrl || project.liveUrl) && (
+                  <div className="pt-3 border-t border-neutral-800/60 flex flex-wrap items-center gap-4 text-sm">
+                    {project.repoUrl && (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-neutral-400 hover:text-emerald-400 transition-colors inline-flex items-center gap-1.5 group cursor-pointer"
+                      >
+                        <Github className="h-4 w-4" />
+                        <span>Source Repository</span>
+                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </a>
+                    )}
+
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-neutral-400 hover:text-emerald-400 transition-colors inline-flex items-center gap-1.5 group cursor-pointer"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        <span>Live System</span>
+                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile Archive Cards View */}
-        <div className="md:hidden space-y-4">
-          {filteredProjects.map((project: Project) => (
-            <div
-              key={project.id}
-              className="rounded-sm border border-neutral-800 bg-[#0f1115] p-5 space-y-3"
-            >
-              <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
-                <span
-                  className={`inline-block rounded-sm px-2.5 py-0.5 text-xs font-bold font-mono uppercase tracking-wider ${
-                    project.category === "COMMISSIONED"
-                      ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-400"
-                      : "bg-neutral-800 border border-neutral-600 text-neutral-200"
-                  }`}
-                >
-                  {project.category}
-                </span>
-                <span className="text-sm text-neutral-500 font-bold">{project.year}</span>
-              </div>
-
-              <div>
-                <h3 className="font-pixel text-lg text-neutral-100 uppercase tracking-wide">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-neutral-400 mt-0.5">{project.tagline}</p>
-              </div>
-
-              <p className="text-sm text-neutral-300 leading-relaxed">{project.description}</p>
-
-              <div className="flex flex-wrap gap-1 pt-1">
-                {project.techStack.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-sm bg-neutral-900 px-1.5 py-0.5 text-xs text-neutral-400 border border-neutral-800"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              {(project.repoUrl || project.liveUrl) && (
-                <div className="pt-2 border-t border-neutral-800 flex gap-4 text-sm">
-                  {project.repoUrl && (
-                    <a
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-emerald-400 hover:text-white transition-colors inline-flex items-center gap-1"
-                    >
-                      <Github className="h-3.5 w-3.5" />
-                      <span>Source</span>
-                    </a>
-                  )}
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-emerald-400 hover:text-white transition-colors inline-flex items-center gap-1"
-                    >
-                      <ExternalLink className="h-3.5 w-3.5" />
-                      <span>Live App</span>
-                    </a>
-                  )}
-                </div>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      {lightboxImage && (
+        <LightboxModal
+          open={!!lightboxImage}
+          onOpenChange={(open) => !open && setLightboxImage(null)}
+          image={lightboxImage}
+        />
+      )}
     </main>
   );
 }
