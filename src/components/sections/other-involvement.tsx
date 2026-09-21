@@ -43,7 +43,7 @@ export function OtherInvolvement() {
                 <div>
                   <div className="flex items-center gap-2.5">
                     {getIcon(item.id)}
-                    <h3 className="font-pixel text-xl sm:text-2xl text-neutral-100 tracking-wide">
+                    <h3 className="font-pixel text-lg sm:text-xl text-neutral-100 tracking-wide">
                       {item.organization}
                     </h3>
                   </div>
@@ -59,7 +59,7 @@ export function OtherInvolvement() {
               </div>
 
               {/* Description */}
-              <p className="text-sm sm:text-base text-neutral-300 leading-relaxed max-w-3xl">
+              <p className="text-sm text-neutral-300 leading-relaxed max-w-3xl">
                 {item.description}
               </p>
 

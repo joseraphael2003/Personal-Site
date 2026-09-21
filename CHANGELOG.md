@@ -7,19 +7,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased] - 2026-09-21
 
 ### Added
+- **Certifications**: Featured full-width VITRO Data Center Specialist card (`src/components/sections/certifications.tsx`) with an embedded 4-photo `DraggableMarquee` reel and full-size interactive `LightboxModal`.
+- Added normalized photo assets `public/certifications/vitro-3.jpg` and `vitro-4.jpg` featuring cohort graduation celebration and logo wall ceremony.
 - Global `EmailModalProvider` (`src/components/providers/email-modal-provider.tsx`) allowing Hero, Header ("Quick Email"), and Footer ("Send Email") to trigger the Formspree email composer without prop drilling.
 - Clean `LightboxModal` component (`src/components/ui/lightbox-modal.tsx`) using Base UI Dialog for uncluttered, high-res popup views of project and musical performance images.
 - Draggable marquee reels on project cards with screenshot galleries (*OpsDeck*).
 - Active "See More" link on the VITRO Data Center certification card pointing directly to verified LinkedIn credential post.
 - Route-level Escape key listener on `/projects` navigating smoothly back to `/` ("Return to Overview") when no modal is open.
-
 ### Changed
 - Swapped Hero CTA button styles: "Quick Email" is now the primary solid emerald button (`bg-emerald-500 text-black font-bold`), and "Get Resume" is the secondary grey outline button (`border-neutral-700 bg-neutral-900/60`).
 - Updated Hero GitHub and LinkedIn social link typography to match email button styling (`text-neutral-200 hover:text-white`).
-- Replaced Work timeline line-and-dots with clean left-accent borders (`border-l-emerald-500` active, `border-l-neutral-700` historical).
+- Restored Work technical vertical line rail with **Option A Micro-Square (Data Pixel) Nodes**: solid emerald square for active role and dark neutral square with subtle border for historical roles.
+- Positioned Work historical timeline nodes with clipping-safe negative margin gutter compensation (`-ml-8 sm:-ml-10 pl-8 sm:pl-10`) preventing clipping inside `<motion.div overflow-hidden>`.
+- Removed colored left borders on Work cards, standardizing on uniform subtle borders (`border border-neutral-800`).
+- Center-aligned Work "Expand Full Career Ledger" compact emerald button.
+- Converted Projects "View Complete Project Archive" CTA from full-width to an auto-width, compact solid emerald button centered underneath project cards.
+- Harmonized Other Involvement typography: rebalanced card headings to `font-pixel text-lg sm:text-xl` and body descriptions to `text-sm`, matching Work and Certifications scales.
 - Replaced Work full-length outline banner with a compact solid emerald button (`bg-emerald-500 text-black font-bold`).
 - Upgraded Work accordion transition to spring physics (`stiffness: 150, damping: 22`) for smooth expansion without layout snap.
-- Upgraded Projects "View Complete Project Archive" button to full-width solid emerald styling.
 - Renamed navbar "Hire Me" button to "Quick Email" across desktop and mobile menus, wired to the Formspree modal.
 - Converted footer "Send Email" CTA into a direct trigger for the Formspree modal.
 

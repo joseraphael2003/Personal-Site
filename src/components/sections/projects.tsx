@@ -125,11 +125,11 @@ export function Projects() {
           })}
         </div>
 
-        {/* See All Projects Link (Full Width Solid Emerald Button) */}
-        <div className="pt-4 font-mono">
+        {/* See All Projects Link (Compact Centered Solid Emerald Button) */}
+        <div className="pt-4 flex justify-center font-mono">
           <Link
             href="/projects"
-            className="w-full cursor-pointer rounded-sm bg-emerald-500 px-6 py-3.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center justify-center gap-2"
+            className="cursor-pointer rounded-sm bg-emerald-500 px-6 py-3 text-sm font-mono font-bold text-black hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center gap-2"
           >
             <span>View Complete Project Archive (8 Projects)</span>
             <ArrowRight className="h-4 w-4 text-black" />

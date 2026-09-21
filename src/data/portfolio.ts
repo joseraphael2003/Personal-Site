@@ -87,6 +87,7 @@ export interface CertificationItem {
   skills?: string[];
   honors?: string;
   earner?: string;
+  galleryImages?: GalleryItem[];
 }
 
 export interface InvolvementItem {
@@ -392,6 +393,26 @@ export const certifications: CertificationItem[] = [
     honors: "Top 10% Class Honors",
     moreUrl:
       "https://www.linkedin.com/posts/jdichoso2003_vitro25-vitroacademy-activity-7379857518933487616-To3N?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFHx_o0Bmeh6Vi1Gg2tr6xBMI1dBbQ7zXC0",
+    galleryImages: [
+      {
+        src: "/certifications/vitro-1.png",
+        caption:
+          "VITRO Certified Data Center Specialist Certificate Award Ceremony (2025)",
+      },
+      {
+        src: "/certifications/vitro-2.png",
+        caption:
+          "Graduation and credential verification with VITRO Academy peers",
+      },
+      {
+        src: "/certifications/vitro-3.jpg",
+        caption: "VITRO Academy cohort celebration at the facility logo wall",
+      },
+      {
+        src: "/certifications/vitro-4.jpg",
+        caption: "VITRO Academy peer cohort gathering at the academy facility",
+      },
+    ],
   },
   {
     id: "ccna-introduction-to-networks",
