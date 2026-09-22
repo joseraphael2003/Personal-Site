@@ -2,13 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { flagshipProjects, Project } from "@/data/portfolio";
+import { flagshipProjects, archiveProjects, Project } from "@/data/portfolio";
+import { motion } from "framer-motion";
 import { DraggableMarquee } from "@/components/ui/draggable-marquee";
 import { LightboxModal } from "@/components/ui/lightbox-modal";
 import { Github, ExternalLink, ArrowRight, ArrowUpRight } from "lucide-react";
 
 export function Projects() {
   const [lightboxImage, setLightboxImage] = useState<{ src: string; caption?: string } | null>(null);
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
 
   return (
     <section id="projects" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-10 sm:py-16 lg:py-24">
@@ -53,6 +55,8 @@ export function Projects() {
                       className={`inline-block rounded-sm px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider ${
                         project.category === "COMMISSIONED"
                           ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-400"
+                          : project.category === "INTERNSHIP"
+                          ? "bg-cyan-500/15 border border-cyan-500/40 text-cyan-400"
                           : "bg-neutral-800 border border-neutral-600 text-neutral-200"
                       }`}
                     >
@@ -85,7 +89,10 @@ export function Projects() {
                     <DraggableMarquee
                       items={galleryList}
                       speed={0.35}
-                      onItemClick={(origIdx) => setLightboxImage(galleryList[origIdx])}
+                      onItemClick={(origIdx, item, rect) => {
+                        setOriginRect(rect || null);
+                        setLightboxImage(galleryList[origIdx]);
+                      }}
                     />
                   </div>
                 )}
@@ -127,13 +134,19 @@ export function Projects() {
 
         {/* See All Projects Link (Compact Centered Solid Emerald Button) */}
         <div className="pt-4 flex justify-center font-mono">
-          <Link
-            href="/projects"
-            className="cursor-pointer rounded-sm bg-emerald-500 px-6 py-3 text-sm font-mono font-bold text-black hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center gap-2"
+          <motion.div
+            whileHover={{ scale: 1.025 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
-            <span>View Complete Project Archive (8 Projects)</span>
-            <ArrowRight className="h-4 w-4 text-black" />
-          </Link>
+            <Link
+              href="/projects"
+              className="cursor-pointer rounded-sm bg-emerald-500 px-6 py-3 text-sm font-mono font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
+            >
+              <span>View Complete Project Archive ({archiveProjects.length} Projects)</span>
+              <ArrowRight className="h-4 w-4 text-black" />
+            </Link>
+          </motion.div>
         </div>
       </div>
 
@@ -141,8 +154,14 @@ export function Projects() {
       {lightboxImage && (
         <LightboxModal
           open={!!lightboxImage}
-          onOpenChange={(open) => !open && setLightboxImage(null)}
+          onOpenChange={(open) => {
+            if (!open) {
+              setLightboxImage(null);
+              setOriginRect(null);
+            }
+          }}
           image={lightboxImage}
+          originRect={originRect}
         />
       )}
     </section>

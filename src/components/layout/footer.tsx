@@ -25,7 +25,7 @@ export function Footer() {
               LET&apos;S TALK!
             </h2>
             <p className="text-sm sm:text-base text-neutral-400 leading-relaxed">
-              Available for commissioned freelance web platforms, automation workflows, and
+              Available for commissioned freelance software development, automation workflows, and
               internship opportunities.
             </p>
           </div>
@@ -51,7 +51,7 @@ export function Footer() {
             <button
               type="button"
               onClick={openEmailModal}
-              className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-3 text-sm font-bold text-black hover:bg-emerald-400 transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
+              className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-3 text-sm font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
             >
               <Mail className="h-4 w-4 text-black" />
               <span>Send Email</span>

@@ -5,6 +5,63 @@ import Link from "next/link";
 import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
 import { Menu, X, Mail } from "lucide-react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+
+function MagneticNavLink({
+  label,
+  id,
+  isActive,
+  onClick,
+}: {
+  label: string;
+  id: string;
+  isActive: boolean;
+  onClick: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+}) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const springX = useSpring(x, { stiffness: 420, damping: 25, mass: 0.3 });
+  const springY = useSpring(y, { stiffness: 420, damping: 25, mass: 0.3 });
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLAnchorElement>) => {
+    if (typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const offsetX = e.clientX - (rect.left + rect.width / 2);
+      const offsetY = e.clientY - (rect.top + rect.height / 2);
+      x.set(offsetX * 0.18);
+      y.set(offsetY * 0.18);
+    }
+  };
+
+  const reset = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.a
+      href={`#${id}`}
+      onClick={onClick}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={reset}
+      style={{ x: springX, y: springY }}
+      aria-current={isActive ? "location" : undefined}
+      className={`relative cursor-pointer transition-colors px-2.5 py-1 text-sm ${
+        isActive ? "text-emerald-400 font-bold" : "text-neutral-400 hover:text-neutral-100"
+      }`}
+    >
+      {isActive && (
+        <motion.span
+          layoutId="active-nav-pill"
+          className="absolute inset-0 rounded-sm bg-emerald-500/15 border border-emerald-500/30"
+          transition={{ type: "spring", stiffness: 450, damping: 32 }}
+        />
+      )}
+      <span className="relative z-10">{label}</span>
+    </motion.a>
+  );
+}
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -63,51 +120,51 @@ export function Header() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-8">
         {/* Left: Identity */}
         <div className="flex items-center gap-3">
-          <Link href="/" className="group flex items-baseline gap-2">
+          <Link
+            href="/"
+            onClick={(e) => {
+              if (window.location.pathname === "/") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+            className="group flex items-baseline gap-2 cursor-pointer"
+          >
             <span className="font-pixel text-lg sm:text-xl text-neutral-100 tracking-wide group-hover:text-emerald-400 transition-colors">
               {profile.name}
             </span>
           </Link>
         </div>
 
-        {/* Center: Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-5 text-sm font-mono text-neutral-400">
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.id;
-            return (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                onClick={(e) => handleScrollTo(e, link.id)}
-                aria-current={isActive ? "location" : undefined}
-                className={`cursor-pointer transition-colors py-1 ${
-                  isActive
-                    ? "text-emerald-400 font-bold border-b-2 border-emerald-400"
-                    : "hover:text-neutral-100"
-                }`}
-              >
-                {link.label}
-              </a>
-            );
-          })}
+        {/* Center: Desktop Navigation with Magnet Tabs & Sliding LayoutId Pill */}
+        <nav className="hidden lg:flex items-center gap-1 font-mono text-neutral-400">
+          {navLinks.map((link) => (
+            <MagneticNavLink
+              key={link.id}
+              id={link.id}
+              label={link.label}
+              isActive={activeSection === link.id}
+              onClick={(e) => handleScrollTo(e, link.id)}
+            />
+          ))}
         </nav>
 
         {/* Right: Availability & Action */}
-        <div className="hidden sm:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           <button
             type="button"
             onClick={openEmailModal}
-            className="cursor-pointer rounded-sm bg-emerald-500 px-3.5 py-1.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 transition-colors inline-flex items-center gap-1.5 shadow-sm"
+            className="cursor-pointer rounded-sm bg-emerald-500 px-3.5 py-1.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors inline-flex items-center gap-1.5 shadow-sm"
           >
             <Mail className="h-3.5 w-3.5 text-black" />
             <span>Quick Email</span>
           </button>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile / Tablet menu button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden cursor-pointer rounded-sm border border-neutral-800 p-1.5 text-neutral-400 hover:text-white"
+          className="lg:hidden cursor-pointer rounded-sm border border-neutral-800 p-1.5 text-neutral-400 hover:text-white"
           aria-label="Toggle menu"
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -116,7 +173,7 @@ export function Header() {
 
       {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-neutral-800 bg-[#0c0d10] px-4 py-4 font-mono text-sm space-y-3">
+        <div className="lg:hidden border-b border-neutral-800 bg-[#0c0d10] px-4 py-4 font-mono text-sm space-y-3">
           <div className="flex flex-col gap-2.5 pt-1">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;

@@ -10,8 +10,8 @@ import { LightboxModal } from "@/components/ui/lightbox-modal";
 
 export default function ProjectsArchivePage() {
   const router = useRouter();
-  const [activeCategory, setActiveCategory] = useState<string>("All");
   const [lightboxImage, setLightboxImage] = useState<GalleryItem | null>(null);
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -24,10 +24,17 @@ export default function ProjectsArchivePage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [router]);
 
-  const categories = ["All", "COMMISSIONED", "PERSONAL"];
+  const categories = [
+    { label: "All", value: "ALL" },
+    { label: "Commissioned", value: "COMMISSIONED" },
+    { label: "Personal", value: "PERSONAL" },
+    { label: "Internship", value: "INTERNSHIP" },
+  ];
+
+  const [activeCategory, setActiveCategory] = useState("ALL");
 
   const filteredProjects =
-    activeCategory === "All"
+    activeCategory === "ALL"
       ? archiveProjects
       : archiveProjects.filter((p) => p.category === activeCategory);
 
@@ -60,15 +67,15 @@ export default function ProjectsArchivePage() {
           </div>
           {categories.map((cat) => (
             <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
+              key={cat.value}
+              onClick={() => setActiveCategory(cat.value)}
               className={`cursor-pointer px-3 py-1.5 text-sm rounded-sm transition-colors ${
-                activeCategory === cat
+                activeCategory === cat.value
                   ? "bg-emerald-500 text-black font-bold"
                   : "bg-neutral-900 text-neutral-400 border border-neutral-800 hover:text-neutral-200 hover:bg-neutral-800"
               }`}
             >
-              {cat}
+              {cat.label}
             </button>
           ))}
           <span className="text-sm text-neutral-500 ml-auto hidden sm:inline">
@@ -111,6 +118,8 @@ export default function ProjectsArchivePage() {
                       className={`inline-block rounded-sm px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider ${
                         project.category === "COMMISSIONED"
                           ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-400"
+                          : project.category === "INTERNSHIP"
+                          ? "bg-cyan-500/15 border border-cyan-500/40 text-cyan-400"
                           : "bg-neutral-800 border border-neutral-600 text-neutral-200"
                       }`}
                     >
@@ -143,7 +152,10 @@ export default function ProjectsArchivePage() {
                     <DraggableMarquee
                       items={galleryList}
                       speed={0.35}
-                      onItemClick={(origIdx) => setLightboxImage(galleryList[origIdx])}
+                      onItemClick={(origIdx, item, rect) => {
+                        setOriginRect(rect || null);
+                        setLightboxImage(galleryList[origIdx]);
+                      }}
                     />
                   </div>
                 )}
@@ -188,8 +200,14 @@ export default function ProjectsArchivePage() {
       {lightboxImage && (
         <LightboxModal
           open={!!lightboxImage}
-          onOpenChange={(open) => !open && setLightboxImage(null)}
+          onOpenChange={(open) => {
+            if (!open) {
+              setLightboxImage(null);
+              setOriginRect(null);
+            }
+          }}
           image={lightboxImage}
+          originRect={originRect}
         />
       )}
     </main>

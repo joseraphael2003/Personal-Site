@@ -17,7 +17,7 @@ interface DraggableMarqueeProps {
   className?: string;
   itemClassName?: string;
   pauseOnHover?: boolean;
-  onItemClick?: (index: number) => void;
+  onItemClick?: (index: number, item?: GalleryItem, rect?: DOMRect) => void;
   selectedIndex?: number;
   label?: string;
 }
@@ -257,7 +257,7 @@ export function DraggableMarquee({
             <button
               type="button"
               key={`${item.src}-${index}`}
-              onClick={() => onItemClick?.(originalIndex)}
+              onClick={(e) => onItemClick?.(originalIndex, item, e.currentTarget.getBoundingClientRect())}
               className={`shrink-0 text-left transition-all rounded-sm overflow-hidden border cursor-pointer ${
                 isSelected
                   ? "border-emerald-400 ring-1 ring-emerald-400 opacity-100"

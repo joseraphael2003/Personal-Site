@@ -9,6 +9,7 @@ import { LightboxModal } from "@/components/ui/lightbox-modal";
 
 export function Certifications() {
   const [lightboxImage, setLightboxImage] = useState<GalleryItem | null>(null);
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
 
   if (!certifications || certifications.length === 0) return null;
 
@@ -90,7 +91,10 @@ export function Certifications() {
                         <DraggableMarquee
                           items={gallery}
                           speed={0.35}
-                          onItemClick={(origIdx) => setLightboxImage(gallery[origIdx])}
+                          onItemClick={(origIdx, item, rect) => {
+                            setOriginRect(rect || null);
+                            setLightboxImage(gallery[origIdx]);
+                          }}
                         />
                       </div>
                     );
@@ -133,9 +137,13 @@ export function Certifications() {
         <LightboxModal
           open={!!lightboxImage}
           onOpenChange={(open) => {
-            if (!open) setLightboxImage(null);
+            if (!open) {
+              setLightboxImage(null);
+              setOriginRect(null);
+            }
           }}
           image={lightboxImage}
+          originRect={originRect}
         />
       )}
     </section>

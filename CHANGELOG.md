@@ -7,6 +7,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased] - 2026-09-22
 
 ### Added
+- **Inteflow Project Entry**: Added internal project management and automation tool built for Integrya Technologies with category badge `INTERNSHIP`, positioned directly below Domain Scorer.
+- **Projects Archive Filter Tab**: Added dedicated "Internship" filter tab on `/projects` with custom cyan styling (`bg-cyan-500/15 border-cyan-500/40 text-cyan-400`).
+- **Desktop Magnet Tabs Navigation**: Implemented Framer Motion `layoutId="active-nav-pill"` smooth sliding indicator with subtle pointer spring magnetic attraction (`useSpring`) on desktop navbar tabs.
+- **Dynamic Natural Aspect Ratio Lightbox**: Overhauled `LightboxModal` to naturally size to image orientation (square, portrait, panoramic) without rigid 16:10 / 16:9 letterbox clipping.
+- **Click-Origin Spring Expansion Morph**: Lightbox modal now tracks the clicked thumbnail's `DOMRect` coordinates to scale up directly from the clicked thumbnail via Framer Motion spring physics (`stiffness: 380, damping: 30`).
+- **Tactical Specular Sheen on Emerald Buttons**: Added GPU-accelerated angled light sweep (`.btn-tactical-sheen`) on hover across all primary solid emerald action buttons.
+- **Hero Text Shimmer**: Added continuous CSS keyframe text shimmer (`.animate-text-shimmer`) across "AVAILABLE FOR WORK" status text.
+- **Next.js 16 SEO Stack**: Added `metadataBase`, OpenGraph cards, Twitter cards, canonical tags for `/` and `/projects`, dynamic `src/app/sitemap.ts`, `src/app/robots.ts`, and structured `Person` JSON-LD schema.
+- **Consolidated Multi-Viewport Automation**: Added `.sisyphus/evidence/pw-refinements-v5.js` validating all 11 scenarios across 360px, 390px, 768px, and 1280px viewports.
 - **Hero Mobile Compact Avatar**: Integrated a 64×64px portrait avatar directly beside the name and headline on mobile devices (`lg:hidden`) featuring retro green micro-corner reticles, bringing immediate identity into the first screen fold.
 - **Mobile Multi-Viewport Automation**: Added `.sisyphus/evidence/pw-mobile.js` verifying zero horizontal overflow, avatar visibility toggles, section spacing, and marquee interactions across 390px, 360px, and 1280px viewports.
 - **Project Repository (`/projects`)**: Complete overhaul to match Overview flagship cards layout, complete with indexed headers (`01 //`), badges, tech stack chips, action links, and embedded interactive `DraggableMarquee` reels for all projects with screenshots (*OpsDeck*, *Mnemosyne*, *MuBrew*, *Modular Bench Power Supply*, *Naga City Incident Heat Map*).
@@ -19,7 +28,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Clean `LightboxModal` component (`src/components/ui/lightbox-modal.tsx`) using Base UI Dialog for uncluttered, high-res popup views of project and musical performance images.
 - Route-level Escape key listener on `/projects` navigating smoothly back to `/` ("Return to Overview") when no modal is open.
 ### Changed
-- **Universal Section Spacing Tuning**: Reduced vertical padding from `py-16 sm:py-24` down to `py-10 sm:py-16 lg:py-24` across content sections and `py-10 sm:py-14 lg:py-20` on the footer, eliminating empty travel gutters on mobile while preserving exact 96px/80px desktop rhythm.
+- **Project Ordering & Years Alignment**: Positioned `reddit-apify-actor` directly under `social-media-dashboard` and `inteflow` directly under `domain-selector`. Set all project years to `2026` with `Modular Bench Power Supply` as the sole `2025` hardware project.
+- **Dynamic Archive Count & Spring Scale**: Projects homepage CTA now computes project count dynamically (`(9 Projects)`) with Framer Motion hover/tap spring scaling (`whileHover={{ scale: 1.025 }} whileTap={{ scale: 0.97 }}`).
+- **Header Brand Click Scroll-to-Top**: Clicking `"Jose Raphael V. Dichoso"` smoothly scrolls the window to top without reload or hash clutter.
+- **Header Drawer Breakpoint Parity**: Unified mobile/tablet drawer with hamburger trigger at `lg:hidden`, guaranteeing full navigation access across 768px–1023px tablet viewports.
+- **Work Role & Contact Copy**: Updated Integrya role to `Tech Intern (University Requirement)` and contact CTA to `Available for commissioned freelance software development, automation workflows, and internship opportunities.`
 - **Universal Card Padding Compaction**: Reduced card padding from `p-5 sm:p-7` / `p-6 sm:p-8` down to `p-4 sm:p-6 lg:p-7` / `lg:p-8` across role, project, skills, cert, education, and involvement cards, gaining 16px of horizontal text width on phones while strictly preserving desktop padding.
 - **Wrap-Safe Metadata Headers**: Updated Project and Work card headers to `flex flex-row flex-wrap sm:flex-nowrap items-start sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-2.5 sm:pb-3`, allowing long titles to wrap gracefully on mobile without crushing badges or dates, while retaining single-line nowrap alignment on desktop.
 - **Tech Stack Compact Spec Layout**: Reorganized category rows to stacked label + compact tags on mobile (`flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 sm:gap-4 lg:gap-3`) with `px-2 py-0.5 text-xs` chips, dropping ledger height on phones from 770px down to 498px while preserving desktop column constraints.
@@ -42,6 +55,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Converted footer "Send Email" CTA into a direct trigger for the Formspree modal.
 
 ### Removed
+- **Hero Radar Ping Dot**: Removed repetitive green dual ping animation, replacing it with the subtle typography shimmer.
 - **Hero Mobile Portrait Block**: Removed the 400px bottom photo block on mobile screens (`hidden lg:flex`), allowing visitors to view bio, status, and CTAs without an oversized visual dead-end.
 - **Marquee Images**: Removed visual captions across all thumbnail previews and stripped caption block from `LightboxModal` for edge-to-edge viewing.
 - **Project Repository Header**: Removed `COMPLETE ARCHIVE` eyebrow and bloat description paragraph.

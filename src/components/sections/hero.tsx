@@ -28,12 +28,8 @@ export function Hero() {
           {/* Left Column (60%): Editorial Thesis Stack */}
           <div className="lg:col-span-7 space-y-6 font-mono">
             {/* 1. Status Badge (Enlarged + Dual Sonar Radar Ping + Emerald Technical Glow) */}
-            <div className="inline-flex items-center gap-2.5 rounded-sm border border-emerald-500/40 bg-emerald-950/20 px-3.5 py-1.5 text-sm text-emerald-300 shadow-[0_0_12px_rgba(52,211,153,0.18)]">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-              </span>
-              <span className="font-bold uppercase tracking-wider text-emerald-400">
+            <div className="inline-flex items-center gap-2 rounded-sm border border-emerald-500/40 bg-emerald-950/20 px-3.5 py-1.5 text-sm shadow-[0_0_12px_rgba(52,211,153,0.18)]">
+              <span className="font-bold uppercase tracking-wider animate-text-shimmer">
                 {profile.status}
               </span>
             </div>
@@ -142,7 +138,7 @@ export function Hero() {
               <button
                 type="button"
                 onClick={openEmailModal}
-                className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center gap-2"
+                className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
               >
                 <Mail className="h-4 w-4 text-black" />
                 <span>Quick Email</span>

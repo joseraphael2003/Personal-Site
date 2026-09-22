@@ -41,7 +41,7 @@ export interface Project {
   title: string;
   tagline: string;
   description: string;
-  category: "COMMISSIONED" | "PERSONAL";
+  category: "COMMISSIONED" | "PERSONAL" | "INTERNSHIP";
   confidential: boolean;
   year: string;
   techStack: string[];
@@ -130,7 +130,7 @@ export const workExperience: WorkRole[] = [
   },
   {
     company: "Integrya Technologies",
-    role: "Tech Intern",
+    role: "Tech Intern (University Requirement)",
     period: "Jun 2026 - Jul 2026",
     location: "Remote, Taguig City, Philippines",
     summaryBullet:
@@ -199,6 +199,20 @@ export const flagshipProjects: Project[] = [
     ],
   },
   {
+    id: "reddit-apify-actor",
+    title: "Reddit Account & Engagement Scraper",
+    tagline: "Custom Apify Actor for Distributed Social Scraping",
+    description:
+      "An autonomous web scraping actor developed with TypeScript, Crawlee, and residential proxy rotation. Built to ingest Reddit user profiles, engagement metrics, posts, and nested comment structures at scale while reliably bypassing rate limits.",
+    category: "COMMISSIONED",
+    confidential: false,
+    year: "2026",
+    techStack: ["TypeScript", "Apify SDK", "Crawlee", "Node.js", "Residential Proxies"],
+    primaryImage: null,
+    repoUrl: null,
+    liveUrl: null,
+  },
+  {
     id: "domain-selector",
     title: "Domain Scorer and Selection Tool",
     tagline: "Commissioned Internal Tool for US SEO Client",
@@ -228,6 +242,20 @@ export const flagshipProjects: Project[] = [
       { label: "Data Handling", value: "High-Volume Inventory Parsing & Scoring" },
       { label: "Output", value: "Human Review Interface & Filtered CSV" },
     ],
+  },
+  {
+    id: "inteflow",
+    title: "Inteflow",
+    tagline: "Internal Project Management & Automation System",
+    description:
+      "Internal automation tool built for Integrya Technologies streamlining project management, QA workflows, and automated extraction of actionable tasks from company meeting minutes.",
+    category: "INTERNSHIP",
+    confidential: false,
+    year: "2026",
+    techStack: ["Django", "React", "PostgreSQL", "Python", "REST API"],
+    primaryImage: null,
+    repoUrl: null,
+    liveUrl: null,
   },
   {
     id: "opsdeck",
@@ -343,26 +371,12 @@ export const archiveProjects: Project[] = [
       "Geospatial data visualization analyzing emergency and traffic incident patterns across Naga City coordinates using React, Vite, Kepler.gl, and Python data preprocessing.",
     category: "PERSONAL",
     confidential: false,
-    year: "2025",
+    year: "2026",
     techStack: ["React", "Vite", "Kepler.gl", "Python", "Geospatial Analysis"],
     primaryImage: "/projects/heatmap/heatmap-1.png",
     galleryImages: [
       { src: "/projects/heatmap/heatmap-1.png", caption: "Naga City Incident Heat Map" },
     ],
-    repoUrl: null,
-    liveUrl: null,
-  },
-  {
-    id: "reddit-apify-actor",
-    title: "Reddit Account & Engagement Scraper",
-    tagline: "Custom Apify Actor for Distributed Social Scraping",
-    description:
-      "An autonomous web scraping actor developed with TypeScript, Crawlee, and residential proxy rotation. Built to ingest Reddit user profiles, engagement metrics, posts, and nested comment structures at scale while reliably bypassing rate limits.",
-    category: "COMMISSIONED",
-    confidential: false,
-    year: "2026",
-    techStack: ["TypeScript", "Apify SDK", "Crawlee", "Node.js", "Residential Proxies"],
-    primaryImage: null,
     repoUrl: null,
     liveUrl: null,
   },

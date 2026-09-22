@@ -9,3 +9,55 @@ body {
   background-color: #090a0c;
   color: #ededed;
 }
+
+@keyframes text-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-text-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(52, 211, 153, 0.7) 0%,
+    rgba(209, 250, 229, 1) 50%,
+    rgba(52, 211, 153, 0.7) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: text-shimmer 3s ease-in-out infinite;
+}
+
+/* Tactical Button Specular Sheen */
+.btn-tactical-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-tactical-sheen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.32) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  transition: none;
+}
+
+.btn-tactical-sheen:hover::after {
+  left: 160%;
+  transition: left 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}

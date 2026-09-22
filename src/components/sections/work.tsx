@@ -147,7 +147,7 @@ export function Work() {
             type="button"
             onClick={() => setExpanded(!expanded)}
             aria-expanded={expanded}
-            className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center gap-2"
+            className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
           >
             <span>
               {expanded

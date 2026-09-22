@@ -8,6 +8,7 @@ import { Music, Calendar, Disc3, Radio } from "lucide-react";
 
 export function OtherInvolvement() {
   const [lightboxImage, setLightboxImage] = useState<{ src: string; caption?: string } | null>(null);
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
   if (!involvement || involvement.length === 0) return null;
 
   const getIcon = (id: string) => {
@@ -70,7 +71,10 @@ export function OtherInvolvement() {
                   <DraggableMarquee
                     items={item.gallery}
                     speed={0.35}
-                    onItemClick={(origIdx) => setLightboxImage(item.gallery[origIdx])}
+                    onItemClick={(origIdx, galleryItem, rect) => {
+                      setOriginRect(rect || null);
+                      setLightboxImage(item.gallery[origIdx]);
+                    }}
                   />
                 </div>
               )}
@@ -81,8 +85,14 @@ export function OtherInvolvement() {
       {lightboxImage && (
         <LightboxModal
           open={!!lightboxImage}
-          onOpenChange={(open) => !open && setLightboxImage(null)}
+          onOpenChange={(open) => {
+            if (!open) {
+              setLightboxImage(null);
+              setOriginRect(null);
+            }
+          }}
           image={lightboxImage}
+          originRect={originRect}
         />
       )}
     </section>
