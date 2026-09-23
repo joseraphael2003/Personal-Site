@@ -21,7 +21,7 @@ export function Education() {
             {/* Header Row */}
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 border-b border-neutral-800 pb-4">
               <div>
-                <div className="flex items-center gap-2 text-emerald-400">
+                <div className="flex items-center gap-2 text-accent-hover">
                   <GraduationCap className="h-4 w-4" />
                   <span className="text-sm font-bold text-neutral-400">
                     {item.institution}
@@ -46,7 +46,7 @@ export function Education() {
 
             {/* Honors Tag */}
             {item.honors && (
-              <div className="inline-block rounded-sm border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-xs text-emerald-300 font-bold">
+              <div className="inline-block rounded-sm border border-accent/30 bg-accent/10 px-2.5 py-1 text-xs text-accent-soft font-bold">
                 {item.honors}
               </div>
             )}
@@ -55,7 +55,7 @@ export function Education() {
             <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-neutral-300 leading-normal sm:leading-relaxed pt-1">
               {item.details.map((detail, dIdx) => (
                 <li key={dIdx} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-4 w-4 text-accent-hover mt-0.5 flex-shrink-0" />
                   <span>{detail}</span>
                 </li>
               ))}

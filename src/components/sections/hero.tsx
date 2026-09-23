@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { FileText, Mail, Copy, Check, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
@@ -10,7 +10,18 @@ import { Auralis } from "@/components/ui/auralis";
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
+  // `null` until mounted: the aura is decorative, and deferring the tier choice
+  // keeps the server HTML and the first client render identical.
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
   const { openEmailModal } = useEmailModal();
+
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1024px)");
+    const syncTier = () => setIsDesktop(query.matches);
+    syncTier();
+    query.addEventListener("change", syncTier);
+    return () => query.removeEventListener("change", syncTier);
+  }, []);
 
   const handleCopyEmail = async () => {
     try {
@@ -30,7 +41,7 @@ export function Hero() {
           {/* Left Column (60%): Editorial Thesis Stack */}
           <div className="lg:col-span-7 space-y-6 font-mono">
             {/* 1. Status Badge (Enlarged + Dual Sonar Radar Ping + Emerald Technical Glow) */}
-            <div className="inline-flex items-center gap-2 rounded-sm border border-emerald-500/40 bg-emerald-950/20 px-3.5 py-1.5 text-sm shadow-[0_0_12px_rgba(52,211,153,0.18)]">
+            <div className="inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent-deep/20 px-3.5 py-1.5 text-sm shadow-[0_0_12px_var(--accent-glow)]">
               <span className="font-bold uppercase tracking-wider animate-text-shimmer">
                 {profile.status}
               </span>
@@ -40,7 +51,11 @@ export function Hero() {
             <div className="flex items-center gap-3.5 sm:gap-5 lg:block min-w-0">
               {/* Compact Avatar (Mobile / Tablet only) */}
               <div className="lg:hidden relative h-16 w-16 shrink-0 rounded-sm border border-neutral-800 bg-[#0f1115] p-1 shadow-md">
-                <div className="relative h-full w-full overflow-hidden rounded-sm bg-[#0a0c0f]">
+                {/* Auralis Simplex Aura — the mobile tier's only instance */}
+                {isDesktop === false && (
+                  <Auralis className="z-0 rounded-sm" opacity={0.95} dprCap={1} maxFps={30} />
+                )}
+                <div className="relative z-[1] h-full w-full overflow-hidden rounded-sm bg-[#0a0c0f]/60">
                   <Image
                     src="/profile.png"
                     alt={profile.name}
@@ -51,19 +66,19 @@ export function Hero() {
                   />
                   {/* Technical Micro Reticles */}
                   <div
-                    className="pointer-events-none absolute top-1 left-1 h-2 w-2 border-t-2 border-l-2 border-emerald-400 z-10"
+                    className="pointer-events-none absolute top-1 left-1 h-2 w-2 border-t-2 border-l-2 border-accent-hover z-10"
                     aria-hidden="true"
                   />
                   <div
-                    className="pointer-events-none absolute top-1 right-1 h-2 w-2 border-t-2 border-r-2 border-emerald-400 z-10"
+                    className="pointer-events-none absolute top-1 right-1 h-2 w-2 border-t-2 border-r-2 border-accent-hover z-10"
                     aria-hidden="true"
                   />
                   <div
-                    className="pointer-events-none absolute bottom-1 left-1 h-2 w-2 border-b-2 border-l-2 border-emerald-400 z-10"
+                    className="pointer-events-none absolute bottom-1 left-1 h-2 w-2 border-b-2 border-l-2 border-accent-hover z-10"
                     aria-hidden="true"
                   />
                   <div
-                    className="pointer-events-none absolute bottom-1 right-1 h-2 w-2 border-b-2 border-r-2 border-emerald-400 z-10"
+                    className="pointer-events-none absolute bottom-1 right-1 h-2 w-2 border-b-2 border-r-2 border-accent-hover z-10"
                     aria-hidden="true"
                   />
                 </div>
@@ -85,13 +100,13 @@ export function Hero() {
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="cursor-pointer group inline-flex items-center gap-1.5 text-neutral-200 hover:text-emerald-400 transition-colors font-medium"
+                  className="cursor-pointer group inline-flex items-center gap-1.5 text-neutral-200 hover:text-accent-hover transition-colors font-medium"
                   title="Click to copy email address"
                 >
                   {copied ? (
-                    <Check className="h-4 w-4 text-emerald-400" />
+                    <Check className="h-4 w-4 text-accent-hover" />
                   ) : (
-                    <Copy className="h-4 w-4 text-neutral-500 group-hover:text-emerald-400 transition-colors" />
+                    <Copy className="h-4 w-4 text-neutral-500 group-hover:text-accent-hover transition-colors" />
                   )}
                   <span>{profile.email}</span>
                 </button>
@@ -100,7 +115,7 @@ export function Hero() {
                 {copied && (
                   <div
                     role="status"
-                    className="absolute -top-7 left-0 rounded-sm border border-emerald-500/40 bg-neutral-950 px-2 py-0.5 text-xs text-emerald-400 font-bold shadow-lg animate-in fade-in zoom-in-95 duration-150"
+                    className="absolute -top-7 left-0 rounded-sm border border-accent/40 bg-neutral-950 px-2 py-0.5 text-xs text-accent-hover font-bold shadow-lg animate-in fade-in zoom-in-95 duration-150"
                   >
                     Copied to clipboard!
                   </div>
@@ -113,7 +128,7 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub Profile"
-                className="cursor-pointer text-neutral-200 hover:text-white hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
+                className="cursor-pointer text-neutral-200 hover:text-accent-hover hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
                 title="GitHub Profile"
               >
                 <Github className="h-4 w-4" />
@@ -126,7 +141,7 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn Profile"
-                className="cursor-pointer text-neutral-200 hover:text-white hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
+                className="cursor-pointer text-neutral-200 hover:text-accent-hover hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
                 title="LinkedIn Profile"
               >
                 <Linkedin className="h-4 w-4" />
@@ -145,7 +160,7 @@ export function Hero() {
                 <button
                   type="button"
                   onClick={openEmailModal}
-                  className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
+                  className="cursor-pointer rounded-sm bg-accent px-5 py-2.5 text-sm font-bold text-black hover:bg-accent-hover btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
                 >
                   <Mail className="h-4 w-4 text-black" />
                   <span>Quick Email</span>
@@ -159,7 +174,7 @@ export function Hero() {
                 rel="noopener noreferrer"
                 className="cursor-pointer rounded-sm border border-neutral-700 bg-neutral-900/60 px-5 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-neutral-800/80 transition-colors inline-flex items-center gap-2"
               >
-                <FileText className="h-4 w-4 text-emerald-400" />
+                <FileText className="h-4 w-4 text-accent-hover" />
                 <span>Get Resume</span>
               </a>
             </div>
@@ -169,7 +184,7 @@ export function Hero() {
           <div className="hidden lg:flex lg:col-span-5 justify-center">
             <div className="relative w-full max-w-[320px] sm:max-w-[340px] rounded-sm border border-neutral-800 bg-[#0f1115] p-3 shadow-2xl">
               {/* Auralis Simplex Aura (z-0, accent-synced, auto-pauses off-screen) */}
-              <Auralis className="z-0 rounded-sm" opacity={0.95} />
+              {isDesktop === true && <Auralis className="z-0 rounded-sm" opacity={0.95} />}
 
               {/* Frame Surface with 4:5 Aspect Ratio (z-[1], above the aura) */}
               <div className="relative z-[1] aspect-4/5 w-full overflow-hidden rounded-sm border border-neutral-800 bg-[#0a0c0f]/60">
@@ -183,19 +198,19 @@ export function Hero() {
 
                 {/* Technical Corner Reticles Overlay */}
                 <div
-                  className="pointer-events-none absolute top-2 left-2 h-3 w-3 border-t-2 border-l-2 border-emerald-500/50 z-10"
+                  className="pointer-events-none absolute top-2 left-2 h-3 w-3 border-t-2 border-l-2 border-accent/50 z-10"
                   aria-hidden="true"
                 />
                 <div
-                  className="pointer-events-none absolute top-2 right-2 h-3 w-3 border-t-2 border-r-2 border-emerald-500/50 z-10"
+                  className="pointer-events-none absolute top-2 right-2 h-3 w-3 border-t-2 border-r-2 border-accent/50 z-10"
                   aria-hidden="true"
                 />
                 <div
-                  className="pointer-events-none absolute bottom-2 left-2 h-3 w-3 border-b-2 border-l-2 border-emerald-500/50 z-10"
+                  className="pointer-events-none absolute bottom-2 left-2 h-3 w-3 border-b-2 border-l-2 border-accent/50 z-10"
                   aria-hidden="true"
                 />
                 <div
-                  className="pointer-events-none absolute bottom-2 right-2 h-3 w-3 border-b-2 border-r-2 border-emerald-500/50 z-10"
+                  className="pointer-events-none absolute bottom-2 right-2 h-3 w-3 border-b-2 border-r-2 border-accent/50 z-10"
                   aria-hidden="true"
                 />
               </div>

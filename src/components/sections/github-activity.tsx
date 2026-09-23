@@ -67,15 +67,15 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
   const getColorClass = (level: number) => {
     switch (level) {
       case 1:
-        return "bg-[#064e3b]";
+        return "bg-heat-1";
       case 2:
-        return "bg-[#047857]";
+        return "bg-heat-2";
       case 3:
-        return "bg-[#059669]";
+        return "bg-heat-3";
       case 4:
-        return "bg-[#10b981]";
+        return "bg-heat-4";
       default:
-        return "bg-[#14171c]";
+        return "bg-heat-0";
     }
   };
 
@@ -94,7 +94,7 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
             href={profile.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-neutral-400 hover:text-emerald-400 transition-colors inline-flex items-center gap-1.5"
+            className="text-sm text-neutral-400 hover:text-accent-hover transition-colors inline-flex items-center gap-1.5"
           >
             <Github className="h-4 w-4" />
             <span>github.com/joseraphael2003</span>
@@ -120,7 +120,7 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
                   href={profile.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-sm border border-neutral-700 bg-neutral-900 px-4 py-2 text-sm text-emerald-400 hover:bg-neutral-800 transition-colors inline-flex items-center gap-1.5 font-bold"
+                  className="rounded-sm border border-neutral-700 bg-neutral-900 px-4 py-2 text-sm text-accent-hover hover:bg-neutral-800 transition-colors inline-flex items-center gap-1.5 font-bold"
                 >
                   <span>View Profile on GitHub</span>
                   <ArrowUpRight className="h-4 w-4" />
@@ -132,7 +132,7 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
             <div className="space-y-4">
               <div className="flex items-center justify-between text-sm text-neutral-400 border-b border-neutral-800/80 pb-2">
                 <div className="flex items-center gap-2">
-                  <Activity className="h-4 w-4 text-emerald-400" />
+                  <Activity className="h-4 w-4 text-accent-hover" />
                   <span className="text-neutral-200 font-bold">{typeof data?.total === "number" ? data.total : 0}</span>
                   <span>contributions in rolling 12 months</span>
                 </div>
@@ -151,7 +151,7 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
                       className="outline-none focus:outline-none cursor-pointer inline-block"
                       content={
                         <span>
-                          <strong className="text-emerald-400">{day.count} contributions</strong> on{" "}
+                          <strong className="text-accent-hover">{day.count} contributions</strong> on{" "}
                           {day.date}
                         </span>
                       }
@@ -170,11 +170,11 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
               <div className="flex items-center justify-end text-xs text-neutral-500 pt-2 border-t border-neutral-800/60">
                 <div className="flex items-center gap-1.5">
                   <span>Less</span>
-                  <div className="h-2 w-2 rounded-[1px] bg-[#14171c]" />
-                  <div className="h-2 w-2 rounded-[1px] bg-[#064e3b]" />
-                  <div className="h-2 w-2 rounded-[1px] bg-[#047857]" />
-                  <div className="h-2 w-2 rounded-[1px] bg-[#059669]" />
-                  <div className="h-2 w-2 rounded-[1px] bg-[#10b981]" />
+                  <div className="h-2 w-2 rounded-[1px] bg-heat-0" />
+                  <div className="h-2 w-2 rounded-[1px] bg-heat-1" />
+                  <div className="h-2 w-2 rounded-[1px] bg-heat-2" />
+                  <div className="h-2 w-2 rounded-[1px] bg-heat-3" />
+                  <div className="h-2 w-2 rounded-[1px] bg-heat-4" />
                   <span>More</span>
                 </div>
               </div>

@@ -19,13 +19,13 @@ export function SpecTabs({
       <Tabs.List className="flex gap-2 border-b border-neutral-800 pb-2">
         <Tabs.Tab
           value="overview"
-          className="cursor-pointer px-3 py-1 text-sm font-mono text-neutral-400 transition-colors data-[active]:text-emerald-400 data-[active]:border-b-2 data-[active]:border-emerald-400 data-[active]:font-bold aria-selected:text-emerald-400 aria-selected:border-b-2 aria-selected:border-emerald-400 aria-selected:font-bold focus-visible:outline-none"
+          className="cursor-pointer px-3 py-1 text-sm font-mono text-neutral-400 transition-colors data-[active]:text-accent-hover data-[active]:border-b-2 data-[active]:border-accent-hover data-[active]:font-bold aria-selected:text-accent-hover aria-selected:border-b-2 aria-selected:border-accent-hover aria-selected:font-bold focus-visible:outline-none"
         >
           [OVERVIEW]
         </Tabs.Tab>
         <Tabs.Tab
           value="specs"
-          className="cursor-pointer px-3 py-1 text-sm font-mono text-neutral-400 transition-colors data-[active]:text-emerald-400 data-[active]:border-b-2 data-[active]:border-emerald-400 data-[active]:font-bold aria-selected:text-emerald-400 aria-selected:border-b-2 aria-selected:border-emerald-400 aria-selected:font-bold focus-visible:outline-none"
+          className="cursor-pointer px-3 py-1 text-sm font-mono text-neutral-400 transition-colors data-[active]:text-accent-hover data-[active]:border-b-2 data-[active]:border-accent-hover data-[active]:font-bold aria-selected:text-accent-hover aria-selected:border-b-2 aria-selected:border-accent-hover aria-selected:font-bold focus-visible:outline-none"
         >
           [SPECIFICATIONS]
         </Tabs.Tab>

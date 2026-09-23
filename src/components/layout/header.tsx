@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
-import { AccentSwitcher } from "@/components/ui/accent-switcher";
+import { AccentSwitcher, ACCENT_PRESETS, applyAccentPreset } from "@/components/ui/accent-switcher";
 import { Menu, X, Mail } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
@@ -49,13 +49,13 @@ function MagneticNavLink({
       style={{ x: springX, y: springY }}
       aria-current={isActive ? "location" : undefined}
       className={`relative cursor-pointer transition-colors px-2.5 py-1 text-sm ${
-        isActive ? "text-emerald-400 font-bold" : "text-neutral-400 hover:text-neutral-100"
+        isActive ? "text-accent-hover font-bold" : "text-neutral-400 hover:text-neutral-100"
       }`}
     >
       {isActive && (
         <motion.span
           layoutId="active-nav-pill"
-          className="absolute inset-0 rounded-sm bg-emerald-500/15 border border-emerald-500/30"
+          className="absolute inset-0 rounded-sm bg-accent/15 border border-accent/30"
           transition={{ type: "spring", stiffness: 450, damping: 32 }}
         />
       )}
@@ -157,7 +157,7 @@ export function Header() {
             }}
             className="group flex items-baseline gap-2 cursor-pointer"
           >
-            <span className="font-pixel text-lg sm:text-xl text-neutral-100 tracking-wide group-hover:text-emerald-400 transition-colors">
+            <span className="font-pixel text-lg sm:text-xl text-neutral-100 tracking-wide group-hover:text-accent-hover transition-colors">
               {profile.name}
             </span>
           </Link>
@@ -187,7 +187,7 @@ export function Header() {
             <button
               type="button"
               onClick={openEmailModal}
-              className="cursor-pointer rounded-sm bg-emerald-500 px-3.5 py-1.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors inline-flex items-center gap-1.5 shadow-sm"
+              className="cursor-pointer rounded-sm bg-accent px-3.5 py-1.5 text-sm font-mono font-bold text-black hover:bg-accent-hover btn-tactical-sheen transition-colors inline-flex items-center gap-1.5 shadow-sm"
             >
               <Mail className="h-3.5 w-3.5 text-black" />
               <span>Quick Email</span>
@@ -217,7 +217,7 @@ export function Header() {
                     onClick={(e) => handleScrollTo(e, link.id)}
                     aria-current={isActive ? "location" : undefined}
                     className={`py-1 transition-colors cursor-pointer ${
-                      isActive ? "text-emerald-400 font-bold" : "text-neutral-300 hover:text-emerald-400"
+                      isActive ? "text-accent-hover font-bold" : "text-neutral-300 hover:text-accent-hover"
                     }`}
                   >
                     {link.label}
@@ -231,26 +231,17 @@ export function Header() {
           <div className="pt-2 border-t border-neutral-800 flex items-center justify-between">
             <span className="text-xs text-neutral-500 uppercase tracking-wider">Accent</span>
             <div className="flex items-center gap-1.5">
-              {[
-                { id: "emerald", color: "#10b981", glow: "rgba(16, 185, 129, 0.2)" },
-                { id: "cyan", color: "#06b6d4", glow: "rgba(6, 182, 212, 0.2)" },
-                { id: "violet", color: "#8b5cf6", glow: "rgba(139, 92, 246, 0.2)" },
-                { id: "amber", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.2)" },
-                { id: "rose", color: "#f43f5e", glow: "rgba(244, 63, 94, 0.2)" },
-              ].map((swatch) => (
+              {ACCENT_PRESETS.map((preset) => (
                 <button
-                  key={swatch.id}
+                  key={preset.id}
                   type="button"
-                  onClick={() => {
-                    document.documentElement.setAttribute("data-accent", swatch.id);
-                    try { localStorage.setItem("portfolio-accent", swatch.id); } catch {}
-                  }}
-                  aria-label={swatch.id}
+                  onClick={() => applyAccentPreset(preset.id)}
+                  aria-label={preset.id}
                   className="h-6 w-6 rounded-sm border border-neutral-800 flex items-center justify-center cursor-pointer hover:border-neutral-600 transition-colors"
                 >
                   <span
                     className="h-2.5 w-2.5 rounded-full border"
-                    style={{ borderColor: swatch.color, backgroundColor: swatch.glow }}
+                    style={{ borderColor: preset.color, backgroundColor: preset.glow }}
                   />
                 </button>
               ))}
@@ -264,7 +255,7 @@ export function Header() {
                 setMobileMenuOpen(false);
                 openEmailModal();
               }}
-              className="text-emerald-400 flex items-center gap-1.5 font-bold cursor-pointer"
+              className="text-accent-hover flex items-center gap-1.5 font-bold cursor-pointer"
             >
               <Mail className="h-3.5 w-3.5" />
               <span>Quick Email</span>

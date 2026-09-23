@@ -97,7 +97,7 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
             {/* Content Body */}
             {status === "success" ? (
               <div className="py-6 flex flex-col items-center text-center space-y-4">
-                <div className="h-12 w-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                <div className="h-12 w-12 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center text-accent-hover">
                   <CheckCircle2 className="h-6 w-6" />
                 </div>
                 <div className="space-y-1.5">
@@ -120,7 +120,7 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
                   <button
                     type="button"
                     onClick={() => onOpenChange(false)}
-                    className="cursor-pointer rounded-sm bg-emerald-500 px-4 py-2 text-sm font-bold text-black hover:bg-emerald-400 transition-colors"
+                    className="cursor-pointer rounded-sm bg-accent px-4 py-2 text-sm font-bold text-black hover:bg-accent-hover transition-colors"
                   >
                     Close
                   </button>
@@ -150,7 +150,7 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
                 {/* Name */}
                 <div className="space-y-1.5">
                   <label htmlFor="modal-name" className="text-neutral-400 block font-medium">
-                    Your Name <span className="text-emerald-400">*</span>
+                    Your Name <span className="text-accent-hover">*</span>
                   </label>
                   <input
                     id="modal-name"
@@ -160,14 +160,14 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Alex Santos"
-                    className="w-full rounded-sm border border-neutral-800 bg-[#14171d] px-3 py-2 text-neutral-200 placeholder:text-neutral-600 focus:border-emerald-500 focus:outline-none transition-colors disabled:opacity-50"
+                    className="w-full rounded-sm border border-neutral-800 bg-[#14171d] px-3 py-2 text-neutral-200 placeholder:text-neutral-600 focus:border-accent focus:outline-none transition-colors disabled:opacity-50"
                   />
                 </div>
 
                 {/* Email */}
                 <div className="space-y-1.5">
                   <label htmlFor="modal-email" className="text-neutral-400 block font-medium">
-                    Your Email <span className="text-emerald-400">*</span>
+                    Your Email <span className="text-accent-hover">*</span>
                   </label>
                   <input
                     id="modal-email"
@@ -177,14 +177,14 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="e.g. alex@example.com"
-                    className="w-full rounded-sm border border-neutral-800 bg-[#14171d] px-3 py-2 text-neutral-200 placeholder:text-neutral-600 focus:border-emerald-500 focus:outline-none transition-colors disabled:opacity-50"
+                    className="w-full rounded-sm border border-neutral-800 bg-[#14171d] px-3 py-2 text-neutral-200 placeholder:text-neutral-600 focus:border-accent focus:outline-none transition-colors disabled:opacity-50"
                   />
                 </div>
 
                 {/* Message */}
                 <div className="space-y-1.5">
                   <label htmlFor="modal-message" className="text-neutral-400 block font-medium">
-                    Project Scope / Inquiry <span className="text-emerald-400">*</span>
+                    Project Scope / Inquiry <span className="text-accent-hover">*</span>
                   </label>
                   <textarea
                     id="modal-message"
@@ -194,7 +194,7 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Briefly describe your project, timeline, or question..."
-                    className="w-full rounded-sm border border-neutral-800 bg-[#14171d] px-3 py-2 text-neutral-200 placeholder:text-neutral-600 focus:border-emerald-500 focus:outline-none transition-colors disabled:opacity-50 resize-y leading-relaxed"
+                    className="w-full rounded-sm border border-neutral-800 bg-[#14171d] px-3 py-2 text-neutral-200 placeholder:text-neutral-600 focus:border-accent focus:outline-none transition-colors disabled:opacity-50 resize-y leading-relaxed"
                   />
                 </div>
 
@@ -203,7 +203,7 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="cursor-pointer rounded-sm bg-emerald-500 px-4 py-2 text-sm font-bold text-black hover:bg-emerald-400 transition-colors inline-flex items-center gap-1.5 disabled:opacity-60"
+                    className="cursor-pointer rounded-sm bg-accent px-4 py-2 text-sm font-bold text-black hover:bg-accent-hover transition-colors inline-flex items-center gap-1.5 disabled:opacity-60"
                   >
                     {status === "submitting" ? (
                       <>

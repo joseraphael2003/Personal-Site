@@ -260,7 +260,7 @@ export function DraggableMarquee({
               onClick={(e) => onItemClick?.(originalIndex, item, e.currentTarget.getBoundingClientRect())}
               className={`shrink-0 text-left transition-all rounded-sm overflow-hidden border cursor-pointer ${
                 isSelected
-                  ? "border-emerald-400 ring-1 ring-emerald-400 opacity-100"
+                  ? "border-accent-hover ring-1 ring-accent-hover opacity-100"
                   : "border-neutral-800 opacity-70 hover:opacity-100 hover:border-neutral-700"
               } ${itemClassName}`}
               aria-label={item.caption || `Image ${originalIndex + 1}`}

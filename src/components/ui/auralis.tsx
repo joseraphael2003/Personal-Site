@@ -6,12 +6,20 @@ import { useEffect, useRef } from "react";
 /*  Auralis — layered 2D simplex noise aura                                    */
 /*                                                                            */
 /*  Lifecycle guarantees:                                                      */
-/*    - WebGL context is created lazily on first visibility (never on mobile).  */
+/*    - One instance is mounted per viewport, chosen by breakpoint: the 64px    */
+/*      mobile avatar uses `dprCap={1} maxFps={30}`, the desktop portrait uses  */
+/*      the defaults. A breakpoint switch unmounts one and mounts the other, so */
+/*      only one WebGL context is ever live.                                    */
+/*    - The WebGL context is created lazily on the first render that is allowed */
+/*      (visible viewport *and* visible tab).                                   */
+/*    - `canRender()` gates every entry point, so a hidden tab never draws.     */
 /*    - IntersectionObserver cancels the rAF loop the moment the hero leaves    */
 /*      the viewport, so 0% CPU/GPU is spent while reading other sections.      */
 /*    - `prefers-reduced-motion` renders one static frame and never loops.      */
-/*    - Backing store is capped at DPR 1.5 and animation time is wrapped so     */
+/*    - Backing store is capped at `dprCap` and animation time is wrapped so    */
 /*      float32 precision never degrades on long sessions.                      */
+/*    - A truly unmounted canvas releases its context; a StrictMode / Fast      */
+/*      Refresh remount of a still-connected canvas reuses it.                  */
 /* -------------------------------------------------------------------------- */
 
 const vertexShaderGLSL = `
@@ -100,11 +108,14 @@ export type AuralisProps = {
   grain?: number;
   /** Canvas opacity — keep subtle when layered behind imagery. */
   opacity?: number;
+  /** Upper bound for the device pixel ratio used by the backing store. */
+  dprCap?: number;
+  /** Upper bound for how many frames per second are drawn. */
+  maxFps?: number;
 };
 
 const ACCENT_FALLBACK: AuralisColor = [0.0627, 0.7255, 0.5059]; // #10b981 (emerald)
 const ACCENT_CUSTOM_PROPERTY = "--accent-color";
-const DPR_CAP = 1.5;
 /** Seconds after which animation time wraps — keeps float32 noise math precise. */
 const TIME_WRAP_SECONDS = 3600;
 /** Fixed timestamp used for the single frame rendered under reduced motion. */
@@ -184,7 +195,15 @@ type Scene = {
   colorsLocation: WebGLUniformLocation | null;
 };
 
-export function Auralis({ className, colors, speed = 1, grain = 0.045, opacity = 0.45 }: AuralisProps) {
+export function Auralis({
+  className,
+  colors,
+  speed = 1,
+  grain = 0.045,
+  opacity = 0.45,
+  dprCap = 1.5,
+  maxFps = 60,
+}: AuralisProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const paletteKey = colors ? JSON.stringify(colors) : "";
 
@@ -222,6 +241,12 @@ export function Auralis({ className, colors, speed = 1, grain = 0.045, opacity =
     let rafId = 0;
     let elapsedMs = 0;
     let lastFrameMs = 0;
+    /** Timestamp of the last frame that actually drew — the fps cap's clock. */
+    let lastDrawMs = 0;
+    const frameIntervalMs = 1000 / maxFps;
+
+    /** Single source of truth for "may this instance touch the GPU right now". */
+    const canRender = () => !document.hidden && visible;
 
     const motionQuery =
       typeof window.matchMedia === "function"
@@ -303,7 +328,7 @@ export function Auralis({ className, colors, speed = 1, grain = 0.045, opacity =
     };
 
     const resizeCanvas = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+      const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
       const width = Math.max(1, Math.round(canvas.clientWidth * dpr));
       const height = Math.max(1, Math.round(canvas.clientHeight * dpr));
       if (canvas.width !== width || canvas.height !== height) {
@@ -331,21 +356,29 @@ export function Auralis({ className, colors, speed = 1, grain = 0.045, opacity =
     };
 
     const renderStaticFrame = () => {
-      if (disposed || !ensureScene()) return;
+      if (disposed || !canRender() || !ensureScene()) return;
       if (elapsedMs === 0) elapsedMs = STATIC_FRAME_TIME_MS;
       draw(elapsedMs);
     };
 
     const frame = (now: number) => {
       if (disposed) return;
+      if (!canRender()) {
+        stop();
+        return;
+      }
       rafId = requestAnimationFrame(frame);
       elapsedMs += lastFrameMs === 0 ? 16 : Math.min(now - lastFrameMs, MAX_FRAME_DELTA_MS);
       lastFrameMs = now;
+      // The fps cap skips draws but never stops the clock above, so the field
+      // keeps real-time speed at any cap.
+      if (now - lastDrawMs < frameIntervalMs - 1) return;
       draw(elapsedMs);
+      lastDrawMs = now;
     };
 
     const start = () => {
-      if (disposed || running) return;
+      if (disposed || running || !canRender()) return;
       if (reduced) {
         renderStaticFrame();
         return;
@@ -353,6 +386,7 @@ export function Auralis({ className, colors, speed = 1, grain = 0.045, opacity =
       if (!ensureScene()) return;
       running = true;
       lastFrameMs = 0;
+      lastDrawMs = 0;
       rafId = requestAnimationFrame(frame);
     };
 
@@ -369,7 +403,8 @@ export function Auralis({ className, colors, speed = 1, grain = 0.045, opacity =
       const accent = readAccentColor();
       if (!accent) return;
       writePalette(derivePalette(accent));
-      if (visible && !running) renderStaticFrame();
+      if (!canRender() || running) return;
+      renderStaticFrame();
     };
 
     function handleContextLost(event: Event) {
@@ -381,21 +416,29 @@ export function Auralis({ className, colors, speed = 1, grain = 0.045, opacity =
     function handleContextRestored() {
       if (disposed || !gl) return;
       scene = buildScene(gl);
-      if (!scene) return;
-      if (visible) {
-        if (reduced) renderStaticFrame();
-        else start();
-      }
+      if (!scene || !canRender()) return;
+      if (reduced) renderStaticFrame();
+      else start();
     }
 
     const handleMotionPreference = () => {
       reduced = motionQuery?.matches ?? false;
       if (reduced) {
         stop();
-        if (visible) renderStaticFrame();
-      } else if (visible) {
+        if (canRender()) renderStaticFrame();
+      } else if (canRender()) {
         start();
       }
+    };
+
+    const handleVisibilityChange = () => {
+      if (disposed) return;
+      if (!canRender()) {
+        stop();
+        return;
+      }
+      if (reduced) renderStaticFrame();
+      else start();
     };
 
     writePalette(resolvePalette());
@@ -416,8 +459,7 @@ export function Auralis({ className, colors, speed = 1, grain = 0.045, opacity =
       typeof ResizeObserver === "undefined"
         ? null
         : new ResizeObserver(() => {
-            if (!visible) return;
-            if (running) return;
+            if (!canRender() || running) return;
             renderStaticFrame();
           });
     resizeObserver?.observe(canvas);
@@ -429,6 +471,7 @@ export function Auralis({ className, colors, speed = 1, grain = 0.045, opacity =
     });
 
     motionQuery?.addEventListener?.("change", handleMotionPreference);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       disposed = true;
@@ -437,20 +480,28 @@ export function Auralis({ className, colors, speed = 1, grain = 0.045, opacity =
       resizeObserver?.disconnect();
       accentObserver.disconnect();
       motionQuery?.removeEventListener?.("change", handleMotionPreference);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (gl) {
+        const context = gl;
+        gl = null;
         canvas.removeEventListener("webglcontextlost", handleContextLost);
         canvas.removeEventListener("webglcontextrestored", handleContextRestored);
         if (scene) {
-          gl.deleteBuffer(scene.buffer);
-          gl.deleteProgram(scene.program);
+          context.deleteBuffer(scene.buffer);
+          context.deleteProgram(scene.program);
           scene = null;
         }
-        // The canvas may be re-mounted (StrictMode / Fast Refresh), so the
-        // context is left intact for the next effect run to reuse.
-        gl = null;
+        // A StrictMode / Fast Refresh remount reuses the still-connected canvas,
+        // so the release is deferred to tell the two cases apart: only a canvas
+        // that is really gone from the document gives its context up.
+        setTimeout(() => {
+          if (!canvas.isConnected) {
+            context.getExtension("WEBGL_lose_context")?.loseContext();
+          }
+        }, 0);
       }
     };
-  }, [paletteKey, speed, grain]);
+  }, [paletteKey, speed, grain, dprCap, maxFps]);
 
   return (
     <canvas

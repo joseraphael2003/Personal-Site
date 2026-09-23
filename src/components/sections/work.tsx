@@ -28,7 +28,7 @@ export function Work() {
             <div className="relative space-y-4">
               {/* Active Role Node (Centered exactly over 1px rail border) */}
               <div
-                className="absolute -left-[29.5px] sm:-left-[37.5px] top-6 h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                className="absolute -left-[29.5px] sm:-left-[37.5px] top-6 h-2.5 w-2.5 bg-accent-hover shadow-[0_0_8px_color-mix(in_srgb,var(--accent-hover)_50%,transparent)]"
                 aria-hidden="true"
               />
 
@@ -40,7 +40,7 @@ export function Work() {
                       {currentRole.role}
                     </h3>
                     <div className="text-sm text-neutral-400 mt-0.5 flex items-center gap-1.5">
-                      <Briefcase className="h-4 w-4 text-emerald-400" />
+                      <Briefcase className="h-4 w-4 text-accent-hover" />
                       <span className="text-neutral-200 font-bold">{currentRole.company}</span>
                     </div>
                   </div>
@@ -62,7 +62,7 @@ export function Work() {
                   {!expanded ? (
                     /* Collapsed View: Single Summary Bullet */
                     <div className="flex items-start gap-2.5 leading-normal sm:leading-relaxed py-1 text-neutral-200">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-accent-hover mt-1.5 shrink-0" />
                       {(() => {
                         const text = currentRole.summaryBullet || currentRole.bullets[0];
                         const colonIndex = text.indexOf(":");
@@ -84,7 +84,7 @@ export function Work() {
                         const colonIndex = bullet.indexOf(":");
                         return (
                           <li key={bIdx} className="flex items-start gap-2.5 leading-normal sm:leading-relaxed">
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+                            <span className="h-1.5 w-1.5 rounded-full bg-accent-hover mt-1.5 shrink-0" />
                             {colonIndex !== -1 ? (
                               <span>
                                 <strong className="text-neutral-100 font-semibold">{bullet.slice(0, colonIndex + 1)}</strong>
@@ -184,7 +184,7 @@ export function Work() {
               type="button"
               onClick={() => setExpanded(!expanded)}
               aria-expanded={expanded}
-              className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
+              className="cursor-pointer rounded-sm bg-accent px-5 py-2.5 text-sm font-mono font-bold text-black hover:bg-accent-hover btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
             >
               <span>
                 {expanded

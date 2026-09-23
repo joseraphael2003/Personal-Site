@@ -14,11 +14,11 @@ export function OtherInvolvement() {
   const getIcon = (id: string) => {
     switch (id) {
       case "celestial-carabaos":
-        return <Disc3 className="h-5 w-5 text-emerald-400" />;
+        return <Disc3 className="h-5 w-5 text-accent-hover" />;
       case "the-masirams":
-        return <Radio className="h-5 w-5 text-emerald-400" />;
+        return <Radio className="h-5 w-5 text-accent-hover" />;
       default:
-        return <Music className="h-5 w-5 text-emerald-400" />;
+        return <Music className="h-5 w-5 text-accent-hover" />;
     }
   };
 
@@ -48,7 +48,7 @@ export function OtherInvolvement() {
                       {item.organization}
                     </h3>
                   </div>
-                  <div className="text-sm text-emerald-400 font-bold mt-1">
+                  <div className="text-sm text-accent-hover font-bold mt-1">
                     {item.role}
                   </div>
                 </div>

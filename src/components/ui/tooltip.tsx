@@ -25,7 +25,7 @@ export function AcronymTooltip({
           tabIndex={tabIndex}
           className={
             className ||
-            "cursor-help underline decoration-neutral-600 decoration-dotted underline-offset-4 hover:decoration-emerald-400 transition-colors focus-visible:outline-none"
+            "cursor-help underline decoration-neutral-600 decoration-dotted underline-offset-4 hover:decoration-accent-hover transition-colors focus-visible:outline-none"
           }
         >
           {children}

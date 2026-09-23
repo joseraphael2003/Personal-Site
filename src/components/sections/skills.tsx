@@ -3,11 +3,11 @@ import { Terminal, Cpu, Database, Wrench, CircuitBoard } from "lucide-react";
 
 export function Skills() {
   const iconMap: Record<string, React.ReactNode> = {
-    Languages: <Terminal className="h-4 w-4 text-emerald-400" />,
-    "Frameworks & Systems": <Cpu className="h-4 w-4 text-emerald-400" />,
-    "Databases & Storage": <Database className="h-4 w-4 text-emerald-400" />,
-    "Automation & Tooling": <Wrench className="h-4 w-4 text-emerald-400" />,
-    Engineering: <CircuitBoard className="h-4 w-4 text-emerald-400" />,
+    Languages: <Terminal className="h-4 w-4 text-accent-hover" />,
+    "Frameworks & Systems": <Cpu className="h-4 w-4 text-accent-hover" />,
+    "Databases & Storage": <Database className="h-4 w-4 text-accent-hover" />,
+    "Automation & Tooling": <Wrench className="h-4 w-4 text-accent-hover" />,
+    Engineering: <CircuitBoard className="h-4 w-4 text-accent-hover" />,
   };
 
   return (
@@ -29,7 +29,7 @@ export function Skills() {
             >
               {/* Category Label with Icon */}
               <div className="flex items-center gap-2 lg:gap-2.5 shrink-0 sm:min-w-[200px] lg:min-w-[250px]">
-                {iconMap[category.title] || <Terminal className="h-4 w-4 text-emerald-400" />}
+                {iconMap[category.title] || <Terminal className="h-4 w-4 text-accent-hover" />}
                 <span className="font-pixel text-sm sm:text-base text-neutral-200 uppercase tracking-wide">
                   [{category.title}]
                 </span>

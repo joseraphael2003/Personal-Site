@@ -7,7 +7,7 @@ import { Check, Crosshair } from "lucide-react";
 /** Shared with the pre-paint script in app/layout.tsx. */
 export const ACCENT_STORAGE_KEY = "portfolio-accent";
 
-type AccentId = "emerald" | "cyan" | "violet" | "amber" | "rose";
+export type AccentId = "emerald" | "cyan" | "violet" | "amber" | "rose";
 
 type AccentPreset = {
   id: AccentId;
@@ -17,7 +17,7 @@ type AccentPreset = {
 };
 
 /** Mirrors the `[data-accent]` blocks in app/globals.css. */
-const ACCENT_PRESETS: AccentPreset[] = [
+export const ACCENT_PRESETS: AccentPreset[] = [
   { id: "emerald", label: "Emerald", color: "#10b981", glow: "rgba(16, 185, 129, 0.2)" },
   { id: "cyan", label: "Cyan", color: "#06b6d4", glow: "rgba(6, 182, 212, 0.2)" },
   { id: "violet", label: "Violet", color: "#8b5cf6", glow: "rgba(139, 92, 246, 0.2)" },
@@ -30,9 +30,22 @@ function isAccentId(value: string | null): value is AccentId {
 }
 
 /**
- * Compact reticle trigger plus swatch popover. Selecting a preset writes
- * `data-accent` on <html> so every `--accent-*` token retargets at once, and
- * mirrors the choice into localStorage for the next visit's pre-paint script.
+ * Applies a preset: `data-accent` on <html> retargets every `--accent-*` token
+ * at once, and localStorage mirrors the choice for the next visit's pre-paint
+ * script. Shared with the mobile swatch strip in the header.
+ */
+export function applyAccentPreset(preset: AccentId) {
+  document.documentElement.setAttribute("data-accent", preset);
+  try {
+    localStorage.setItem(ACCENT_STORAGE_KEY, preset);
+  } catch {
+    // Storage can be unavailable
+  }
+}
+
+/**
+ * Compact reticle trigger plus swatch popover. The active row follows the
+ * `data-accent` attribute on <html>, so the mobile swatch strip stays in sync.
  */
 export function AccentSwitcher({ className = "" }: { className?: string }) {
   const [accent, setAccent] = useState<AccentId>("emerald");
@@ -51,12 +64,7 @@ export function AccentSwitcher({ className = "" }: { className?: string }) {
   }, []);
 
   const applyAccent = (preset: AccentId) => {
-    document.documentElement.setAttribute("data-accent", preset);
-    try {
-      localStorage.setItem(ACCENT_STORAGE_KEY, preset);
-    } catch {
-      // Storage can be unavailable
-    }
+    applyAccentPreset(preset);
     setAccent(preset);
     setOpen(false);
   };

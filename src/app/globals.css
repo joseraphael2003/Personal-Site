@@ -3,8 +3,21 @@
 @theme {
   --font-pixel: var(--font-dot-gothic), monospace;
   --font-mono: var(--font-space-mono), monospace;
-  --color-emerald-400: var(--accent-hover);
-  --color-emerald-500: var(--accent-color);
+}
+
+/* Accent utility family. `inline` keeps every utility pointing at the live
+   --accent-* tokens, so a `data-accent` swap repaints utilities that were
+   already generated. */
+@theme inline {
+  --color-accent: var(--accent-color);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: color-mix(in srgb, var(--accent-hover) 55%, white);
+  --color-accent-deep: color-mix(in srgb, var(--accent-color) 25%, #090a0c);
+  --color-heat-0: #14171c;
+  --color-heat-1: color-mix(in srgb, var(--accent-color) 30%, #14171c);
+  --color-heat-2: color-mix(in srgb, var(--accent-color) 50%, #14171c);
+  --color-heat-3: color-mix(in srgb, var(--accent-color) 75%, #14171c);
+  --color-heat-4: var(--accent-color);
 }
 
 /* ---------------------------------------------------------------------------
@@ -65,9 +78,9 @@ body {
 .animate-text-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(52, 211, 153, 0.7) 0%,
-    rgba(209, 250, 229, 1) 50%,
-    rgba(52, 211, 153, 0.7) 100%
+    color-mix(in srgb, var(--accent-hover) 70%, transparent) 0%,
+    var(--color-accent-soft) 50%,
+    color-mix(in srgb, var(--accent-hover) 70%, transparent) 100%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;

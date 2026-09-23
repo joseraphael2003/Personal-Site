@@ -38,8 +38,8 @@ export function Footer() {
             >
               {copied ? (
                 <>
-                  <Check className="h-4 w-4 text-emerald-400" />
-                  <span className="text-emerald-400">Email Copied</span>
+                  <Check className="h-4 w-4 text-accent-hover" />
+                  <span className="text-accent-hover">Email Copied</span>
                 </>
               ) : (
                 <>
@@ -57,7 +57,7 @@ export function Footer() {
               <button
                 type="button"
                 onClick={openEmailModal}
-                className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-3 text-sm font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
+                className="cursor-pointer rounded-sm bg-accent px-5 py-3 text-sm font-bold text-black hover:bg-accent-hover btn-tactical-sheen transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
               >
                 <Mail className="h-4 w-4 text-black" />
                 <span>Send Email</span>
@@ -72,7 +72,7 @@ export function Footer() {
           <div className="space-y-1.5">
             <div className="font-pixel text-base text-neutral-200">{profile.name}</div>
             <div className="flex items-center gap-1.5 text-neutral-500 text-xs">
-              <MapPin className="h-3.5 w-3.5 text-emerald-400" />
+              <MapPin className="h-3.5 w-3.5 text-accent-hover" />
               <span>{profile.location}</span>
             </div>
           </div>
@@ -87,7 +87,7 @@ export function Footer() {
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-emerald-400 transition-colors inline-flex items-center gap-1"
+                className="hover:text-accent-hover transition-colors inline-flex items-center gap-1"
               >
                 <Github className="h-4 w-4" />
                 <span>GitHub</span>
@@ -97,7 +97,7 @@ export function Footer() {
                 href={profile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-emerald-400 transition-colors inline-flex items-center gap-1"
+                className="hover:text-accent-hover transition-colors inline-flex items-center gap-1"
               >
                 <Linkedin className="h-4 w-4" />
                 <span>LinkedIn</span>

@@ -15,7 +15,7 @@ export function ArchitecturePipeline({
   return (
     <div className={`space-y-2 font-mono ${className}`}>
       <div className="flex items-center justify-between text-xs text-neutral-500 border-b border-neutral-800 pb-1.5">
-        <span className="text-emerald-400 font-bold uppercase tracking-wider">
+        <span className="text-accent-hover font-bold uppercase tracking-wider">
           ARCHITECTURE PIPELINE
         </span>
         <span>{steps.length} STAGES</span>
@@ -30,7 +30,7 @@ export function ArchitecturePipeline({
             <div>
               <div className="flex items-center justify-between text-xs text-neutral-500 mb-1">
                 <span>0{idx + 1}</span>
-                <span className="text-emerald-400 font-bold">STAGE</span>
+                <span className="text-accent-hover font-bold">STAGE</span>
               </div>
               <div className="font-pixel text-sm text-neutral-100 uppercase tracking-wide">
                 {step.stage}

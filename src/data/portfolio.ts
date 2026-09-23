@@ -299,10 +299,6 @@ export const flagshipProjects: Project[] = [
     repoUrl: null,
     liveUrl: null,
   },
-];
-
-export const archiveProjects: Project[] = [
-  ...flagshipProjects,
   {
     id: "mnemosyne",
     title: "Mnemosyne",
@@ -324,6 +320,10 @@ export const archiveProjects: Project[] = [
     repoUrl: null,
     liveUrl: null,
   },
+];
+
+export const archiveProjects: Project[] = [
+  ...flagshipProjects,
   {
     id: "mubrew",
     title: "MuBrew",
@@ -397,7 +397,7 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     title: "Automation & Tooling",
-    skills: ["n8n Workflows", "Apify Actors", "Telegram Bots", "Git / GitHub", "Linux", "Vercel"],
+    skills: ["n8n Workflows", "Apify Actors", "Telegram Bots", "Git / GitHub", "Linux"],
   },
   {
     title: "Engineering",

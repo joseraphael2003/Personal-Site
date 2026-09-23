@@ -48,13 +48,13 @@ export function Certifications() {
                           className="object-contain p-1"
                         />
                       ) : (
-                        <Award className="h-6 w-6 text-emerald-400" />
+                        <Award className="h-6 w-6 text-accent-hover" />
                       )}
                     </div>
 
                     <div className="text-right text-xs text-neutral-500 font-mono">
                       <div>{cert.year}</div>
-                      <div className="text-[11px] text-emerald-400 font-bold mt-0.5">VERIFIED</div>
+                      <div className="text-[11px] text-accent-hover font-bold mt-0.5">VERIFIED</div>
                     </div>
                   </div>
 
@@ -70,7 +70,7 @@ export function Certifications() {
 
                   {/* Honors Tag */}
                   {cert.honors && (
-                    <div className="inline-block rounded-sm border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-xs text-emerald-300 font-bold">
+                    <div className="inline-block rounded-sm border border-accent/30 bg-accent/10 px-2.5 py-0.5 text-xs text-accent-soft font-bold">
                       {cert.honors}
                     </div>
                   )}
@@ -78,7 +78,7 @@ export function Certifications() {
                   {/* Earner */}
                   {cert.earner && (
                     <div className="flex items-center gap-1.5 text-xs text-neutral-400 pt-1">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-accent-hover shrink-0" />
                       <span>Issued to: {cert.earner}</span>
                     </div>
                   )}
@@ -108,7 +108,7 @@ export function Certifications() {
                       href={cert.verifyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors group cursor-pointer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-accent-hover hover:text-accent-soft transition-colors group cursor-pointer"
                     >
                       <span>Verify on Credly</span>
                       <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -118,7 +118,7 @@ export function Certifications() {
                       href={cert.moreUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors group cursor-pointer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-accent-hover hover:text-accent-soft transition-colors group cursor-pointer"
                     >
                       <span>See More</span>
                       <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

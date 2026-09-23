@@ -13,7 +13,7 @@ export default async function Home() {
   const initialContributions = await getGithubContributions();
 
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-[#090a0c] text-neutral-200 selection:bg-emerald-500/20 selection:text-emerald-300">
+    <div className="flex min-h-[100dvh] flex-col bg-[#090a0c] text-neutral-200 selection:bg-accent/20 selection:text-accent-soft">
       <Header />
       <main className="flex-1">
         <Hero />
