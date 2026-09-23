@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
@@ -90,6 +90,8 @@ export function Header() {
     }
   }, []);
 
+  const lastObservedSection = useRef<string>("work");
+
   useEffect(() => {
     const sectionIds = ["work", "projects", "skills", "education", "certifications", "involvement", "contact"];
     const elements = sectionIds
@@ -102,7 +104,13 @@ export function Header() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+            lastObservedSection.current = entry.target.id;
+            const atBottom =
+              window.innerHeight + window.scrollY >=
+              document.documentElement.scrollHeight - 90;
+            if (!atBottom) {
+              setActiveSection(entry.target.id);
+            }
           }
         });
       },
@@ -113,8 +121,26 @@ export function Header() {
     );
 
     elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+
+    const handleScroll = () => {
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 90;
+      if (atBottom) {
+        setActiveSection("contact");
+      } else if (lastObservedSection.current) {
+        setActiveSection(lastObservedSection.current);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
+
   return (
     <header className="sticky top-0 z-40 w-full border-b border-neutral-800 bg-[#090a0c]/90 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-8">
@@ -151,16 +177,21 @@ export function Header() {
 
         {/* Right: Availability & Action */}
         <div className="hidden lg:flex items-center gap-4">
-          <button
-            type="button"
-            onClick={openEmailModal}
-            className="cursor-pointer rounded-sm bg-emerald-500 px-3.5 py-1.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors inline-flex items-center gap-1.5 shadow-sm"
+          <motion.div
+            whileHover={{ scale: 1.025 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
-            <Mail className="h-3.5 w-3.5 text-black" />
-            <span>Quick Email</span>
-          </button>
+            <button
+              type="button"
+              onClick={openEmailModal}
+              className="cursor-pointer rounded-sm bg-emerald-500 px-3.5 py-1.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors inline-flex items-center gap-1.5 shadow-sm"
+            >
+              <Mail className="h-3.5 w-3.5 text-black" />
+              <span>Quick Email</span>
+            </button>
+          </motion.div>
         </div>
-
         {/* Mobile / Tablet menu button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

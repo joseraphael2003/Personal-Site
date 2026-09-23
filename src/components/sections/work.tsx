@@ -143,19 +143,25 @@ export function Work() {
 
         {/* 3. Expand / Collapse Action Control (Centered Compact Solid Emerald Button) */}
         <div className="pt-4 flex justify-center">
-          <button
-            type="button"
-            onClick={() => setExpanded(!expanded)}
-            aria-expanded={expanded}
-            className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
+          <motion.div
+            whileHover={{ scale: 1.025 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
-            <span>
-              {expanded
-                ? "Collapse to Current Role"
-                : `Expand Full Career Ledger (${workExperience.length} Roles Total)`}
-            </span>
-            {expanded ? <ChevronUp className="h-4 w-4 text-black" /> : <ChevronDown className="h-4 w-4 text-black" />}
-          </button>
+            <button
+              type="button"
+              onClick={() => setExpanded(!expanded)}
+              aria-expanded={expanded}
+              className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-mono font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
+            >
+              <span>
+                {expanded
+                  ? "Collapse to Current Role"
+                  : `Expand Full Career Ledger (${workExperience.length} Roles Total)`}
+              </span>
+              {expanded ? <ChevronUp className="h-4 w-4 text-black" /> : <ChevronDown className="h-4 w-4 text-black" />}
+            </button>
+          </motion.div>
         </div>
       </div>
     </section>

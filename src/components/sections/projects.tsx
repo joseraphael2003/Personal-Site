@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { flagshipProjects, archiveProjects, Project } from "@/data/portfolio";
 import { motion } from "framer-motion";
+import { useRadialTransition, RadialTransitionOverlay } from "@/components/ui/radial-transition";
 import { DraggableMarquee } from "@/components/ui/draggable-marquee";
 import { LightboxModal } from "@/components/ui/lightbox-modal";
 import { Github, ExternalLink, ArrowRight, ArrowUpRight } from "lucide-react";
@@ -11,6 +12,7 @@ import { Github, ExternalLink, ArrowRight, ArrowUpRight } from "lucide-react";
 export function Projects() {
   const [lightboxImage, setLightboxImage] = useState<{ src: string; caption?: string } | null>(null);
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
+  const { transitioning, origin, navigateWithRadial } = useRadialTransition();
 
   return (
     <section id="projects" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-10 sm:py-16 lg:py-24">
@@ -141,6 +143,12 @@ export function Projects() {
           >
             <Link
               href="/projects"
+              onClick={(e) => {
+                if (!e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
+                  e.preventDefault();
+                  navigateWithRadial("/projects", e);
+                }
+              }}
               className="cursor-pointer rounded-sm bg-emerald-500 px-6 py-3 text-sm font-mono font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
             >
               <span>View Complete Project Archive ({archiveProjects.length} Projects)</span>
@@ -149,6 +157,9 @@ export function Projects() {
           </motion.div>
         </div>
       </div>
+
+      {/* Radial Page Transition Overlay */}
+      <RadialTransitionOverlay active={transitioning} origin={origin} />
 
       {/* Lightbox Modal */}
       {lightboxImage && (

@@ -167,8 +167,7 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
               </div>
 
               {/* Legend */}
-              <div className="flex items-center justify-between text-xs text-neutral-500 pt-2 border-t border-neutral-800/60">
-                <span>Recent contribution cadence</span>
+              <div className="flex items-center justify-end text-xs text-neutral-500 pt-2 border-t border-neutral-800/60">
                 <div className="flex items-center gap-1.5">
                   <span>Less</span>
                   <div className="h-2 w-2 rounded-[1px] bg-[#14171c]" />

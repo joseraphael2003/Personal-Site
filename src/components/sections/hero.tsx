@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { FileText, Mail, Copy, Check, Github, Linkedin } from "lucide-react";
+import { motion } from "framer-motion";
 import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
 
@@ -22,7 +23,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative w-full border-b border-neutral-800/80 bg-[#090a0c] pt-12 sm:pt-20 pb-16 sm:pb-24">
+    <section id="hero" className="relative w-full border-b border-neutral-800/80 bg-[#090a0c] pt-12 sm:pt-20 pb-16 sm:pb-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column (60%): Editorial Thesis Stack */}
@@ -135,14 +136,20 @@ export function Hero() {
             {/* 5. Primary Action CTAs */}
             <div className="pt-2 flex flex-wrap items-center gap-3">
               {/* Quick Email Modal Trigger (Primary Green Action) */}
-              <button
-                type="button"
-                onClick={openEmailModal}
-                className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
+              <motion.div
+                whileHover={{ scale: 1.025 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                <Mail className="h-4 w-4 text-black" />
-                <span>Quick Email</span>
-              </button>
+                <button
+                  type="button"
+                  onClick={openEmailModal}
+                  className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-2.5 text-sm font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
+                >
+                  <Mail className="h-4 w-4 text-black" />
+                  <span>Quick Email</span>
+                </button>
+              </motion.div>
 
               {/* Get Resume CTA (Secondary Grey Action) */}
               <a

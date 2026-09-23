@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Dialog } from "@base-ui/react";
+import { motion } from "framer-motion";
 import { X, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
 interface EmailModalProps {
@@ -70,8 +71,16 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm transition-opacity duration-150" />
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6">
-          <Dialog.Popup className="relative w-full max-w-[min(90vw,780px)] min-w-[320px] min-h-[min(420px,92vh)] resize overflow-auto rounded-sm border border-neutral-700 bg-[#0c0e12] p-5 sm:p-7 shadow-2xl text-neutral-200 outline-none flex flex-col gap-5 max-h-[92vh] font-mono">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 pointer-events-none">
+          <Dialog.Popup
+            className="pointer-events-auto relative w-full max-w-[min(90vw,680px)] rounded-sm border border-neutral-700 bg-[#0c0e12] p-5 sm:p-7 shadow-2xl text-neutral-200 outline-none flex flex-col gap-5 max-h-[92vh] overflow-y-auto font-mono"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 420, damping: 28, mass: 0.6 }}
+              className="flex flex-col gap-5 w-full"
+            >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-neutral-800 pb-3.5">
               <div>
@@ -211,27 +220,7 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
                 </div>
               </form>
             )}
-            {/* Bottom-Right Tactile Resize Grip Icon */}
-            <div
-              className="pointer-events-none absolute bottom-1 right-1 flex items-end justify-end p-0.5 opacity-40"
-              aria-hidden="true"
-            >
-              <svg
-                width="10"
-                height="10"
-                viewBox="0 0 10 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-neutral-400"
-              >
-                <path
-                  d="M9 1L1 9M9 5L5 9M9 9L9 9.01"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
+            </motion.div>
           </Dialog.Popup>
         </div>
       </Dialog.Portal>

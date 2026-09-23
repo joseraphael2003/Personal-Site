@@ -3,21 +3,24 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { archiveProjects, Project, GalleryItem } from "@/data/portfolio";
 import { ArrowLeft, Github, ExternalLink, Filter, ArrowUpRight } from "lucide-react";
 import { DraggableMarquee } from "@/components/ui/draggable-marquee";
 import { LightboxModal } from "@/components/ui/lightbox-modal";
+import { useRadialTransition, RadialTransitionOverlay } from "@/components/ui/radial-transition";
 
 export default function ProjectsArchivePage() {
   const router = useRouter();
   const [lightboxImage, setLightboxImage] = useState<GalleryItem | null>(null);
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
+  const { transitioning, origin, navigateWithRadial } = useRadialTransition();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Only navigate back if no modal/dialog is currently active
       if (e.key === "Escape" && !document.querySelector("[role='dialog']")) {
-        router.push("/");
+        navigateWithRadial("/");
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -39,13 +42,24 @@ export default function ProjectsArchivePage() {
       : archiveProjects.filter((p) => p.category === activeCategory);
 
   return (
-    <main className="min-h-[100dvh] bg-[#090a0c] text-neutral-200 px-4 py-8 sm:px-8 sm:py-16 font-mono selection:bg-emerald-500/20 selection:text-emerald-300">
+    <motion.main
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.28, ease: "easeOut" }}
+      className="min-h-[100dvh] bg-[#090a0c] text-neutral-200 px-4 py-8 sm:px-8 sm:py-16 font-mono selection:bg-emerald-500/20 selection:text-emerald-300"
+    >
       <div className="mx-auto max-w-6xl space-y-10">
-        {/* Top Back Nav */}
+        {/* Top Back Nav with Radial Transition */}
         <div>
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-emerald-400 transition-colors"
+            onClick={(e) => {
+              if (!e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                navigateWithRadial("/", e);
+              }
+            }}
+            className="group inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-emerald-400 transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             <span>Return to Overview</span>
@@ -210,6 +224,9 @@ export default function ProjectsArchivePage() {
           originRect={originRect}
         />
       )}
-    </main>
+
+      {/* Radial Page Transition Overlay */}
+      <RadialTransitionOverlay active={transitioning} origin={origin} />
+    </motion.main>
   );
 }

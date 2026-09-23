@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased] - 2026-09-22
 
 ### Added
+- **Radial Origin Page Transitions**: Integrated hardware-accelerated `clip-path` radial circle expansion on `/projects` navigation originating from cursor/tap coordinates with reciprocal return collapse and `prefers-reduced-motion` safety.
+- **Email Modal Tactile Spring Entrance**: Wrapped `EmailModal` popup card in a Framer Motion spring transition (`initial={{ opacity: 0, scale: 0.94, y: 10 }}`) for responsive emergence upon click.
+- **Lightbox Loading Synchronization & Strict Containment**: Added pulse skeleton loader with smooth 300ms decode fade-in (`opacity-0 -> opacity-100`) and 3-tier boundary containment, eliminating empty black box delays and border clipping.
+- **Consolidated Multi-Viewport Automation v6**: Added `.sisyphus/evidence/pw-refinements-v6.js` validating all 8 scenarios across 360px, 390px, 768px, and 1280px viewports.
 - **Inteflow Project Entry**: Added internal project management and automation tool built for Integrya Technologies with category badge `INTERNSHIP`, positioned directly below Domain Scorer.
 - **Projects Archive Filter Tab**: Added dedicated "Internship" filter tab on `/projects` with custom cyan styling (`bg-cyan-500/15 border-cyan-500/40 text-cyan-400`).
 - **Desktop Magnet Tabs Navigation**: Implemented Framer Motion `layoutId="active-nav-pill"` smooth sliding indicator with subtle pointer spring magnetic attraction (`useSpring`) on desktop navbar tabs.
@@ -28,8 +32,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Clean `LightboxModal` component (`src/components/ui/lightbox-modal.tsx`) using Base UI Dialog for uncluttered, high-res popup views of project and musical performance images.
 - Route-level Escape key listener on `/projects` navigating smoothly back to `/` ("Return to Overview") when no modal is open.
 ### Changed
+- **Unified Emerald Button Hover/Tap Scale Physics**: Synchronized Framer Motion `whileHover={{ scale: 1.025 }} whileTap={{ scale: 0.97 }}` spring scaling across all primary green buttons (Hero Quick Email, Header Quick Email, Work Expand Ledger, Projects Archive CTA, Footer Send Email).
+- **Navbar Magnet Contact Tab Activation**: Added passive scroll listener triggering the active navigation pill when reaching the footer (`scrollHeight - 90px threshold`) and restoring the previously intersected section on scroll up.
+- **Email Modal Window Ergonomics**: Removed outer window drag resizing and fixed min-heights from `Dialog.Popup`; preserved vertical-only resizing (`resize-y`) on message textarea.
+- **GitHub Activity Legend Clean-Up**: Removed redundant `"Recent contribution cadence"` label and cleanly right-aligned color swatches (`justify-end`).
 - **Project Ordering & Years Alignment**: Positioned `reddit-apify-actor` directly under `social-media-dashboard` and `inteflow` directly under `domain-selector`. Set all project years to `2026` with `Modular Bench Power Supply` as the sole `2025` hardware project.
-- **Dynamic Archive Count & Spring Scale**: Projects homepage CTA now computes project count dynamically (`(9 Projects)`) with Framer Motion hover/tap spring scaling (`whileHover={{ scale: 1.025 }} whileTap={{ scale: 0.97 }}`).
 - **Header Brand Click Scroll-to-Top**: Clicking `"Jose Raphael V. Dichoso"` smoothly scrolls the window to top without reload or hash clutter.
 - **Header Drawer Breakpoint Parity**: Unified mobile/tablet drawer with hamburger trigger at `lg:hidden`, guaranteeing full navigation access across 768px–1023px tablet viewports.
 - **Work Role & Contact Copy**: Updated Integrya role to `Tech Intern (University Requirement)` and contact CTA to `Available for commissioned freelance software development, automation workflows, and internship opportunities.`

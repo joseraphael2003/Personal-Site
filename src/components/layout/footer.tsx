@@ -4,6 +4,7 @@ import { useState } from "react";
 import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
 import { Copy, Check, Github, Linkedin, Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Footer() {
   const [copied, setCopied] = useState(false);
@@ -48,14 +49,20 @@ export function Footer() {
               )}
             </button>
 
-            <button
-              type="button"
-              onClick={openEmailModal}
-              className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-3 text-sm font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
+            <motion.div
+              whileHover={{ scale: 1.025 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
             >
-              <Mail className="h-4 w-4 text-black" />
-              <span>Send Email</span>
-            </button>
+              <button
+                type="button"
+                onClick={openEmailModal}
+                className="cursor-pointer rounded-sm bg-emerald-500 px-5 py-3 text-sm font-bold text-black hover:bg-emerald-400 btn-tactical-sheen transition-colors inline-flex items-center justify-center gap-1.5 shadow-sm"
+              >
+                <Mail className="h-4 w-4 text-black" />
+                <span>Send Email</span>
+              </button>
+            </motion.div>
           </div>
         </div>
 

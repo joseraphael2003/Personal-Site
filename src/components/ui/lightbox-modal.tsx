@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
@@ -16,6 +17,8 @@ interface LightboxModalProps {
 }
 
 export function LightboxModal({ open, onOpenChange, image, originRect }: LightboxModalProps) {
+  const [loaded, setLoaded] = useState(false);
+
   if (!image) return null;
 
   // Calculate click origin offset if rect is present
@@ -27,13 +30,19 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
     : 0;
 
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+    <Dialog.Root
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!nextOpen) setLoaded(false);
+        onOpenChange(nextOpen);
+      }}
+    >
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md transition-opacity duration-200 animate-in fade-in" />
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-10 pointer-events-none">
           <Dialog.Popup
             aria-label={image.caption || image.alt || "Image preview"}
-            className="pointer-events-auto relative max-h-[90vh] max-w-[95vw] sm:max-w-5xl w-auto flex flex-col items-center rounded-sm border border-neutral-800 bg-[#0c0d10] p-2.5 sm:p-4 shadow-2xl focus:outline-none"
+            className="pointer-events-auto relative max-h-[88vh] max-w-[94vw] sm:max-w-5xl w-auto overflow-hidden flex flex-col items-center rounded-sm border border-neutral-800 bg-[#0c0d10] p-2.5 sm:p-4 shadow-2xl focus:outline-none"
           >
             <motion.div
               initial={{
@@ -48,35 +57,43 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
                 x: 0,
                 y: 0,
               }}
-              exit={{
-                opacity: 0,
-                scale: 0.8,
-              }}
               transition={{
                 type: "spring",
                 stiffness: 380,
                 damping: 30,
                 mass: 0.7,
               }}
+              className="relative w-full flex flex-col items-center"
             >
               <Dialog.Title className="sr-only">
                 {image.caption || image.alt || "Image preview"}
               </Dialog.Title>
               {/* Close Button */}
-              <div className="absolute top-3 right-3 z-20">
+              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20">
                 <Dialog.Close className="cursor-pointer rounded-sm border border-neutral-800 bg-neutral-900/90 p-1.5 text-neutral-400 hover:text-white hover:border-neutral-700 transition-colors">
                   <X className="h-4 w-4" />
                   <span className="sr-only">Close modal</span>
                 </Dialog.Close>
               </div>
 
-              {/* Dynamic Natural Ratio Stage Viewer */}
-              <div className="relative overflow-hidden rounded-sm bg-black/70 flex items-center justify-center max-h-[82vh] max-w-full">
+              {/* Dynamic Natural Ratio Stage Viewer with Strict Containment */}
+              <div
+                className={`relative overflow-hidden rounded-sm bg-black/80 flex items-center justify-center max-h-[80vh] max-w-[88vw] sm:max-w-[78vw] ${
+                  !loaded ? "min-h-[260px] min-w-[320px] sm:min-w-[480px]" : ""
+                }`}
+              >
+                {/* Subtle pulse skeleton before decode */}
+                {!loaded && (
+                  <div className="absolute inset-0 bg-neutral-900/70 animate-pulse rounded-sm" />
+                )}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={image.src}
                   alt={image.caption || image.alt || "Lightbox image"}
-                  className="w-auto h-auto max-h-[80vh] max-w-[90vw] sm:max-w-[80vw] object-contain rounded-sm"
+                  onLoad={() => setLoaded(true)}
+                  className={`w-auto h-auto max-h-[78vh] max-w-[85vw] sm:max-w-[75vw] object-contain rounded-sm select-none transition-opacity duration-300 ${
+                    loaded ? "opacity-100" : "opacity-0"
+                  }`}
                   loading="eager"
                 />
               </div>
