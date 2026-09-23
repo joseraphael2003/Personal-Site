@@ -2,19 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { archiveProjects, Project, GalleryItem } from "@/data/portfolio";
 import { ArrowLeft, Github, ExternalLink, Filter, ArrowUpRight } from "lucide-react";
 import { DraggableMarquee } from "@/components/ui/draggable-marquee";
 import { LightboxModal } from "@/components/ui/lightbox-modal";
-import { useRadialTransition, RadialTransitionOverlay } from "@/components/ui/radial-transition";
+import { useRadialTransition } from "@/components/ui/radial-transition";
 
 export default function ProjectsArchivePage() {
-  const router = useRouter();
   const [lightboxImage, setLightboxImage] = useState<GalleryItem | null>(null);
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
-  const { transitioning, origin, navigateWithRadial } = useRadialTransition();
+  const { navigateWithRadial } = useRadialTransition();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -25,7 +23,7 @@ export default function ProjectsArchivePage() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [router]);
+  }, [navigateWithRadial]);
 
   const categories = [
     { label: "All", value: "ALL" },
@@ -97,8 +95,8 @@ export default function ProjectsArchivePage() {
           </span>
         </div>
 
-        {/* Project Cards (Overview Flagship Style) */}
-        <div className="space-y-6">
+        {/* Project Cards (Dynamic Bento Grid: 2-col full width for image projects, 1-col compact for text-only) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
           {filteredProjects.map((project: Project, idx: number) => {
             const galleryList: GalleryItem[] | null =
               project.galleryImages && project.galleryImages.length > 0
@@ -111,72 +109,82 @@ export default function ProjectsArchivePage() {
             return (
               <div
                 key={project.id}
-                className="rounded-sm border border-neutral-800 bg-[#0f1115] p-5 sm:p-7 space-y-4 hover:border-neutral-700 transition-colors font-mono shadow-sm"
+                className={`rounded-sm border border-neutral-800 bg-[#0f1115] hover:border-neutral-700 transition-colors font-mono shadow-sm flex flex-col justify-between ${
+                  hasImages
+                    ? "col-span-1 md:col-span-2 p-5 sm:p-7 space-y-4"
+                    : "col-span-1 p-4 sm:p-6 space-y-3.5"
+                }`}
               >
-                {/* Project Header Row */}
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-3">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-neutral-500">
-                        {String(idx + 1).padStart(2, "0")} {"//"}
-                      </span>
-                      <h2 className="font-pixel text-xl sm:text-2xl text-neutral-100 uppercase tracking-wide">
-                        {project.title}
-                      </h2>
+                <div className="space-y-3">
+                  {/* Project Header Row */}
+                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-2.5 sm:pb-3">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs sm:text-sm text-neutral-500">
+                          {String(idx + 1).padStart(2, "0")} {"//"}
+                        </span>
+                        <h2
+                          className={`font-pixel text-neutral-100 uppercase tracking-wide ${
+                            hasImages ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"
+                          }`}
+                        >
+                          {project.title}
+                        </h2>
+                      </div>
+                      <p className="text-xs sm:text-sm text-neutral-400 mt-1">{project.tagline}</p>
                     </div>
-                    <p className="text-sm text-neutral-400 mt-1">{project.tagline}</p>
+
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className={`inline-block rounded-sm px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider ${
+                          project.category === "COMMISSIONED"
+                            ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-400"
+                            : project.category === "INTERNSHIP"
+                            ? "bg-cyan-500/15 border border-cyan-500/40 text-cyan-400"
+                            : "bg-neutral-800 border border-neutral-600 text-neutral-200"
+                        }`}
+                      >
+                        {project.category}
+                      </span>
+                      <span className="text-xs sm:text-sm text-neutral-500">{project.year}</span>
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-2.5">
-                    <span
-                      className={`inline-block rounded-sm px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider ${
-                        project.category === "COMMISSIONED"
-                          ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-400"
-                          : project.category === "INTERNSHIP"
-                          ? "bg-cyan-500/15 border border-cyan-500/40 text-cyan-400"
-                          : "bg-neutral-800 border border-neutral-600 text-neutral-200"
-                      }`}
-                    >
-                      {project.category}
-                    </span>
-                    <span className="text-sm text-neutral-500">{project.year}</span>
+                  {/* Description Body */}
+                  <p className="text-xs sm:text-sm text-neutral-300 leading-normal sm:leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  {/* Tech Stack Chips */}
+                  <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                    {project.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-sm border border-neutral-800 bg-neutral-900 px-2 py-0.5 text-xs text-neutral-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
+
+                  {/* Image Marquee Reel (Wide Visual Cards) */}
+                  {hasImages && galleryList && (
+                    <div className="pt-2">
+                      <DraggableMarquee
+                        items={galleryList}
+                        speed={0.35}
+                        onItemClick={(origIdx, item, rect) => {
+                          setOriginRect(rect || null);
+                          setLightboxImage(galleryList[origIdx]);
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
-
-                {/* Description Body */}
-                <p className="text-sm text-neutral-300 leading-relaxed max-w-3xl">
-                  {project.description}
-                </p>
-
-                {/* Tech Stack Chips */}
-                <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                  {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-sm border border-neutral-800 bg-neutral-900 px-2 py-0.5 text-xs text-neutral-300"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Image Marquee Reel */}
-                {hasImages && galleryList && (
-                  <div className="pt-2">
-                    <DraggableMarquee
-                      items={galleryList}
-                      speed={0.35}
-                      onItemClick={(origIdx, item, rect) => {
-                        setOriginRect(rect || null);
-                        setLightboxImage(galleryList[origIdx]);
-                      }}
-                    />
-                  </div>
-                )}
 
                 {/* Actions Row */}
                 {(project.repoUrl || project.liveUrl) && (
-                  <div className="pt-3 border-t border-neutral-800/60 flex flex-wrap items-center gap-4 text-sm">
+                  <div className="pt-3 border-t border-neutral-800/60 flex flex-wrap items-center gap-4 text-xs sm:text-sm mt-auto">
                     {project.repoUrl && (
                       <a
                         href={project.repoUrl}
@@ -225,8 +233,6 @@ export default function ProjectsArchivePage() {
         />
       )}
 
-      {/* Radial Page Transition Overlay */}
-      <RadialTransitionOverlay active={transitioning} origin={origin} />
     </motion.main>
   );
 }

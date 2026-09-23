@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { flagshipProjects, archiveProjects, Project } from "@/data/portfolio";
 import { motion } from "framer-motion";
-import { useRadialTransition, RadialTransitionOverlay } from "@/components/ui/radial-transition";
+import { useRadialTransition } from "@/components/ui/radial-transition";
 import { DraggableMarquee } from "@/components/ui/draggable-marquee";
 import { LightboxModal } from "@/components/ui/lightbox-modal";
 import { Github, ExternalLink, ArrowRight, ArrowUpRight } from "lucide-react";
@@ -12,7 +12,7 @@ import { Github, ExternalLink, ArrowRight, ArrowUpRight } from "lucide-react";
 export function Projects() {
   const [lightboxImage, setLightboxImage] = useState<{ src: string; caption?: string } | null>(null);
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
-  const { transitioning, origin, navigateWithRadial } = useRadialTransition();
+  const { navigateWithRadial } = useRadialTransition();
 
   return (
     <section id="projects" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-10 sm:py-16 lg:py-24">
@@ -69,7 +69,7 @@ export function Projects() {
                 </div>
 
                 {/* Description Body */}
-                <p className="text-sm text-neutral-300 leading-relaxed max-w-3xl">
+                <p className="text-xs sm:text-sm text-neutral-300 leading-normal sm:leading-relaxed max-w-3xl">
                   {project.description}
                 </p>
 
@@ -157,9 +157,6 @@ export function Projects() {
           </motion.div>
         </div>
       </div>
-
-      {/* Radial Page Transition Overlay */}
-      <RadialTransitionOverlay active={transitioning} origin={origin} />
 
       {/* Lightbox Modal */}
       {lightboxImage && (

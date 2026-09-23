@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { EmailModalProvider } from "@/components/providers/email-modal-provider";
+import { RadialTransitionProvider } from "@/components/ui/radial-transition";
 
 const dotGothic = DotGothic16({
   weight: "400",
@@ -71,14 +72,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dotGothic.variable} ${spaceMono.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${dotGothic.variable} ${spaceMono.variable}`}
+    >
+      <head>
+        <script
+          // Restores the stored accent before first paint so the palette never
+          // flashes emerald. Kept in sync with ACCENT_PRESETS in ui/accent-switcher.tsx.
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var a=localStorage.getItem("portfolio-accent");if(a&&/^(emerald|cyan|violet|amber|rose)$/.test(a)){document.documentElement.setAttribute("data-accent",a)}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="font-mono bg-[#090a0c] text-neutral-200 antialiased selection:bg-emerald-500/20 selection:text-emerald-300 min-h-screen">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <EmailModalProvider>
-          {children}
+          <RadialTransitionProvider>{children}</RadialTransitionProvider>
         </EmailModalProvider>
         <Analytics />
         <SpeedInsights />

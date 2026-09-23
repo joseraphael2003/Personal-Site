@@ -42,7 +42,7 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-10 pointer-events-none">
           <Dialog.Popup
             aria-label={image.caption || image.alt || "Image preview"}
-            className="pointer-events-auto relative max-h-[88vh] max-w-[94vw] sm:max-w-5xl w-auto overflow-hidden flex flex-col items-center rounded-sm border border-neutral-800 bg-[#0c0d10] p-2.5 sm:p-4 shadow-2xl focus:outline-none"
+            className="pointer-events-auto relative max-h-[88dvh] max-w-[94vw] sm:max-w-5xl w-auto overflow-hidden flex flex-col items-center rounded-sm border border-neutral-800 bg-[#0c0d10] p-2.5 sm:p-4 shadow-2xl focus:outline-none"
           >
             <motion.div
               initial={{
@@ -78,8 +78,8 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
 
               {/* Dynamic Natural Ratio Stage Viewer with Strict Containment */}
               <div
-                className={`relative overflow-hidden rounded-sm bg-black/80 flex items-center justify-center max-h-[80vh] max-w-[88vw] sm:max-w-[78vw] ${
-                  !loaded ? "min-h-[260px] min-w-[320px] sm:min-w-[480px]" : ""
+                className={`relative overflow-hidden rounded-sm bg-black/80 flex items-center justify-center max-w-full max-h-[80dvh] ${
+                  !loaded ? "min-h-[220px] min-w-[min(280px,100%)]" : ""
                 }`}
               >
                 {/* Subtle pulse skeleton before decode */}
@@ -91,7 +91,7 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
                   src={image.src}
                   alt={image.caption || image.alt || "Lightbox image"}
                   onLoad={() => setLoaded(true)}
-                  className={`w-auto h-auto max-h-[78vh] max-w-[85vw] sm:max-w-[75vw] object-contain rounded-sm select-none transition-opacity duration-300 ${
+                  className={`w-auto h-auto max-w-full max-h-[78dvh] object-contain select-none rounded-sm transition-opacity duration-300 ${
                     loaded ? "opacity-100" : "opacity-0"
                   }`}
                   loading="eager"

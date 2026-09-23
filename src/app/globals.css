@@ -3,6 +3,49 @@
 @theme {
   --font-pixel: var(--font-dot-gothic), monospace;
   --font-mono: var(--font-space-mono), monospace;
+  --color-emerald-400: var(--accent-hover);
+  --color-emerald-500: var(--accent-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Accent system. `data-accent` on <html> retargets every --accent-* token at
+   once; app/layout.tsx restores the stored preset before first paint and
+   ui/accent-switcher.tsx writes it. Keep this list in sync with ACCENT_PRESETS.
+--------------------------------------------------------------------------- */
+:root,
+[data-accent="emerald"] {
+  --accent-color: #10b981;
+  --accent-hover: #34d399;
+  --accent-glow: rgba(16, 185, 129, 0.2);
+  --accent-muted: rgba(16, 185, 129, 0.15);
+}
+
+[data-accent="cyan"] {
+  --accent-color: #06b6d4;
+  --accent-hover: #22d3ee;
+  --accent-glow: rgba(6, 182, 212, 0.2);
+  --accent-muted: rgba(6, 182, 212, 0.15);
+}
+
+[data-accent="violet"] {
+  --accent-color: #8b5cf6;
+  --accent-hover: #a78bfa;
+  --accent-glow: rgba(139, 92, 246, 0.2);
+  --accent-muted: rgba(139, 92, 246, 0.15);
+}
+
+[data-accent="amber"] {
+  --accent-color: #f59e0b;
+  --accent-hover: #fbbf24;
+  --accent-glow: rgba(245, 158, 11, 0.2);
+  --accent-muted: rgba(245, 158, 11, 0.15);
+}
+
+[data-accent="rose"] {
+  --accent-color: #f43f5e;
+  --accent-hover: #fb7185;
+  --accent-glow: rgba(244, 63, 94, 0.2);
+  --accent-muted: rgba(244, 63, 94, 0.15);
 }
 
 body {

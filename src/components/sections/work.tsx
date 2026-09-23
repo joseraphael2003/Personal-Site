@@ -58,22 +58,44 @@ export function Work() {
                 </div>
 
                 {/* Bullets: Morph / Switch between Summary and Full Bullets */}
-                <div className="text-sm text-neutral-300">
+                <div className="text-xs sm:text-sm text-neutral-300">
                   {!expanded ? (
                     /* Collapsed View: Single Summary Bullet */
-                    <div className="flex items-start gap-2.5 leading-relaxed py-1 text-neutral-200">
+                    <div className="flex items-start gap-2.5 leading-normal sm:leading-relaxed py-1 text-neutral-200">
                       <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
-                      <span>{currentRole.summaryBullet || currentRole.bullets[0]}</span>
+                      {(() => {
+                        const text = currentRole.summaryBullet || currentRole.bullets[0];
+                        const colonIndex = text.indexOf(":");
+                        if (colonIndex !== -1) {
+                          return (
+                            <span>
+                              <strong className="text-neutral-100 font-semibold">{text.slice(0, colonIndex + 1)}</strong>
+                              {text.slice(colonIndex + 1)}
+                            </span>
+                          );
+                        }
+                        return <span>{text}</span>;
+                      })()}
                     </div>
                   ) : (
                     /* Expanded View: All Detailed Bullets */
-                    <ul className="space-y-2.5">
-                      {currentRole.bullets.map((bullet, bIdx) => (
-                        <li key={bIdx} className="flex items-start gap-2.5 leading-relaxed">
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
+                    <ul className="space-y-2 sm:space-y-2.5">
+                      {currentRole.bullets.map((bullet, bIdx) => {
+                        const colonIndex = bullet.indexOf(":");
+                        return (
+                          <li key={bIdx} className="flex items-start gap-2.5 leading-normal sm:leading-relaxed">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+                            {colonIndex !== -1 ? (
+                              <span>
+                                <strong className="text-neutral-100 font-semibold">{bullet.slice(0, colonIndex + 1)}</strong>
+                                {bullet.slice(colonIndex + 1)}
+                              </span>
+                            ) : (
+                              <span>{bullet}</span>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   )}
                 </div>
@@ -125,13 +147,23 @@ export function Work() {
                       </div>
 
                       {/* Bullets */}
-                      <ul className="space-y-2.5 text-sm text-neutral-300">
-                        {role.bullets.map((bullet, bIdx) => (
-                          <li key={bIdx} className="flex items-start gap-2.5 leading-relaxed">
-                            <span className="h-1.5 w-1.5 rounded-full bg-neutral-600 mt-1.5 shrink-0" />
-                            <span>{bullet}</span>
-                          </li>
-                        ))}
+                      <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-neutral-300">
+                        {role.bullets.map((bullet, bIdx) => {
+                          const colonIndex = bullet.indexOf(":");
+                          return (
+                            <li key={bIdx} className="flex items-start gap-2.5 leading-normal sm:leading-relaxed">
+                              <span className="h-1.5 w-1.5 rounded-full bg-neutral-600 mt-1.5 shrink-0" />
+                              {colonIndex !== -1 ? (
+                                <span>
+                                  <strong className="text-neutral-200 font-semibold">{bullet.slice(0, colonIndex + 1)}</strong>
+                                  {bullet.slice(colonIndex + 1)}
+                                </span>
+                              ) : (
+                                <span>{bullet}</span>
+                              )}
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>

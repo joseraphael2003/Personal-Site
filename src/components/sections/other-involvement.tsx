@@ -60,7 +60,7 @@ export function OtherInvolvement() {
               </div>
 
               {/* Description */}
-              <p className="text-sm text-neutral-300 leading-relaxed max-w-3xl">
+              <p className="text-xs sm:text-sm text-neutral-300 leading-normal sm:leading-relaxed max-w-3xl">
                 {item.description}
               </p>
 

@@ -6,6 +6,7 @@ import { FileText, Mail, Copy, Check, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
+import { Auralis } from "@/components/ui/auralis";
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
@@ -73,7 +74,7 @@ export function Hero() {
               </h1>
             </div>
             {/* 3. Executive Bio (from resume) */}
-            <p className="text-sm sm:text-base text-neutral-300 max-w-xl leading-relaxed">
+            <p className="text-xs sm:text-base text-neutral-300 max-w-xl leading-normal sm:leading-relaxed">
               {profile.bio}
             </p>
 
@@ -167,8 +168,11 @@ export function Hero() {
           {/* Right Column (40%): Styled 4:5 Portrait Frame (Desktop Only) */}
           <div className="hidden lg:flex lg:col-span-5 justify-center">
             <div className="relative w-full max-w-[320px] sm:max-w-[340px] rounded-sm border border-neutral-800 bg-[#0f1115] p-3 shadow-2xl">
-              {/* Frame Surface with 4:5 Aspect Ratio */}
-              <div className="relative aspect-4/5 w-full overflow-hidden rounded-sm border border-neutral-800 bg-[#0a0c0f]">
+              {/* Auralis Simplex Aura (z-0, accent-synced, auto-pauses off-screen) */}
+              <Auralis className="z-0 rounded-sm" opacity={0.95} />
+
+              {/* Frame Surface with 4:5 Aspect Ratio (z-[1], above the aura) */}
+              <div className="relative z-[1] aspect-4/5 w-full overflow-hidden rounded-sm border border-neutral-800 bg-[#0a0c0f]/60">
                 <Image
                   src="/profile.png"
                   alt={profile.name}

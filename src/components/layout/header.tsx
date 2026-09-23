@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
+import { AccentSwitcher } from "@/components/ui/accent-switcher";
 import { Menu, X, Mail } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
@@ -173,6 +174,7 @@ export function Header() {
               onClick={(e) => handleScrollTo(e, link.id)}
             />
           ))}
+          <AccentSwitcher className="ml-1" />
         </nav>
 
         {/* Right: Availability & Action */}
@@ -209,19 +211,50 @@ export function Header() {
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
-                <a
-                  key={link.id}
-                  href={`#${link.id}`}
-                  onClick={(e) => handleScrollTo(e, link.id)}
-                  aria-current={isActive ? "location" : undefined}
-                  className={`py-1 transition-colors cursor-pointer ${
-                    isActive ? "text-emerald-400 font-bold" : "text-neutral-300 hover:text-emerald-400"
-                  }`}
-                >
-                  {link.label}
-                </a>
+                <div key={link.id} className="flex items-center justify-between gap-3">
+                  <a
+                    href={`#${link.id}`}
+                    onClick={(e) => handleScrollTo(e, link.id)}
+                    aria-current={isActive ? "location" : undefined}
+                    className={`py-1 transition-colors cursor-pointer ${
+                      isActive ? "text-emerald-400 font-bold" : "text-neutral-300 hover:text-emerald-400"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                </div>
               );
             })}
+          </div>
+
+          {/* Tactical Swatch Strip (Mobile) */}
+          <div className="pt-2 border-t border-neutral-800 flex items-center justify-between">
+            <span className="text-xs text-neutral-500 uppercase tracking-wider">Accent</span>
+            <div className="flex items-center gap-1.5">
+              {[
+                { id: "emerald", color: "#10b981", glow: "rgba(16, 185, 129, 0.2)" },
+                { id: "cyan", color: "#06b6d4", glow: "rgba(6, 182, 212, 0.2)" },
+                { id: "violet", color: "#8b5cf6", glow: "rgba(139, 92, 246, 0.2)" },
+                { id: "amber", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.2)" },
+                { id: "rose", color: "#f43f5e", glow: "rgba(244, 63, 94, 0.2)" },
+              ].map((swatch) => (
+                <button
+                  key={swatch.id}
+                  type="button"
+                  onClick={() => {
+                    document.documentElement.setAttribute("data-accent", swatch.id);
+                    try { localStorage.setItem("portfolio-accent", swatch.id); } catch {}
+                  }}
+                  aria-label={swatch.id}
+                  className="h-6 w-6 rounded-sm border border-neutral-800 flex items-center justify-center cursor-pointer hover:border-neutral-600 transition-colors"
+                >
+                  <span
+                    className="h-2.5 w-2.5 rounded-full border"
+                    style={{ borderColor: swatch.color, backgroundColor: swatch.glow }}
+                  />
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="pt-2 border-t border-neutral-800 flex justify-end items-center text-sm">
