@@ -27,6 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Marquee Behaviour**: The GSAP marquee subscribes to `prefers-reduced-motion` (drag and keyboard still work, auto-advance and throw momentum stop), pauses via IntersectionObserver while off-screen, cleans up its listener/observer/ticker on unmount, and shows a `focus-visible` ring instead of `outline-none`.
 - **Animate Plugin Registered**: `@plugin "tailwindcss-animate";` in `globals.css` turns the existing `animate-in` classes on, each gated with `motion-reduce:animate-none`.
 - **Work Section Dedupe**: `work.tsx` extracts `RoleCard` and `Bullet`, so the rail-dot offsets exist once instead of triplicated markup.
+- **Work Bullets**: Dropped the colon-split bold lead-in from `Bullet`; the only bullet with a colon (the SEO backlink tool) was being bolded up to its colon by accident.
+- **Production Database URL**: Vercel `DATABASE_URL` (Production, Preview, Development) now points at Neon; it still held the retired Supabase string, so the build-time `github_cache` read failed and `/` was prerendered with the offline heatmap.
 - **Docs**: AGENTS.md (§3–§7) and README rewritten to match the trimmed stack; CHANGELOG entry added.
 
 ### Removed
