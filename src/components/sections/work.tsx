@@ -8,20 +8,12 @@ import { Briefcase, Calendar, MapPin, ChevronDown, ChevronUp } from "lucide-reac
 
 type Role = (typeof workExperience)[number];
 
-/** One bullet: a rail dot plus the colon-split bold lead-in. */
-function Bullet({ text, dotClass, strongClass }: { text: string; dotClass: string; strongClass: string }) {
-  const colonIndex = text.indexOf(":");
+/** One bullet: a rail dot plus the bullet text. */
+function Bullet({ text, dotClass }: { text: string; dotClass: string }) {
   return (
     <>
       <span className={`h-1.5 w-1.5 rounded-full ${dotClass} mt-1.5 shrink-0`} />
-      {colonIndex !== -1 ? (
-        <span>
-          <strong className={`${strongClass} font-semibold`}>{text.slice(0, colonIndex + 1)}</strong>
-          {text.slice(colonIndex + 1)}
-        </span>
-      ) : (
-        <span>{text}</span>
-      )}
+      <span>{text}</span>
     </>
   );
 }
@@ -85,18 +77,14 @@ function RoleCard({
             {!expanded ? (
               /* Collapsed View: Single Summary Bullet */
               <div className="flex items-start gap-2.5 leading-normal sm:leading-relaxed py-1 text-body">
-                <Bullet
-                  text={role.summaryBullet || role.bullets[0]}
-                  dotClass="bg-accent-hover"
-                  strongClass="text-ink"
-                />
+                <Bullet text={role.summaryBullet || role.bullets[0]} dotClass="bg-accent-hover" />
               </div>
             ) : (
               /* Expanded View: All Detailed Bullets */
               <ul className="space-y-2 sm:space-y-2.5">
                 {role.bullets.map((bullet, bIdx) => (
                   <li key={bIdx} className="flex items-start gap-2.5 leading-normal sm:leading-relaxed">
-                    <Bullet text={bullet} dotClass="bg-accent-hover" strongClass="text-ink" />
+                    <Bullet text={bullet} dotClass="bg-accent-hover" />
                   </li>
                 ))}
               </ul>
@@ -106,7 +94,7 @@ function RoleCard({
           <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-copy">
             {role.bullets.map((bullet, bIdx) => (
               <li key={bIdx} className="flex items-start gap-2.5 leading-normal sm:leading-relaxed">
-                <Bullet text={bullet} dotClass="bg-faint" strongClass="text-body" />
+                <Bullet text={bullet} dotClass="bg-faint" />
               </li>
             ))}
           </ul>
