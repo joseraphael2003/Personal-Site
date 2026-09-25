@@ -6,10 +6,12 @@ import { FileText, Mail, Copy, Check, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
+import { useCopyEmail } from "@/hooks/use-copy-email";
+import { pressableMotion } from "@/lib/motion";
 import { Auralis } from "@/components/ui/auralis";
 
 export function Hero() {
-  const [copied, setCopied] = useState(false);
+  const { copied, copyEmail } = useCopyEmail();
   // `null` until mounted: the aura is decorative, and deferring the tier choice
   // keeps the server HTML and the first client render identical.
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
@@ -22,17 +24,6 @@ export function Hero() {
     query.addEventListener("change", syncTier);
     return () => query.removeEventListener("change", syncTier);
   }, []);
-
-  const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(profile.email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Fallback for environments where clipboard API is restricted
-      window.location.href = `mailto:${profile.email}`;
-    }
-  };
 
   return (
     <section id="hero" className="relative w-full border-b border-edge/80 bg-page pt-12 sm:pt-20 pb-16 sm:pb-24">
@@ -99,7 +90,7 @@ export function Hero() {
               <div className="relative inline-flex items-center">
                 <button
                   type="button"
-                  onClick={handleCopyEmail}
+                  onClick={copyEmail}
                   className="cursor-pointer group inline-flex items-center gap-1.5 text-body hover:text-accent-hover transition-colors font-medium"
                   title="Click to copy email address"
                 >
@@ -115,7 +106,7 @@ export function Hero() {
                 {copied && (
                   <div
                     role="status"
-                    className="absolute -top-7 left-0 rounded-sm border border-accent/40 bg-page px-2 py-0.5 text-xs text-accent-hover font-bold shadow-lg animate-in fade-in zoom-in-95 duration-150"
+                    className="absolute -top-7 left-0 rounded-sm border border-accent/40 bg-page px-2 py-0.5 text-xs text-accent-hover font-bold shadow-lg animate-in fade-in zoom-in-95 duration-150 motion-reduce:animate-none"
                   >
                     Copied to clipboard!
                   </div>
@@ -152,11 +143,7 @@ export function Hero() {
             {/* 5. Primary Action CTAs */}
             <div className="pt-2 flex flex-wrap items-center gap-3">
               {/* Quick Email Modal Trigger (Primary Green Action) */}
-              <motion.div
-                whileHover={{ scale: 1.025 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              >
+              <motion.div {...pressableMotion}>
                 <button
                   type="button"
                   onClick={openEmailModal}

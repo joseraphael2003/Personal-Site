@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
-/** Shared with the pre-paint script in app/layout.tsx. */
-export const THEME_STORAGE_KEY = "portfolio-theme";
+/** Mirrors the pre-paint script in app/layout.tsx. */
+const THEME_STORAGE_KEY = "portfolio-theme";
 
 export type ThemeId = "dark" | "light";
 

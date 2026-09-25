@@ -3,7 +3,9 @@ import { DotGothic16, Space_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import { profile } from "@/data/portfolio";
 import { EmailModalProvider } from "@/components/providers/email-modal-provider";
+import { MotionProvider } from "@/components/providers/motion-provider";
 import { PageTransitionProvider } from "@/components/ui/page-transition";
 
 const dotGothic = DotGothic16({
@@ -59,7 +61,7 @@ const jsonLd = {
   "@type": "Person",
   name: "Jose Raphael V. Dichoso",
   url: "https://jrdichoso.vercel.app",
-  jobTitle: "Software & Systems Engineer",
+  jobTitle: profile.role,
   sameAs: [
     "https://github.com/joseraphael2003",
     "https://www.linkedin.com/in/jdichoso2003/",
@@ -92,9 +94,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <EmailModalProvider>
-          <PageTransitionProvider>{children}</PageTransitionProvider>
-        </EmailModalProvider>
+        <MotionProvider>
+          <EmailModalProvider>
+            <PageTransitionProvider>{children}</PageTransitionProvider>
+          </EmailModalProvider>
+        </MotionProvider>
         <Analytics />
         <SpeedInsights />
       </body>

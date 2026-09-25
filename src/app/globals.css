@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "tailwindcss-animate";
 
 /* The `light` variant marks a rule that only applies while <html> carries
    `data-theme="light"`. Dark is the default and is never inferred from the OS. */
@@ -28,6 +29,8 @@
   --color-chip-hover: var(--chip-hover);
   --color-on-accent: var(--on-accent);
   --color-danger: var(--danger);
+  --color-scrim: var(--scrim);
+  --color-on-scrim: var(--on-scrim);
 
   --color-accent: var(--accent-color);
   --color-accent-hover: var(--accent-hover);
@@ -67,6 +70,8 @@
   --chip-hover: #262626;
   --on-accent: #000000;
   --danger: #ff6467;
+  --scrim: #000;
+  --on-scrim: #fff;
 
   --accent-soft: color-mix(in srgb, var(--accent-hover) 55%, white);
   --accent-deep: color-mix(in srgb, var(--accent-color) 25%, var(--page));
@@ -140,6 +145,8 @@
   --chip-hover: #ebe6db;
   --on-accent: #ffffff;
   --danger: #b91c1c;
+  --scrim: #000;
+  --on-scrim: #fff;
 
   --accent-soft: var(--accent-hover);
   --accent-deep: color-mix(in srgb, var(--accent-color) 10%, var(--page));

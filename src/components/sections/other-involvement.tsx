@@ -1,14 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import { involvement } from "@/data/portfolio";
 import { DraggableMarquee } from "@/components/ui/draggable-marquee";
 import { LightboxModal } from "@/components/ui/lightbox-modal";
+import { useLightbox } from "@/hooks/use-lightbox";
 import { Music, Calendar, Disc3, Radio } from "lucide-react";
 
 export function OtherInvolvement() {
-  const [lightboxImage, setLightboxImage] = useState<{ src: string; caption?: string } | null>(null);
-  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
+  const { image, originRect, open, onOpenChange } = useLightbox();
   if (!involvement || involvement.length === 0) return null;
 
   const getIcon = (id: string) => {
@@ -71,10 +70,9 @@ export function OtherInvolvement() {
                   <DraggableMarquee
                     items={item.gallery}
                     speed={0.35}
-                    onItemClick={(origIdx, galleryItem, rect) => {
-                      setOriginRect(rect || null);
-                      setLightboxImage(item.gallery[origIdx]);
-                    }}
+                    onItemClick={(origIdx, _item, rect) =>
+                      open(item.gallery[origIdx], rect || null)
+                    }
                   />
                 </div>
               )}
@@ -82,16 +80,11 @@ export function OtherInvolvement() {
           ))}
         </div>
       </div>
-      {lightboxImage && (
+      {image && (
         <LightboxModal
-          open={!!lightboxImage}
-          onOpenChange={(open) => {
-            if (!open) {
-              setLightboxImage(null);
-              setOriginRect(null);
-            }
-          }}
-          image={lightboxImage}
+          open={!!image}
+          onOpenChange={onOpenChange}
+          image={image}
           originRect={originRect}
         />
       )}

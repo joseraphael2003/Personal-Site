@@ -70,10 +70,10 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/80 light:bg-black/40 backdrop-blur-sm transition-opacity duration-150" />
+        <Dialog.Backdrop className="fixed inset-0 z-50 bg-scrim/80 light:bg-scrim/40 backdrop-blur-sm transition-opacity duration-150" />
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 pointer-events-none">
           <Dialog.Popup
-            className="pointer-events-auto relative w-full max-w-[min(90vw,680px)] rounded-sm border border-edge-strong bg-raised p-5 sm:p-7 shadow-2xl text-body outline-none flex flex-col gap-5 max-h-[92vh] overflow-y-auto font-text"
+            className="pointer-events-auto relative w-full max-w-[min(90vw,680px)] rounded-sm border border-edge-strong bg-raised p-5 sm:p-7 shadow-2xl text-body outline-none flex flex-col gap-5 max-h-[92dvh] overflow-y-auto font-text"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.94, y: 10 }}
@@ -141,7 +141,11 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
 
                 {/* Error Banner */}
                 {status === "error" && (
-                  <div className="p-3 rounded-sm border border-danger/30 bg-danger/10 text-danger flex items-start gap-2.5">
+                  <div
+                    id="email-modal-error"
+                    role="alert"
+                    className="p-3 rounded-sm border border-danger/30 bg-danger/10 text-danger flex items-start gap-2.5"
+                  >
                     <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-danger" />
                     <span className="leading-relaxed">{errorMessage}</span>
                   </div>
@@ -159,6 +163,8 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
                     disabled={status === "submitting"}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    aria-invalid={status === "error"}
+                    aria-describedby={status === "error" ? "email-modal-error" : undefined}
                     placeholder="e.g. Alex Santos"
                     className="w-full rounded-sm border border-edge bg-field px-3 py-2 text-body placeholder:text-faint focus:border-accent focus:outline-none transition-colors disabled:opacity-50"
                   />
@@ -176,6 +182,8 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
                     disabled={status === "submitting"}
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    aria-invalid={status === "error"}
+                    aria-describedby={status === "error" ? "email-modal-error" : undefined}
                     placeholder="e.g. alex@example.com"
                     className="w-full rounded-sm border border-edge bg-field px-3 py-2 text-body placeholder:text-faint focus:border-accent focus:outline-none transition-colors disabled:opacity-50"
                   />
@@ -193,6 +201,8 @@ export function EmailModal({ open, onOpenChange }: EmailModalProps) {
                     disabled={status === "submitting"}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    aria-invalid={status === "error"}
+                    aria-describedby={status === "error" ? "email-modal-error" : undefined}
                     placeholder="Briefly describe your project, timeline, or question..."
                     className="w-full rounded-sm border border-edge bg-field px-3 py-2 text-body placeholder:text-faint focus:border-accent focus:outline-none transition-colors disabled:opacity-50 resize-y leading-relaxed"
                   />

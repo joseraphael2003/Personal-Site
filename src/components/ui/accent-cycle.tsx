@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-/** Shared with the pre-paint script in app/layout.tsx. */
-export const ACCENT_STORAGE_KEY = "portfolio-accent";
+/** Mirrors the pre-paint script in app/layout.tsx. */
+const ACCENT_STORAGE_KEY = "portfolio-accent";
 
 export type AccentId = "emerald" | "cyan" | "violet" | "amber" | "rose";
 

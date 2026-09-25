@@ -1,15 +1,6 @@
 import { skillCategories } from "@/data/portfolio";
-import { Terminal, Cpu, Database, Wrench, CircuitBoard } from "lucide-react";
 
 export function Skills() {
-  const iconMap: Record<string, React.ReactNode> = {
-    Languages: <Terminal className="h-4 w-4 text-accent-hover" />,
-    "Frameworks & Systems": <Cpu className="h-4 w-4 text-accent-hover" />,
-    "Databases & Storage": <Database className="h-4 w-4 text-accent-hover" />,
-    "Automation & Tooling": <Wrench className="h-4 w-4 text-accent-hover" />,
-    Engineering: <CircuitBoard className="h-4 w-4 text-accent-hover" />,
-  };
-
   return (
     <section id="skills" className="w-full border-b border-edge/80 bg-page py-10 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-10 font-text">
@@ -29,7 +20,7 @@ export function Skills() {
             >
               {/* Category Label with Icon */}
               <div className="flex items-center gap-2 lg:gap-2.5 shrink-0 sm:min-w-[200px] lg:min-w-[250px]">
-                {iconMap[category.title] || <Terminal className="h-4 w-4 text-accent-hover" />}
+                <category.icon className="h-4 w-4 text-accent-hover" />
                 <span className="font-display text-sm sm:text-base text-body uppercase tracking-wide">
                   [{category.title}]
                 </span>

@@ -6,6 +6,7 @@ import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
 import { AccentCycle } from "@/components/ui/accent-cycle";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { pressableMotion } from "@/lib/motion";
 import { Menu, X, Mail } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
@@ -181,11 +182,7 @@ export function Header() {
 
         {/* Right: Availability & Action */}
         <div className="hidden lg:flex items-center gap-4">
-          <motion.div
-            whileHover={{ scale: 1.025 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          >
+          <motion.div {...pressableMotion}>
             <button
               type="button"
               onClick={openEmailModal}
@@ -201,6 +198,8 @@ export function Header() {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="lg:hidden cursor-pointer rounded-sm border border-edge p-1.5 text-muted hover:text-ink"
           aria-label="Toggle menu"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-nav-drawer"
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -208,7 +207,7 @@ export function Header() {
 
       {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-edge bg-raised px-4 py-4 font-text text-sm space-y-3">
+        <div id="mobile-nav-drawer" className="lg:hidden border-b border-edge bg-raised px-4 py-4 font-text text-sm space-y-3">
           <div className="flex flex-col gap-2.5 pt-1">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;

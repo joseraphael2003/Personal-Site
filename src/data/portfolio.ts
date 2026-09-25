@@ -1,3 +1,6 @@
+import type { LucideIcon } from "lucide-react";
+import { Terminal, Cpu, Database, Wrench, Bot, CircuitBoard } from "lucide-react";
+
 export interface Profile {
   name: string;
   role: string;
@@ -6,10 +9,8 @@ export interface Profile {
   headline: string;
   bio: string;
   email: string;
-  phone: string;
   github: string;
   linkedin: string;
-  website: string;
 }
 
 export interface WorkRole {
@@ -19,16 +20,6 @@ export interface WorkRole {
   location: string;
   summaryBullet?: string;
   bullets: string[];
-}
-
-export interface ProjectSpec {
-  label: string;
-  value: string;
-}
-
-export interface PipelineStep {
-  stage: string;
-  details: string;
 }
 
 export interface GalleryItem {
@@ -45,8 +36,6 @@ export interface Project {
   confidential: boolean;
   year: string;
   techStack: string[];
-  pipelineSteps?: PipelineStep[];
-  specs?: ProjectSpec[];
   primaryImage?: string | null;
   galleryImages?: GalleryItem[];
   repoUrl?: string | null;
@@ -55,6 +44,7 @@ export interface Project {
 
 export interface SkillCategory {
   title: string;
+  icon: LucideIcon;
   skills: string[];
 }
 
@@ -65,14 +55,6 @@ export interface EducationItem {
   location: string;
   honors?: string;
   details: string[];
-}
-
-export interface LeadershipItem {
-  organization: string;
-  roles: string;
-  period: string;
-  description: string;
-  responsibilities: string[];
 }
 
 export interface CertificationItem {
@@ -108,10 +90,8 @@ export const profile: Profile = {
   headline: "Jose Raphael V. Dichoso",
   bio: "Computer Engineering student majoring in Networks, at Ateneo de Naga University. Developer with 3 months of commissioned project work building web apps and internal tools. VITRO Academy Certified Data Center Specialist (Top 10% of five universities). Experienced virtual assistant for US-based clients, comfortable with remote async work. Proven leader (Ateneo de Naga University Symphonic Band).",
   email: "joseraphael2003@gmail.com",
-  phone: "REDACTED",
   github: "https://github.com/joseraphael2003",
   linkedin: "https://www.linkedin.com/in/jdichoso2003/",
-  website: "https://jrdichoso.vercel.app",
 };
 
 export const workExperience: WorkRole[] = [
@@ -177,26 +157,6 @@ export const flagshipProjects: Project[] = [
     confidential: true,
     year: "2026",
     techStack: ["Python", "FastAPI", "Airtable API", "Telegram Bot API", "Apify", "Cron"],
-    pipelineSteps: [
-      {
-        stage: "Ingestion",
-        details: "Telegram webhook triggers, Airtable asset records, and custom Apify scraping actors.",
-      },
-      {
-        stage: "Processing",
-        details: "Python cron workers, rate-limited media queues, and task validation scripts.",
-      },
-      {
-        stage: "Delivery",
-        details: "Automated channel dispatch, client review status sync, and persistent audit logging.",
-      },
-    ],
-    specs: [
-      { label: "Core Stack", value: "Python, FastAPI, Airtable API" },
-      { label: "Automation", value: "Telegram Bots, Apify Actors" },
-      { label: "Execution", value: "Scheduled Background Cron Workers" },
-      { label: "Delivery", value: "Real-Time Multi-Channel Broadcast" },
-    ],
   },
   {
     id: "reddit-apify-actor",
@@ -222,26 +182,6 @@ export const flagshipProjects: Project[] = [
     confidential: true,
     year: "2026",
     techStack: ["TypeScript", "Next.js", "Python", "Ahrefs API", "HTTP Crawlers", "Tailwind CSS"],
-    pipelineSteps: [
-      {
-        stage: "Input Stage",
-        details: "Domain inventory ingestion, client niche selection, and target parameter filters.",
-      },
-      {
-        stage: "Scoring Engine",
-        details: "Ahrefs API metrics, HTTP crawler verification, and algorithmic quality rating.",
-      },
-      {
-        stage: "Human Review",
-        details: "Interactive reviewable data table, approval controls, and curated CSV export.",
-      },
-    ],
-    specs: [
-      { label: "Architecture", value: "Automated Heuristic Scoring Pipeline" },
-      { label: "Integrations", value: "Ahrefs API, Custom HTTP Crawlers" },
-      { label: "Data Handling", value: "High-Volume Inventory Parsing & Scoring" },
-      { label: "Output", value: "Human Review Interface & Filtered CSV" },
-    ],
   },
   {
     id: "inteflow",
@@ -289,12 +229,6 @@ export const flagshipProjects: Project[] = [
         src: "/projects/opsdeck/opsdeck-activity.png",
         caption: "Figure 5: Live System Activity Stream & Webhook Logs",
       },
-    ],
-    specs: [
-      { label: "Frontend", value: "Next.js 16 (App Router), Tailwind CSS v4" },
-      { label: "Backend", value: "Supabase / Neon PostgreSQL, n8n" },
-      { label: "AI Pipeline", value: "Vercel AI SDK, Document Data Extraction" },
-      { label: "Webhooks", value: "Telegram Bot API, Google Drive Sync" },
     ],
     repoUrl: null,
     liveUrl: null,
@@ -385,22 +319,32 @@ export const archiveProjects: Project[] = [
 export const skillCategories: SkillCategory[] = [
   {
     title: "Languages",
+    icon: Terminal,
     skills: ["Python", "TypeScript", "Dart", "C++"],
   },
   {
     title: "Frameworks & Systems",
+    icon: Cpu,
     skills: ["React 19", "Next.js 16 (App Router)", "FastAPI", "Django", "Flutter", "Vite"],
   },
   {
     title: "Databases & Storage",
+    icon: Database,
     skills: ["PostgreSQL", "Drizzle ORM", "Supabase", "SQLite", "ChromaDB"],
   },
   {
     title: "Automation & Tooling",
+    icon: Wrench,
     skills: ["n8n Workflows", "Apify Actors", "Telegram Bots", "Git / GitHub", "Linux"],
   },
   {
+    title: "AI Tools",
+    icon: Bot,
+    skills: ["Claude", "ChatGPT"],
+  },
+  {
     title: "Engineering",
+    icon: CircuitBoard,
     skills: ["Cisco IOS", "KiCAD", "Digital Electronics", "Analog Electronics", "Octave"],
   },
 ];
@@ -550,12 +494,4 @@ export const involvement: InvolvementItem[] = [
     ],
   },
 ];
-
-export const leadership: LeadershipItem[] = involvement.map((item) => ({
-  organization: item.organization,
-  roles: item.role,
-  period: item.period,
-  description: item.description,
-  responsibilities: item.highlights,
-}));
 

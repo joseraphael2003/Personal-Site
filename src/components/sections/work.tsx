@@ -3,7 +3,118 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { workExperience } from "@/data/portfolio";
+import { pressableMotion } from "@/lib/motion";
 import { Briefcase, Calendar, MapPin, ChevronDown, ChevronUp } from "lucide-react";
+
+type Role = (typeof workExperience)[number];
+
+/** One bullet: a rail dot plus the colon-split bold lead-in. */
+function Bullet({ text, dotClass, strongClass }: { text: string; dotClass: string; strongClass: string }) {
+  const colonIndex = text.indexOf(":");
+  return (
+    <>
+      <span className={`h-1.5 w-1.5 rounded-full ${dotClass} mt-1.5 shrink-0`} />
+      {colonIndex !== -1 ? (
+        <span>
+          <strong className={`${strongClass} font-semibold`}>{text.slice(0, colonIndex + 1)}</strong>
+          {text.slice(colonIndex + 1)}
+        </span>
+      ) : (
+        <span>{text}</span>
+      )}
+    </>
+  );
+}
+
+/**
+ * One timeline entry. `current` is the always-visible active role (accent rail
+ * node, accent bullets, summary/full toggle); `historical` is a collapsed-ledger
+ * entry (hollow node, muted lead-ins).
+ */
+function RoleCard({
+  role,
+  variant,
+  expanded = false,
+}: {
+  role: Role;
+  variant: "current" | "historical";
+  expanded?: boolean;
+}) {
+  const isCurrent = variant === "current";
+
+  return (
+    <div className="relative space-y-4">
+      {/* Role Node (Centered exactly over 1px rail border) */}
+      <div
+        className={
+          isCurrent
+            ? "absolute -left-[29.5px] sm:-left-[37.5px] top-6 h-2.5 w-2.5 bg-accent-hover shadow-[0_0_8px_color-mix(in_srgb,var(--accent-hover)_50%,transparent)]"
+            : "absolute -left-[28.5px] sm:-left-[36.5px] top-6 h-2 w-2 bg-page border border-edge-strong"
+        }
+        aria-hidden="true"
+      />
+
+      <div className="rounded-sm border border-edge bg-surface p-4 sm:p-6 lg:p-7 space-y-4 hover:border-edge-strong transition-colors shadow-sm">
+        {/* Meta Row */}
+        <div className="flex flex-row flex-wrap sm:flex-nowrap items-start sm:items-baseline justify-between gap-2 border-b border-edge pb-2.5 sm:pb-3">
+          <div>
+            <h3 className="font-text font-bold text-base sm:text-lg text-ink">
+              {role.role}
+            </h3>
+            <div className="text-sm text-muted mt-0.5 flex items-center gap-1.5">
+              <Briefcase className={`h-4 w-4 ${isCurrent ? "text-accent-hover" : "text-muted"}`} />
+              <span className="text-body font-bold">{role.company}</span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 text-sm text-subtle">
+            <div className="flex items-center gap-1">
+              <Calendar className="h-3.5 w-3.5 text-muted" />
+              <span className="text-copy">{role.period}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <MapPin className="h-3.5 w-3.5 text-muted" />
+              <span>{role.location}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Bullets: the active role morphs between summary and full bullets */}
+        {isCurrent ? (
+          <div className="text-xs sm:text-sm text-copy">
+            {!expanded ? (
+              /* Collapsed View: Single Summary Bullet */
+              <div className="flex items-start gap-2.5 leading-normal sm:leading-relaxed py-1 text-body">
+                <Bullet
+                  text={role.summaryBullet || role.bullets[0]}
+                  dotClass="bg-accent-hover"
+                  strongClass="text-ink"
+                />
+              </div>
+            ) : (
+              /* Expanded View: All Detailed Bullets */
+              <ul className="space-y-2 sm:space-y-2.5">
+                {role.bullets.map((bullet, bIdx) => (
+                  <li key={bIdx} className="flex items-start gap-2.5 leading-normal sm:leading-relaxed">
+                    <Bullet text={bullet} dotClass="bg-accent-hover" strongClass="text-ink" />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ) : (
+          <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-copy">
+            {role.bullets.map((bullet, bIdx) => (
+              <li key={bIdx} className="flex items-start gap-2.5 leading-normal sm:leading-relaxed">
+                <Bullet text={bullet} dotClass="bg-faint" strongClass="text-body" />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export function Work() {
   const [expanded, setExpanded] = useState(false);
@@ -24,84 +135,7 @@ export function Work() {
         {/* Timeline Rail */}
         <div className="relative pl-6 sm:pl-8 border-l border-edge space-y-8">
           {/* 1. Current Active Role (Always Visible) */}
-          {currentRole && (
-            <div className="relative space-y-4">
-              {/* Active Role Node (Centered exactly over 1px rail border) */}
-              <div
-                className="absolute -left-[29.5px] sm:-left-[37.5px] top-6 h-2.5 w-2.5 bg-accent-hover shadow-[0_0_8px_color-mix(in_srgb,var(--accent-hover)_50%,transparent)]"
-                aria-hidden="true"
-              />
-
-              <div className="rounded-sm border border-edge bg-surface p-4 sm:p-6 lg:p-7 space-y-4 hover:border-edge-strong transition-colors shadow-sm">
-                {/* Meta Row */}
-                <div className="flex flex-row flex-wrap sm:flex-nowrap items-start sm:items-baseline justify-between gap-2 border-b border-edge pb-2.5 sm:pb-3">
-                  <div>
-                    <h3 className="font-text font-bold text-base sm:text-lg text-ink">
-                      {currentRole.role}
-                    </h3>
-                    <div className="text-sm text-muted mt-0.5 flex items-center gap-1.5">
-                      <Briefcase className="h-4 w-4 text-accent-hover" />
-                      <span className="text-body font-bold">{currentRole.company}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-3 text-sm text-subtle">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="h-3.5 w-3.5 text-muted" />
-                      <span className="text-copy">{currentRole.period}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="h-3.5 w-3.5 text-muted" />
-                      <span>{currentRole.location}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Bullets: Morph / Switch between Summary and Full Bullets */}
-                <div className="text-xs sm:text-sm text-copy">
-                  {!expanded ? (
-                    /* Collapsed View: Single Summary Bullet */
-                    <div className="flex items-start gap-2.5 leading-normal sm:leading-relaxed py-1 text-body">
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent-hover mt-1.5 shrink-0" />
-                      {(() => {
-                        const text = currentRole.summaryBullet || currentRole.bullets[0];
-                        const colonIndex = text.indexOf(":");
-                        if (colonIndex !== -1) {
-                          return (
-                            <span>
-                              <strong className="text-ink font-semibold">{text.slice(0, colonIndex + 1)}</strong>
-                              {text.slice(colonIndex + 1)}
-                            </span>
-                          );
-                        }
-                        return <span>{text}</span>;
-                      })()}
-                    </div>
-                  ) : (
-                    /* Expanded View: All Detailed Bullets */
-                    <ul className="space-y-2 sm:space-y-2.5">
-                      {currentRole.bullets.map((bullet, bIdx) => {
-                        const colonIndex = bullet.indexOf(":");
-                        return (
-                          <li key={bIdx} className="flex items-start gap-2.5 leading-normal sm:leading-relaxed">
-                            <span className="h-1.5 w-1.5 rounded-full bg-accent-hover mt-1.5 shrink-0" />
-                            {colonIndex !== -1 ? (
-                              <span>
-                                <strong className="text-ink font-semibold">{bullet.slice(0, colonIndex + 1)}</strong>
-                                {bullet.slice(colonIndex + 1)}
-                              </span>
-                            ) : (
-                              <span>{bullet}</span>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
+          {currentRole && <RoleCard role={currentRole} variant="current" expanded={expanded} />}
 
           {/* 2. Historical Roles (Collapsible) */}
           <AnimatePresence initial={false}>
@@ -114,59 +148,7 @@ export function Work() {
                 className="space-y-8 overflow-hidden -ml-8 sm:-ml-10 pl-8 sm:pl-10 pt-2"
               >
                 {historicalRoles.map((role, idx) => (
-                  <div key={`${role.company}-${idx}`} className="relative space-y-4">
-                    {/* Historical Role Node (Centered exactly over 1px rail border) */}
-                    <div
-                      className="absolute -left-[28.5px] sm:-left-[36.5px] top-6 h-2 w-2 bg-page border border-edge-strong"
-                      aria-hidden="true"
-                    />
-
-                    <div className="rounded-sm border border-edge bg-surface p-4 sm:p-6 lg:p-7 space-y-4 hover:border-edge-strong transition-colors shadow-sm">
-                      {/* Meta Row */}
-                      <div className="flex flex-row flex-wrap sm:flex-nowrap items-start sm:items-baseline justify-between gap-2 border-b border-edge pb-2.5 sm:pb-3">
-                        <div>
-                          <h3 className="font-text font-bold text-base sm:text-lg text-ink">
-                            {role.role}
-                          </h3>
-                          <div className="text-sm text-muted mt-0.5 flex items-center gap-1.5">
-                            <Briefcase className="h-4 w-4 text-muted" />
-                            <span className="text-body font-bold">{role.company}</span>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-wrap items-center gap-3 text-sm text-subtle">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="h-3.5 w-3.5 text-muted" />
-                            <span className="text-copy">{role.period}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <MapPin className="h-3.5 w-3.5 text-muted" />
-                            <span>{role.location}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Bullets */}
-                      <ul className="space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-copy">
-                        {role.bullets.map((bullet, bIdx) => {
-                          const colonIndex = bullet.indexOf(":");
-                          return (
-                            <li key={bIdx} className="flex items-start gap-2.5 leading-normal sm:leading-relaxed">
-                              <span className="h-1.5 w-1.5 rounded-full bg-faint mt-1.5 shrink-0" />
-                              {colonIndex !== -1 ? (
-                                <span>
-                                  <strong className="text-body font-semibold">{bullet.slice(0, colonIndex + 1)}</strong>
-                                  {bullet.slice(colonIndex + 1)}
-                                </span>
-                              ) : (
-                                <span>{bullet}</span>
-                              )}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  </div>
+                  <RoleCard key={`${role.company}-${idx}`} role={role} variant="historical" />
                 ))}
               </motion.div>
             )}
@@ -175,11 +157,7 @@ export function Work() {
 
         {/* 3. Expand / Collapse Action Control (Centered Compact Solid Emerald Button) */}
         <div className="pt-4 flex justify-center">
-          <motion.div
-            whileHover={{ scale: 1.025 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          >
+          <motion.div {...pressableMotion}>
             <button
               type="button"
               onClick={() => setExpanded(!expanded)}

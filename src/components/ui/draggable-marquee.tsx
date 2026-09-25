@@ -36,6 +36,10 @@ export function DraggableMarquee({
   const rootRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<Draggable | null>(null);
+  // Read inside the GSAP ticker so a preference/visibility change never
+  // re-creates the Draggable + ticker setup below.
+  const prefersReducedMotionRef = useRef(false);
+  const isVisibleRef = useRef(true);
 
   // Duplicate items to enable continuous wrapping
   const duplicatedItems = useMemo(() => {
@@ -43,6 +47,31 @@ export function DraggableMarquee({
     if (items.length <= 1) return items;
     return Array.from({ length: repeatCount }).flatMap(() => items);
   }, [items, repeatCount]);
+
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncPreference = () => {
+      prefersReducedMotionRef.current = query.matches;
+    };
+
+    syncPreference();
+    query.addEventListener("change", syncPreference);
+
+    return () => query.removeEventListener("change", syncPreference);
+  }, []);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry) isVisibleRef.current = entry.isIntersecting;
+    });
+    observer.observe(root);
+
+    return () => observer.disconnect();
+  }, [items.length]);
 
   useEffect(() => {
     if (!rootRef.current || !trackRef.current || items.length <= 1) return;
@@ -133,11 +162,20 @@ export function DraggableMarquee({
     };
 
     const update = () => {
+      const prefersReducedMotion = prefersReducedMotionRef.current;
+
       if (!isDragging) {
-        if (!(pauseOnHover && isPointerOver)) {
+        // Auto-advance only while visible and only when motion is welcome.
+        if (
+          !prefersReducedMotion &&
+          isVisibleRef.current &&
+          !(pauseOnHover && isPointerOver)
+        ) {
           x -= speed;
         }
-        x += throwVelocity;
+        if (!prefersReducedMotion) {
+          x += throwVelocity;
+        }
         throwVelocity *= 0.975;
         if (Math.abs(throwVelocity) < 0.01) {
           throwVelocity = 0;
@@ -171,7 +209,7 @@ export function DraggableMarquee({
         if (dt > 0) {
           const sampledVelocity = (dx / dt) * 16.67;
           // Apply minimal momentum only on high-speed intentional flicks
-          if (Math.abs(sampledVelocity) > 2) {
+          if (!prefersReducedMotionRef.current && Math.abs(sampledVelocity) > 2) {
             throwVelocity = gsap.utils.clamp(-25, 25, sampledVelocity * 0.8);
           } else {
             throwVelocity = 0;
@@ -243,7 +281,7 @@ export function DraggableMarquee({
       tabIndex={0}
       role="region"
       aria-label={label}
-      className={`relative w-full overflow-hidden cursor-grab active:cursor-grabbing outline-none select-none ${className}`}
+      className={`relative w-full overflow-hidden cursor-grab active:cursor-grabbing outline-none focus-visible:ring-1 focus-visible:ring-accent select-none ${className}`}
     >
       <div
         ref={trackRef}

@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { archiveProjects, Project, GalleryItem } from "@/data/portfolio";
+import { archiveProjects, Project } from "@/data/portfolio";
 import { ArrowLeft, Filter } from "lucide-react";
 import { LightboxModal } from "@/components/ui/lightbox-modal";
 import { ProjectCard } from "@/components/ui/project-card";
 import { usePageTransition } from "@/components/ui/page-transition";
+import { useLightbox } from "@/hooks/use-lightbox";
 
 export default function ProjectsArchivePage() {
-  const [lightboxImage, setLightboxImage] = useState<GalleryItem | null>(null);
-  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
+  const { image, originRect, open, onOpenChange } = useLightbox();
   const { navigateBack } = usePageTransition();
 
   useEffect(() => {
@@ -75,6 +75,7 @@ export default function ProjectsArchivePage() {
             <button
               key={cat.value}
               onClick={() => setActiveCategory(cat.value)}
+              aria-pressed={activeCategory === cat.value}
               className={`cursor-pointer px-3 py-1.5 text-sm rounded-sm transition-colors ${
                 activeCategory === cat.value
                   ? "bg-accent text-on-accent font-bold"
@@ -97,26 +98,18 @@ export default function ProjectsArchivePage() {
               project={project}
               index={idx}
               headingLevel="h2"
-              onImageClick={(item, rect) => {
-                setOriginRect(rect);
-                setLightboxImage(item);
-              }}
+              onImageClick={open}
             />
           ))}
         </div>
       </div>
 
       {/* Lightbox Modal */}
-      {lightboxImage && (
+      {image && (
         <LightboxModal
-          open={!!lightboxImage}
-          onOpenChange={(open) => {
-            if (!open) {
-              setLightboxImage(null);
-              setOriginRect(null);
-            }
-          }}
-          image={lightboxImage}
+          open={!!image}
+          onOpenChange={onOpenChange}
+          image={image}
           originRect={originRect}
         />
       )}

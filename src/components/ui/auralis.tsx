@@ -598,5 +598,3 @@ export function Auralis({
     />
   );
 }
-
-export default Auralis;

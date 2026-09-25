@@ -1,21 +1,18 @@
 "use client";
 
 import { useState, useEffect, useSyncExternalStore } from "react";
+import { Tooltip } from "@base-ui/react";
 import { AcronymTooltip } from "@/components/ui/tooltip";
 import { profile } from "@/data/portfolio";
+import {
+  CONTRIBUTIONS_URL,
+  normalizeContributions,
+  type ContributionData,
+} from "@/lib/github-contributions";
 import { Github, Activity, ArrowUpRight, AlertCircle } from "lucide-react";
 
-interface ContributionDay {
-  date: string;
-  count: number;
-  level: 0 | 1 | 2 | 3 | 4;
-}
-
 interface GitHubActivityProps {
-  initialData?: {
-    total: number;
-    contributions: ContributionDay[];
-  } | null;
+  initialData?: ContributionData | null;
 }
 const emptySubscribe = () => () => {};
 
@@ -25,32 +22,19 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
     () => true,
     () => false
   );
-  const [data, setData] = useState(initialData);
+  const [clientData, setClientData] = useState<ContributionData | null>(null);
+  const data = initialData ?? clientData;
 
   useEffect(() => {
     const isMock = typeof window !== "undefined" && window.location.search.includes("mock=offline");
 
     // If no initialData was provided via SSR and not in offline mock mode, fetch client-side
     if (!initialData && !isMock) {
-      fetch("https://github-contributions-api.jogruber.de/v4/joseraphael2003?y=last")
+      fetch(CONTRIBUTIONS_URL)
         .then((res) => (res.ok ? res.json() : null))
-        .then((json) => {
-          if (json && json.contributions) {
-            const totalCount =
-              typeof json.total?.lastYear === "number"
-                ? json.total.lastYear
-                : typeof json.total === "number"
-                ? json.total
-                : Number(Object.values(json.total || {})[0]) || 0;
-            const flatDays: ContributionDay[] = [];
-            json.contributions.forEach((day: { date: string; count: number; level: number }) => {
-              flatDays.push({
-                date: day.date,
-                count: day.count,
-                level: Math.min(4, Math.max(0, day.level)) as 0 | 1 | 2 | 3 | 4,
-              });
-            });
-            setData({ total: totalCount, contributions: flatDays });
+        .then((json: unknown) => {
+          if (json) {
+            setClientData(normalizeContributions(json));
           }
         })
         .catch(() => {
@@ -80,7 +64,7 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
   };
 
   return (
-    <section className="w-full border-b border-edge/80 bg-page py-16 sm:py-24 font-text">
+    <section id="github" className="w-full border-b border-edge/80 bg-page py-16 sm:py-24 font-text">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-edge pb-4">
@@ -130,6 +114,11 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
           ) : (
             /* Live Styled SVG Matrix */
             <div className="space-y-4">
+              {data && (
+                <p className="sr-only">
+                  {data.total} contributions in the last year.
+                </p>
+              )}
               <div className="flex items-center justify-between text-sm text-muted border-b border-edge/80 pb-2">
                 <div className="flex items-center gap-2">
                   <Activity className="h-4 w-4 text-accent-hover" />
@@ -143,27 +132,33 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
 
               {/* Grid: 52 columns x 7 days */}
               <div className="overflow-x-auto pb-2">
-                <div className="grid grid-rows-7 grid-flow-col gap-1 min-w-[720px] max-w-full">
-                  {displayDays.map((day) => (
-                    <AcronymTooltip
-                      key={day.date}
-                      tabIndex={-1}
-                      className="outline-none focus:outline-none cursor-pointer inline-block"
-                      content={
-                        <span>
-                          <strong className="text-accent-hover">{day.count} contributions</strong> on{" "}
-                          {day.date}
-                        </span>
-                      }
-                    >
-                      <div
-                        className={`h-2.5 w-2.5 rounded-[1px] transition-transform hover:scale-125 ${getColorClass(
-                          day.level
-                        )}`}
-                      />
-                    </AcronymTooltip>
-                  ))}
-                </div>
+                <Tooltip.Provider delay={150}>
+                  <div
+                    className="grid grid-rows-7 grid-flow-col gap-1 min-w-[720px] max-w-full"
+                    aria-hidden="true"
+                  >
+                    {displayDays.map((day) => (
+                      <AcronymTooltip
+                        key={day.date}
+                        withProvider={false}
+                        tabIndex={-1}
+                        className="cursor-pointer inline-block"
+                        content={
+                          <span>
+                            <strong className="text-accent-hover">{day.count} contributions</strong> on{" "}
+                            {day.date}
+                          </span>
+                        }
+                      >
+                        <div
+                          className={`h-2.5 w-2.5 rounded-[1px] transition-transform hover:scale-125 ${getColorClass(
+                            day.level
+                          )}`}
+                        />
+                      </AcronymTooltip>
+                    ))}
+                  </div>
+                </Tooltip.Provider>
               </div>
 
               {/* Legend */}

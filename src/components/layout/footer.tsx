@@ -1,20 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
+import { useCopyEmail } from "@/hooks/use-copy-email";
+import { pressableMotion } from "@/lib/motion";
 import { Copy, Check, Github, Linkedin, Mail, MapPin, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function Footer() {
-  const [copied, setCopied] = useState(false);
+  const { copied, copyEmail } = useCopyEmail();
   const { openEmailModal } = useEmailModal();
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(profile.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <footer id="contact" className="w-full border-t border-edge bg-sunken py-10 sm:py-14 lg:py-20 font-text text-muted">
@@ -33,7 +28,7 @@ export function Footer() {
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <button
-              onClick={handleCopyEmail}
+              onClick={copyEmail}
               className="cursor-pointer rounded-sm border border-edge-strong bg-chip px-4 py-3 text-sm text-body hover:bg-chip-hover hover:text-ink transition-colors inline-flex items-center justify-center gap-2 font-bold"
             >
               {copied ? (
@@ -49,11 +44,7 @@ export function Footer() {
               )}
             </button>
 
-            <motion.div
-              whileHover={{ scale: 1.025 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            >
+            <motion.div {...pressableMotion}>
               <button
                 type="button"
                 onClick={openEmailModal}

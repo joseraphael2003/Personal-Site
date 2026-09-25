@@ -1,24 +1,21 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 import { EmailModal } from "@/components/ui/email-modal";
 
 interface EmailModalContextType {
   openEmailModal: () => void;
-  closeEmailModal: () => void;
-  isEmailModalOpen: boolean;
 }
 
 const EmailModalContext = createContext<EmailModalContextType | undefined>(undefined);
 
-export function EmailModalProvider({ children }: { children: React.ReactNode }) {
+export function EmailModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openEmailModal = () => setIsOpen(true);
-  const closeEmailModal = () => setIsOpen(false);
 
   return (
-    <EmailModalContext.Provider value={{ openEmailModal, closeEmailModal, isEmailModalOpen: isOpen }}>
+    <EmailModalContext.Provider value={{ openEmailModal }}>
       {children}
       <EmailModal open={isOpen} onOpenChange={setIsOpen} />
     </EmailModalContext.Provider>

@@ -38,7 +38,7 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
       }}
     >
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md transition-opacity duration-200 animate-in fade-in" />
+        <Dialog.Backdrop className="fixed inset-0 z-50 bg-scrim/85 backdrop-blur-md transition-opacity duration-200 animate-in fade-in motion-reduce:animate-none" />
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-10 pointer-events-none">
           <Dialog.Popup
             aria-label={image.caption || image.alt || "Image preview"}
@@ -70,7 +70,7 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
               </Dialog.Title>
               {/* Close Button */}
               <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20">
-                <Dialog.Close className="cursor-pointer rounded-sm border border-edge bg-chip/90 p-1.5 text-muted hover:text-white light:hover:text-ink hover:border-edge-strong transition-colors">
+                <Dialog.Close className="cursor-pointer rounded-sm border border-edge bg-chip/90 p-1.5 text-muted hover:text-on-scrim light:hover:text-ink hover:border-edge-strong transition-colors">
                   <X className="h-4 w-4" />
                   <span className="sr-only">Close modal</span>
                 </Dialog.Close>
@@ -78,13 +78,13 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
 
               {/* Dynamic Natural Ratio Stage Viewer with Strict Containment */}
               <div
-                className={`relative overflow-hidden rounded-sm bg-black/80 flex items-center justify-center max-w-full max-h-[80dvh] ${
+                className={`relative overflow-hidden rounded-sm bg-scrim/80 flex items-center justify-center max-w-full max-h-[80dvh] ${
                   !loaded ? "min-h-[220px] min-w-[min(280px,100%)]" : ""
                 }`}
               >
                 {/* Subtle pulse skeleton before decode */}
                 {!loaded && (
-                  <div className="absolute inset-0 bg-white/[0.06] animate-pulse rounded-sm" />
+                  <div className="absolute inset-0 bg-on-scrim/[0.06] animate-pulse rounded-sm" />
                 )}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

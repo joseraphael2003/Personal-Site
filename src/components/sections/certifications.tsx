@@ -1,15 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import { certifications, GalleryItem } from "@/data/portfolio";
+import { certifications } from "@/data/portfolio";
 import { Award, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { DraggableMarquee } from "@/components/ui/draggable-marquee";
 import { LightboxModal } from "@/components/ui/lightbox-modal";
+import { useLightbox } from "@/hooks/use-lightbox";
 
 export function Certifications() {
-  const [lightboxImage, setLightboxImage] = useState<GalleryItem | null>(null);
-  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
+  const { image, originRect, open, onOpenChange } = useLightbox();
 
   if (!certifications || certifications.length === 0) return null;
 
@@ -38,7 +37,7 @@ export function Certifications() {
                 <div className="space-y-4">
                   {/* Badge Thumbnail & Issuer Row */}
                   <div className="flex items-start justify-between gap-3">
-                    <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-sm border border-edge bg-black/60 light:bg-field p-1.5 flex items-center justify-center">
+                    <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-sm border border-edge bg-scrim/60 light:bg-field p-1.5 flex items-center justify-center">
                       {cert.badgeUrl ? (
                         <Image
                           src={cert.badgeUrl}
@@ -91,10 +90,9 @@ export function Certifications() {
                         <DraggableMarquee
                           items={gallery}
                           speed={0.35}
-                          onItemClick={(origIdx, item, rect) => {
-                            setOriginRect(rect || null);
-                            setLightboxImage(gallery[origIdx]);
-                          }}
+                          onItemClick={(origIdx, _item, rect) =>
+                            open(gallery[origIdx], rect || null)
+                          }
                         />
                       </div>
                     );
@@ -133,16 +131,11 @@ export function Certifications() {
         </div>
       </div>
 
-      {lightboxImage && (
+      {image && (
         <LightboxModal
-          open={!!lightboxImage}
-          onOpenChange={(open) => {
-            if (!open) {
-              setLightboxImage(null);
-              setOriginRect(null);
-            }
-          }}
-          image={lightboxImage}
+          open={!!image}
+          onOpenChange={onOpenChange}
+          image={image}
           originRect={originRect}
         />
       )}

@@ -1,17 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { flagshipProjects, archiveProjects, GalleryItem } from "@/data/portfolio";
+import { flagshipProjects, archiveProjects } from "@/data/portfolio";
 import { motion } from "framer-motion";
+import { pressableMotion } from "@/lib/motion";
 import { usePageTransition } from "@/components/ui/page-transition";
 import { LightboxModal } from "@/components/ui/lightbox-modal";
 import { ProjectCard } from "@/components/ui/project-card";
+import { useLightbox } from "@/hooks/use-lightbox";
 import { ArrowRight } from "lucide-react";
 
 export function Projects() {
-  const [lightboxImage, setLightboxImage] = useState<GalleryItem | null>(null);
-  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
+  const { image, originRect, open, onOpenChange } = useLightbox();
   const { navigate } = usePageTransition();
 
   return (
@@ -32,21 +32,14 @@ export function Projects() {
               project={project}
               index={idx}
               headingLevel="h3"
-              onImageClick={(item, rect) => {
-                setOriginRect(rect);
-                setLightboxImage(item);
-              }}
+              onImageClick={open}
             />
           ))}
         </div>
 
         {/* See All Projects Link (Compact Centered Solid Emerald Button) */}
         <div className="pt-4 flex justify-center font-text">
-          <motion.div
-            whileHover={{ scale: 1.025 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          >
+          <motion.div {...pressableMotion}>
             <Link
               href="/projects"
               onClick={(e) => {
@@ -65,16 +58,11 @@ export function Projects() {
       </div>
 
       {/* Lightbox Modal */}
-      {lightboxImage && (
+      {image && (
         <LightboxModal
-          open={!!lightboxImage}
-          onOpenChange={(open) => {
-            if (!open) {
-              setLightboxImage(null);
-              setOriginRect(null);
-            }
-          }}
-          image={lightboxImage}
+          open={!!image}
+          onOpenChange={onOpenChange}
+          image={image}
           originRect={originRect}
         />
       )}

@@ -4,6 +4,42 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased] - 2026-09-26
+
+### Added
+- **AI Tools Tech Stack Row**: New "AI Tools" category (Claude, ChatGPT) inserted before Engineering, with a `Bot` icon. Every skill category now carries an `icon: LucideIcon` field instead of a string-keyed `iconMap`, so `skills.tsx` renders `<category.icon />` directly.
+- **Shared Contributions Normaliser**: `src/lib/github-contributions.ts` exports `CONTRIBUTIONS_URL`, the `ContributionLevel`/`ContributionDay`/`ContributionData` types and a pure `normalizeContributions()` that merges the three duplicated variants (cron route, DB read, client fallback) with clamped levels and no casts.
+- **Cron Fail-Closed Auth**: `/api/cron/github` now returns 401 unless `CRON_SECRET` is set and the `Authorization` header matches; the upstream GitHub fetch carries a 10s `AbortSignal.timeout`, and the 500 body is a generic `{ ok: false, error: "Internal error" }` instead of leaking `error.message`. `CRON_SECRET` is set in Vercel Production.
+- **DB Scripts**: `npm run db:push` and `npm run db:studio` (drizzle-kit upgraded to the modern config API), plus `import "dotenv/config"` in `drizzle.config.ts`.
+- **`useLightbox` Hook**: `src/hooks/use-lightbox.ts` owns the image/origin-rect state and reset, replacing duplicated state across `projects.tsx`, `certifications.tsx`, `other-involvement.tsx` and `app/projects/page.tsx`.
+- **`useCopyEmail` Hook**: `src/hooks/use-copy-email.ts` owns the copied state and its reset timer; the footer now only shows "Copied" after a successful clipboard write, falling back to `mailto:` when the clipboard API is restricted.
+- **`pressableMotion` Helper**: Shared Framer Motion hover/tap spring props in `src/lib/motion.ts`, used by Hero, Header, Footer, Work and Projects.
+- **`MotionProvider`**: A client `<MotionConfig reducedMotion="user">` mounted as the outermost provider in `src/app/layout.tsx`, so every Framer Motion animation (including the email modal and the page-transition cover) honours `prefers-reduced-motion`.
+- **Overlay Tokens**: `--scrim` / `--on-scrim` theme tokens replace the raw black/white utilities on the lightbox, email modal and certifications overlay, keeping each site's existing opacity and `light:` override (the lightbox backdrop and stage stay dark in both themes).
+- **`.env.example`**: Documents `DATABASE_URL` and `CRON_SECRET` and is un-ignored in `.gitignore`.
+
+### Changed
+- **GitHub Activity Fetch**: `github-activity.tsx` keeps fresh server props (`initialData` wins over client data whenever present) and types the client fetch with the shared normaliser — no untyped `json.*` access.
+- **Heatmap Accessibility**: One `Tooltip.Provider delay={150}` wraps the grid, the cell grid is `aria-hidden` (cells keep `tabIndex={-1}`), and an `sr-only` "{total} contributions in the last year." summary sits outside the hidden subtree; the section gains `id="github"` following the sibling-section convention.
+- **JSON-LD `jobTitle`**: Now reads `profile.role` from `src/data/portfolio.ts` instead of a drifted hard-coded string.
+- **Email Modal Context**: Exposes only `openEmailModal`; the modal error banner is `role="alert"` with `aria-invalid`/`aria-describedby` on the fields, and the popup caps at `max-h-[92dvh]`.
+- **Header Menu Semantics**: The mobile toggle carries `aria-expanded`/`aria-controls` pointing at the drawer.
+- **Marquee Behaviour**: The GSAP marquee subscribes to `prefers-reduced-motion` (drag and keyboard still work, auto-advance and throw momentum stop), pauses via IntersectionObserver while off-screen, cleans up its listener/observer/ticker on unmount, and shows a `focus-visible` ring instead of `outline-none`.
+- **Animate Plugin Registered**: `@plugin "tailwindcss-animate";` in `globals.css` turns the existing `animate-in` classes on, each gated with `motion-reduce:animate-none`.
+- **Work Section Dedupe**: `work.tsx` extracts `RoleCard` and `Bullet`, so the rail-dot offsets exist once instead of triplicated markup.
+- **Docs**: AGENTS.md (§3–§7) and README rewritten to match the trimmed stack; CHANGELOG entry added.
+
+### Removed
+- **Dead Data & Types**: `specs`, `pipelineSteps`, the `ProjectSpec`/`PipelineStep` types, the `leadership` export, the `LeadershipItem` type, and `profile.phone`/`profile.website` — all unreferenced; the prose mentioning "leadership" stays.
+- **Content Tables & Seed**: `experience`, `education`, `projects`, `toolstack` and `memories` dropped from `src/db/schema.ts`, `seed.ts` and `getProfileData()` deleted — the drifted duplicate of `portfolio.ts` is gone and only `github_cache` remains.
+- **`neon.ts`, Neon IaC Deps & `uploads` Bucket**: Deleted the empty infrastructure-as-code policy, uninstalled `@neon/config`/`@neon/env`, and deleted the empty `uploads` bucket from the production branch (its unused `AWS_*` credentials were dropped from the local `.env`). The live DB already held only `github_cache`, so `db:push` found no changes.
+- **Unused Utility Deps**: `clsx` and `tailwind-merge` uninstalled with their `cn()`-style call sites gone.
+- **Redundant Exports**: `export default Auralis` and the exported `*_STORAGE_KEY` constants in `theme-toggle.tsx`/`accent-cycle.tsx` (nothing imported them; the pre-paint script uses the literal keys).
+- **Stale Directories**: Root `temp/` (a stray zip) and the empty `drizzle/` leftovers removed.
+- **Node Types Pinned**: `@types/node` moved to `^22` to match the Node 22 runtime requirement.
+
+---
+
 ## [Unreleased] - 2026-09-22
 
 ### Added
