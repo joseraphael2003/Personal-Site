@@ -23,12 +23,12 @@ export function OtherInvolvement() {
   };
 
   return (
-    <section id="involvement" className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-10 sm:py-16 lg:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-12 font-mono">
+    <section id="involvement" className="w-full border-b border-edge/80 bg-page py-10 sm:py-16 lg:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-12 font-text">
         {/* Section Header */}
-        <div className="space-y-2 border-b border-neutral-800 pb-4">
-          <h2 className="font-pixel text-2xl sm:text-3xl text-neutral-100 uppercase tracking-wide">
-            OTHER INVOLVEMENT
+        <div className="space-y-2 border-b border-edge pb-4">
+          <h2 className="font-display text-2xl sm:text-3xl text-ink uppercase tracking-wide">
+            Other Involvement
           </h2>
         </div>
 
@@ -37,14 +37,14 @@ export function OtherInvolvement() {
           {involvement.map((item) => (
             <div
               key={item.id}
-              className="rounded-sm border border-neutral-800 bg-[#0f1115] p-4 sm:p-6 lg:p-8 space-y-6 hover:border-neutral-700 transition-colors shadow-sm"
+              className="rounded-sm border border-edge bg-surface p-4 sm:p-6 lg:p-8 space-y-6 hover:border-edge-strong transition-colors shadow-sm"
             >
               {/* Header Row */}
-              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 border-b border-neutral-800 pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 border-b border-edge pb-4">
                 <div>
                   <div className="flex items-center gap-2.5">
                     {getIcon(item.id)}
-                    <h3 className="font-pixel text-lg sm:text-xl text-neutral-100 tracking-wide">
+                    <h3 className="font-text font-bold text-base sm:text-lg text-ink">
                       {item.organization}
                     </h3>
                   </div>
@@ -53,21 +53,21 @@ export function OtherInvolvement() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-xs sm:text-sm text-neutral-400">
-                  <Calendar className="h-3.5 w-3.5 text-neutral-500" />
+                <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted">
+                  <Calendar className="h-3.5 w-3.5 text-subtle" />
                   <span>{item.period}</span>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-xs sm:text-sm text-neutral-300 leading-normal sm:leading-relaxed max-w-3xl">
+              <p className="text-xs sm:text-sm text-copy leading-normal sm:leading-relaxed max-w-3xl">
                 {item.description}
               </p>
 
 
               {/* Photo Reel Gallery */}
               {item.gallery && item.gallery.length > 0 && (
-                <div className="space-y-2 pt-3 border-t border-neutral-800/80">
+                <div className="space-y-2 pt-3 border-t border-edge/80">
                   <DraggableMarquee
                     items={item.gallery}
                     speed={0.35}

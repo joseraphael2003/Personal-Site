@@ -260,14 +260,14 @@ export function DraggableMarquee({
               onClick={(e) => onItemClick?.(originalIndex, item, e.currentTarget.getBoundingClientRect())}
               className={`shrink-0 text-left transition-all rounded-sm overflow-hidden border cursor-pointer ${
                 isSelected
-                  ? "border-accent-hover ring-1 ring-accent-hover opacity-100"
-                  : "border-neutral-800 opacity-70 hover:opacity-100 hover:border-neutral-700"
+                  ? "border-accent-hover ring-1 ring-accent-hover"
+                  : "border-edge hover:border-edge-strong"
               } ${itemClassName}`}
               aria-label={item.caption || `Image ${originalIndex + 1}`}
               aria-hidden={index >= items.length ? "true" : undefined}
               tabIndex={index >= items.length ? -1 : 0}
             >
-              <div className="relative aspect-video w-32 sm:w-40 lg:w-44 bg-neutral-900">
+              <div className="relative aspect-video w-32 sm:w-40 lg:w-44 bg-chip">
                 <Image
                   src={item.src}
                   alt={item.caption || "Thumbnail"}

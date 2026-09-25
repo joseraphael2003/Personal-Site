@@ -242,7 +242,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
           key={cover.id}
           aria-hidden="true"
           data-page-transition="cover"
-          className="pointer-events-none fixed left-0 top-0 z-[120] w-screen h-[100dvh] bg-[#090a0c]"
+          className="pointer-events-none fixed left-0 top-0 z-[120] w-screen h-[100dvh] bg-page"
           initial={{ opacity: 0 }}
           animate={{ opacity: cover.revealing ? 0 : 1 }}
           transition={cover.revealing ? COVER_OUT_TRANSITION : COVER_IN_TRANSITION}

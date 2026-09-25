@@ -80,13 +80,13 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
   };
 
   return (
-    <section className="w-full border-b border-neutral-800/80 bg-[#090a0c] py-16 sm:py-24 font-mono">
+    <section className="w-full border-b border-edge/80 bg-page py-16 sm:py-24 font-text">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-edge pb-4">
           <div>
-            <h2 className="font-pixel text-2xl sm:text-3xl text-neutral-100 uppercase tracking-wide">
-              GITHUB CONTRIBUTION STREAM
+            <h2 className="font-display text-2xl sm:text-3xl text-ink uppercase tracking-wide">
+              GitHub Contribution Stream
             </h2>
           </div>
 
@@ -94,7 +94,7 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
             href={profile.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-neutral-400 hover:text-accent-hover transition-colors inline-flex items-center gap-1.5"
+            className="text-sm text-muted hover:text-accent-hover transition-colors inline-flex items-center gap-1.5"
           >
             <Github className="h-4 w-4" />
             <span>github.com/joseraphael2003</span>
@@ -103,15 +103,15 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
         </div>
 
         {/* Heatmap Card */}
-        <div className="rounded-sm border border-neutral-800 bg-[#0f1115] p-5 sm:p-7 space-y-5">
+        <div className="rounded-sm border border-edge bg-surface p-5 sm:p-7 space-y-5">
           {showFallback ? (
             /* Clean Offline Fallback Banner */
-            <div className="rounded-sm border border-neutral-800 bg-[#090a0c] p-6 text-center space-y-3">
-              <div className="flex items-center justify-center gap-2 text-neutral-400 text-sm">
-                <AlertCircle className="h-4 w-4 text-neutral-500" />
+            <div className="rounded-sm border border-edge bg-page p-6 text-center space-y-3">
+              <div className="flex items-center justify-center gap-2 text-muted text-sm">
+                <AlertCircle className="h-4 w-4 text-subtle" />
                 <span>GitHub activity feed currently offline.</span>
               </div>
-              <p className="text-sm text-neutral-500 max-w-md mx-auto">
+              <p className="text-sm text-subtle max-w-md mx-auto">
                 Live commits and daily public repository contributions can be inspected directly on
                 GitHub.
               </p>
@@ -120,7 +120,7 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
                   href={profile.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-sm border border-neutral-700 bg-neutral-900 px-4 py-2 text-sm text-accent-hover hover:bg-neutral-800 transition-colors inline-flex items-center gap-1.5 font-bold"
+                  className="rounded-sm border border-edge-strong bg-chip px-4 py-2 text-sm text-accent-hover hover:bg-chip-hover transition-colors inline-flex items-center gap-1.5 font-bold"
                 >
                   <span>View Profile on GitHub</span>
                   <ArrowUpRight className="h-4 w-4" />
@@ -130,13 +130,13 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
           ) : (
             /* Live Styled SVG Matrix */
             <div className="space-y-4">
-              <div className="flex items-center justify-between text-sm text-neutral-400 border-b border-neutral-800/80 pb-2">
+              <div className="flex items-center justify-between text-sm text-muted border-b border-edge/80 pb-2">
                 <div className="flex items-center gap-2">
                   <Activity className="h-4 w-4 text-accent-hover" />
-                  <span className="text-neutral-200 font-bold">{typeof data?.total === "number" ? data.total : 0}</span>
+                  <span className="text-body font-bold">{typeof data?.total === "number" ? data.total : 0}</span>
                   <span>contributions in rolling 12 months</span>
                 </div>
-                <div className="text-xs text-neutral-500 hidden sm:block">
+                <div className="text-xs text-subtle hidden sm:block">
                   ROLLING 52-WEEK CALENDAR
                 </div>
               </div>
@@ -167,7 +167,7 @@ export function GitHubActivity({ initialData }: GitHubActivityProps) {
               </div>
 
               {/* Legend */}
-              <div className="flex items-center justify-end text-xs text-neutral-500 pt-2 border-t border-neutral-800/60">
+              <div className="flex items-center justify-end text-xs text-subtle pt-2 border-t border-edge/60">
                 <div className="flex items-center gap-1.5">
                   <span>Less</span>
                   <div className="h-2 w-2 rounded-[1px] bg-heat-0" />

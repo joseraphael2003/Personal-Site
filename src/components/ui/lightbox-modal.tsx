@@ -42,7 +42,7 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-10 pointer-events-none">
           <Dialog.Popup
             aria-label={image.caption || image.alt || "Image preview"}
-            className="pointer-events-auto relative max-h-[88dvh] max-w-[94vw] sm:max-w-5xl w-auto overflow-hidden flex flex-col items-center rounded-sm border border-neutral-800 bg-[#0c0d10] p-2.5 sm:p-4 shadow-2xl focus:outline-none"
+            className="pointer-events-auto relative max-h-[88dvh] max-w-[94vw] sm:max-w-5xl w-auto overflow-hidden flex flex-col items-center rounded-sm border border-edge bg-raised p-2.5 sm:p-4 shadow-2xl focus:outline-none"
           >
             <motion.div
               initial={{
@@ -70,7 +70,7 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
               </Dialog.Title>
               {/* Close Button */}
               <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20">
-                <Dialog.Close className="cursor-pointer rounded-sm border border-neutral-800 bg-neutral-900/90 p-1.5 text-neutral-400 hover:text-white hover:border-neutral-700 transition-colors">
+                <Dialog.Close className="cursor-pointer rounded-sm border border-edge bg-chip/90 p-1.5 text-muted hover:text-white light:hover:text-ink hover:border-edge-strong transition-colors">
                   <X className="h-4 w-4" />
                   <span className="sr-only">Close modal</span>
                 </Dialog.Close>
@@ -84,7 +84,7 @@ export function LightboxModal({ open, onOpenChange, image, originRect }: Lightbo
               >
                 {/* Subtle pulse skeleton before decode */}
                 {!loaded && (
-                  <div className="absolute inset-0 bg-neutral-900/70 animate-pulse rounded-sm" />
+                  <div className="absolute inset-0 bg-white/[0.06] animate-pulse rounded-sm" />
                 )}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

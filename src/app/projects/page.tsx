@@ -39,7 +39,7 @@ export default function ProjectsArchivePage() {
       : archiveProjects.filter((p) => p.category === activeCategory);
 
   return (
-    <main className="min-h-[100dvh] bg-[#090a0c] text-neutral-200 px-4 py-8 sm:px-8 sm:py-16 font-mono selection:bg-accent/20 selection:text-accent-soft">
+    <main className="min-h-[100dvh] bg-page text-body px-4 py-8 sm:px-8 sm:py-16 font-text selection:bg-accent/20 selection:text-accent-soft">
       <div className="mx-auto max-w-6xl space-y-10">
         {/* Top Back Nav */}
         <div>
@@ -51,7 +51,7 @@ export default function ProjectsArchivePage() {
                 navigateBack("/#projects");
               }
             }}
-            className="group inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-accent-hover transition-colors cursor-pointer"
+            className="group inline-flex items-center gap-2 text-sm text-muted hover:text-accent-hover transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             <span>Return to Overview</span>
@@ -59,15 +59,15 @@ export default function ProjectsArchivePage() {
         </div>
 
         {/* Page Title (Clean, Zero Bloat) */}
-        <div className="border-b border-neutral-800 pb-4">
-          <h1 className="font-pixel text-3xl sm:text-4xl text-neutral-100 uppercase tracking-wide">
-            PROJECT REPOSITORY
+        <div className="border-b border-edge pb-4">
+          <h1 className="font-display text-3xl sm:text-4xl text-ink uppercase tracking-wide">
+            Project Repository
           </h1>
         </div>
 
         {/* Category Filter Bar */}
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-1.5 text-sm text-neutral-500 mr-2">
+          <div className="flex items-center gap-1.5 text-sm text-subtle mr-2">
             <Filter className="h-3.5 w-3.5" />
             <span>Filter:</span>
           </div>
@@ -77,14 +77,14 @@ export default function ProjectsArchivePage() {
               onClick={() => setActiveCategory(cat.value)}
               className={`cursor-pointer px-3 py-1.5 text-sm rounded-sm transition-colors ${
                 activeCategory === cat.value
-                  ? "bg-accent text-black font-bold"
-                  : "bg-neutral-900 text-neutral-400 border border-neutral-800 hover:text-neutral-200 hover:bg-neutral-800"
+                  ? "bg-accent text-on-accent font-bold"
+                  : "bg-chip text-muted border border-edge hover:text-body hover:bg-chip-hover"
               }`}
             >
               {cat.label}
             </button>
           ))}
-          <span className="text-sm text-neutral-500 ml-auto hidden sm:inline">
+          <span className="text-sm text-subtle ml-auto hidden sm:inline">
             Showing {filteredProjects.length} of {archiveProjects.length} records
           </span>
         </div>

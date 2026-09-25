@@ -15,12 +15,12 @@ export function Projects() {
   const { navigate } = usePageTransition();
 
   return (
-    <section id="projects" className="w-full scroll-mt-14 border-b border-neutral-800/80 bg-[#090a0c] py-10 sm:py-16 lg:py-24">
+    <section id="projects" className="w-full scroll-mt-14 border-b border-edge/80 bg-page py-10 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-8 space-y-12">
         {/* Section Header */}
-        <div className="border-b border-neutral-800 pb-4 font-mono">
-          <h2 className="font-pixel text-2xl sm:text-3xl text-neutral-100 uppercase tracking-wide">
-            PROJECTS
+        <div className="border-b border-edge pb-4 font-text">
+          <h2 className="font-display text-2xl sm:text-3xl text-ink uppercase tracking-wide">
+            Projects
           </h2>
         </div>
 
@@ -41,7 +41,7 @@ export function Projects() {
         </div>
 
         {/* See All Projects Link (Compact Centered Solid Emerald Button) */}
-        <div className="pt-4 flex justify-center font-mono">
+        <div className="pt-4 flex justify-center font-text">
           <motion.div
             whileHover={{ scale: 1.025 }}
             whileTap={{ scale: 0.97 }}
@@ -55,10 +55,10 @@ export function Projects() {
                   navigate("/projects", e);
                 }
               }}
-              className="cursor-pointer rounded-sm bg-accent px-6 py-3 text-sm font-mono font-bold text-black hover:bg-accent-hover btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
+              className="cursor-pointer rounded-sm bg-accent px-6 py-3 text-sm font-text font-bold text-on-accent hover:bg-accent-hover btn-accent transition-colors shadow-sm inline-flex items-center gap-2"
             >
               <span>View Complete Project Archive ({archiveProjects.length} Projects)</span>
-              <ArrowRight className="h-4 w-4 text-black" />
+              <ArrowRight className="h-4 w-4 text-on-accent" />
             </Link>
           </motion.div>
         </div>

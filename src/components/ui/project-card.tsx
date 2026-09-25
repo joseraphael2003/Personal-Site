@@ -28,7 +28,7 @@ export function ProjectCard({
 
   return (
     <div
-      className={`rounded-sm border border-neutral-800 bg-[#0f1115] hover:border-neutral-700 transition-colors font-mono shadow-sm flex flex-col justify-between ${
+      className={`rounded-sm border border-edge bg-surface hover:border-edge-strong transition-colors font-text shadow-sm flex flex-col justify-between ${
         hasImages
           ? "col-span-1 md:col-span-2 p-5 sm:p-7 space-y-4"
           : "col-span-1 p-4 sm:p-6 space-y-3.5"
@@ -36,21 +36,19 @@ export function ProjectCard({
     >
       <div className="space-y-3">
         {/* Project Header Row */}
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-neutral-800 pb-2.5 sm:pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-edge pb-2.5 sm:pb-3">
           <div>
             <div className="flex items-baseline gap-2">
-              <span className="text-xs sm:text-sm text-neutral-500 shrink-0 whitespace-nowrap">
+              <span className="text-xs sm:text-sm text-subtle shrink-0 whitespace-nowrap">
                 {String(index + 1).padStart(2, "0")} {"//"}
               </span>
               <Heading
-                className={`font-pixel text-neutral-100 uppercase tracking-wide ${
-                  hasImages ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"
-                }`}
+                className="font-text font-bold text-base sm:text-lg text-ink uppercase tracking-wide"
               >
                 {project.title}
               </Heading>
             </div>
-            <p className="text-xs sm:text-sm text-neutral-400 mt-1">{project.tagline}</p>
+            <p className="text-xs sm:text-sm text-muted mt-1">{project.tagline}</p>
           </div>
 
           <div className="flex items-center gap-2.5">
@@ -60,17 +58,17 @@ export function ProjectCard({
                   ? "bg-accent/15 border border-accent/40 text-accent-hover"
                   : project.category === "INTERNSHIP"
                   ? "bg-transparent border border-dashed border-accent/50 text-accent-hover"
-                  : "bg-neutral-800 border border-neutral-600 text-neutral-200"
+                  : "bg-chip-hover border border-faint text-body"
               }`}
             >
               {project.category}
             </span>
-            <span className="text-xs sm:text-sm text-neutral-500">{project.year}</span>
+            <span className="text-xs sm:text-sm text-subtle">{project.year}</span>
           </div>
         </div>
 
         {/* Description Body */}
-        <p className="text-xs sm:text-sm text-neutral-300 leading-normal sm:leading-relaxed">
+        <p className="text-xs sm:text-sm text-copy leading-normal sm:leading-relaxed">
           {project.description}
         </p>
 
@@ -79,7 +77,7 @@ export function ProjectCard({
           {project.techStack.map((tech) => (
             <span
               key={tech}
-              className="rounded-sm border border-neutral-800 bg-neutral-900 px-2 py-0.5 text-xs text-neutral-300"
+              className="rounded-sm border border-edge bg-chip px-2 py-0.5 text-xs text-copy"
             >
               {tech}
             </span>
@@ -102,13 +100,13 @@ export function ProjectCard({
 
       {/* Actions Row */}
       {(project.repoUrl || project.liveUrl) && (
-        <div className="pt-3 border-t border-neutral-800/60 flex flex-wrap items-center gap-4 text-xs sm:text-sm mt-auto">
+        <div className="pt-3 border-t border-edge/60 flex flex-wrap items-center gap-4 text-xs sm:text-sm mt-auto">
           {project.repoUrl && (
             <a
               href={project.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-400 hover:text-accent-hover transition-colors inline-flex items-center gap-1.5 group cursor-pointer"
+              className="text-muted hover:text-accent-hover transition-colors inline-flex items-center gap-1.5 group cursor-pointer"
             >
               <Github className="h-4 w-4" />
               <span>Source Repository</span>
@@ -121,7 +119,7 @@ export function ProjectCard({
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-400 hover:text-accent-hover transition-colors inline-flex items-center gap-1.5 group cursor-pointer"
+              className="text-muted hover:text-accent-hover transition-colors inline-flex items-center gap-1.5 group cursor-pointer"
             >
               <ExternalLink className="h-4 w-4" />
               <span>Live System</span>

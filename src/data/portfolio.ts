@@ -105,7 +105,7 @@ export const profile: Profile = {
   role: "Freelance Full-Stack Developer & Automation Specialist",
   location: "Philippines",
   status: "Available for Work",
-  headline: "JOSE RAPHAEL V. DICHOSO",
+  headline: "Jose Raphael V. Dichoso",
   bio: "Computer Engineering student majoring in Networks, at Ateneo de Naga University. Developer with 3 months of commissioned project work building web apps and internal tools. VITRO Academy Certified Data Center Specialist (Top 10% of five universities). Experienced virtual assistant for US-based clients, comfortable with remote async work. Proven leader (Ateneo de Naga University Symphonic Band).",
   email: "joseraphael2003@gmail.com",
   phone: "REDACTED",

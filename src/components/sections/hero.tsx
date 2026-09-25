@@ -35,11 +35,11 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" className="relative w-full border-b border-neutral-800/80 bg-[#090a0c] pt-12 sm:pt-20 pb-16 sm:pb-24">
+    <section id="hero" className="relative w-full border-b border-edge/80 bg-page pt-12 sm:pt-20 pb-16 sm:pb-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column (60%): Editorial Thesis Stack */}
-          <div className="lg:col-span-7 space-y-6 font-mono">
+          <div className="lg:col-span-7 space-y-6 font-text">
             {/* 1. Status Badge (Enlarged + Dual Sonar Radar Ping + Emerald Technical Glow) */}
             <div className="inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent-deep/20 px-3.5 py-1.5 text-sm shadow-[0_0_12px_var(--accent-glow)]">
               <span className="font-bold uppercase tracking-wider animate-text-shimmer">
@@ -50,12 +50,12 @@ export function Hero() {
             {/* 2. Display Headline with Compact Mobile Avatar */}
             <div className="flex items-center gap-3.5 sm:gap-5 lg:block min-w-0">
               {/* Compact Avatar (Mobile / Tablet only) */}
-              <div className="lg:hidden relative h-16 w-16 shrink-0 rounded-sm border border-neutral-800 bg-[#0f1115] p-1 shadow-md">
+              <div className="lg:hidden relative h-16 w-16 shrink-0 rounded-sm border border-edge bg-surface p-1 shadow-md">
                 {/* Auralis Simplex Aura — the mobile tier's only instance */}
                 {isDesktop === false && (
                   <Auralis className="z-0 rounded-sm" opacity={0.95} dprCap={1} maxFps={30} />
                 )}
-                <div className="relative z-[1] h-full w-full overflow-hidden rounded-sm bg-[#0a0c0f]/60">
+                <div className="relative z-[1] h-full w-full overflow-hidden rounded-sm bg-page/60">
                   <Image
                     src="/profile.png"
                     alt={profile.name}
@@ -84,29 +84,29 @@ export function Hero() {
                 </div>
               </div>
 
-              <h1 className="font-pixel text-3xl sm:text-4xl lg:text-6xl text-neutral-100 tracking-wide leading-tight lg:leading-none min-w-0">
+              <h1 className="font-display text-3xl sm:text-4xl lg:text-6xl text-ink uppercase tracking-wide leading-tight lg:leading-none min-w-0">
                 {profile.headline}
               </h1>
             </div>
             {/* 3. Executive Bio (from resume) */}
-            <p className="text-xs sm:text-base text-neutral-300 max-w-xl leading-normal sm:leading-relaxed">
+            <p className="text-xs sm:text-base text-copy max-w-xl leading-normal sm:leading-relaxed">
               {profile.bio}
             </p>
 
             {/* 4. Contact Details Bar */}
-            <div className="pt-1 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-neutral-400">
+            <div className="pt-1 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted">
               {/* Email with Click-to-Copy */}
               <div className="relative inline-flex items-center">
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="cursor-pointer group inline-flex items-center gap-1.5 text-neutral-200 hover:text-accent-hover transition-colors font-medium"
+                  className="cursor-pointer group inline-flex items-center gap-1.5 text-body hover:text-accent-hover transition-colors font-medium"
                   title="Click to copy email address"
                 >
                   {copied ? (
                     <Check className="h-4 w-4 text-accent-hover" />
                   ) : (
-                    <Copy className="h-4 w-4 text-neutral-500 group-hover:text-accent-hover transition-colors" />
+                    <Copy className="h-4 w-4 text-subtle group-hover:text-accent-hover transition-colors" />
                   )}
                   <span>{profile.email}</span>
                 </button>
@@ -115,7 +115,7 @@ export function Hero() {
                 {copied && (
                   <div
                     role="status"
-                    className="absolute -top-7 left-0 rounded-sm border border-accent/40 bg-neutral-950 px-2 py-0.5 text-xs text-accent-hover font-bold shadow-lg animate-in fade-in zoom-in-95 duration-150"
+                    className="absolute -top-7 left-0 rounded-sm border border-accent/40 bg-page px-2 py-0.5 text-xs text-accent-hover font-bold shadow-lg animate-in fade-in zoom-in-95 duration-150"
                   >
                     Copied to clipboard!
                   </div>
@@ -128,7 +128,7 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub Profile"
-                className="cursor-pointer text-neutral-200 hover:text-accent-hover hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
+                className="cursor-pointer text-body hover:text-accent-hover hover:bg-chip/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
                 title="GitHub Profile"
               >
                 <Github className="h-4 w-4" />
@@ -141,7 +141,7 @@ export function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn Profile"
-                className="cursor-pointer text-neutral-200 hover:text-accent-hover hover:bg-neutral-900/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
+                className="cursor-pointer text-body hover:text-accent-hover hover:bg-chip/60 rounded-sm px-2 py-1 transition-colors inline-flex items-center gap-1.5 text-sm font-medium"
                 title="LinkedIn Profile"
               >
                 <Linkedin className="h-4 w-4" />
@@ -160,9 +160,9 @@ export function Hero() {
                 <button
                   type="button"
                   onClick={openEmailModal}
-                  className="cursor-pointer rounded-sm bg-accent px-5 py-2.5 text-sm font-bold text-black hover:bg-accent-hover btn-tactical-sheen transition-colors shadow-sm inline-flex items-center gap-2"
+                  className="cursor-pointer rounded-sm bg-accent px-5 py-2.5 text-sm font-bold text-on-accent hover:bg-accent-hover btn-accent transition-colors shadow-sm inline-flex items-center gap-2"
                 >
-                  <Mail className="h-4 w-4 text-black" />
+                  <Mail className="h-4 w-4 text-on-accent" />
                   <span>Quick Email</span>
                 </button>
               </motion.div>
@@ -172,7 +172,7 @@ export function Hero() {
                 href="/resume%20for%20site.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="cursor-pointer rounded-sm border border-neutral-700 bg-neutral-900/60 px-5 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-neutral-800/80 transition-colors inline-flex items-center gap-2"
+                className="cursor-pointer rounded-sm border border-edge-strong bg-chip/60 px-5 py-2.5 text-sm text-copy hover:text-ink hover:bg-chip-hover/80 transition-colors inline-flex items-center gap-2"
               >
                 <FileText className="h-4 w-4 text-accent-hover" />
                 <span>Get Resume</span>
@@ -182,12 +182,12 @@ export function Hero() {
 
           {/* Right Column (40%): Styled 4:5 Portrait Frame (Desktop Only) */}
           <div className="hidden lg:flex lg:col-span-5 justify-center">
-            <div className="relative w-full max-w-[320px] sm:max-w-[340px] rounded-sm border border-neutral-800 bg-[#0f1115] p-3 shadow-2xl">
+            <div className="relative w-full max-w-[320px] sm:max-w-[340px] rounded-sm border border-edge bg-surface p-3 shadow-2xl">
               {/* Auralis Simplex Aura (z-0, accent-synced, auto-pauses off-screen) */}
               {isDesktop === true && <Auralis className="z-0 rounded-sm" opacity={0.95} />}
 
               {/* Frame Surface with 4:5 Aspect Ratio (z-[1], above the aura) */}
-              <div className="relative z-[1] aspect-4/5 w-full overflow-hidden rounded-sm border border-neutral-800 bg-[#0a0c0f]/60">
+              <div className="relative z-[1] aspect-4/5 w-full overflow-hidden rounded-sm border border-edge bg-page/60">
                 <Image
                   src="/profile.png"
                   alt={profile.name}
@@ -214,7 +214,6 @@ export function Hero() {
                   aria-hidden="true"
                 />
               </div>
-
             </div>
           </div>
         </div>

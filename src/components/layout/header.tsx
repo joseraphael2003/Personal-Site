@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { profile } from "@/data/portfolio";
 import { useEmailModal } from "@/components/providers/email-modal-provider";
-import { AccentSwitcher, ACCENT_PRESETS, applyAccentPreset } from "@/components/ui/accent-switcher";
+import { AccentCycle } from "@/components/ui/accent-cycle";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Menu, X, Mail } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
@@ -49,7 +50,7 @@ function MagneticNavLink({
       style={{ x: springX, y: springY }}
       aria-current={isActive ? "location" : undefined}
       className={`relative cursor-pointer transition-colors px-2.5 py-1 text-sm ${
-        isActive ? "text-accent-hover font-bold" : "text-neutral-400 hover:text-neutral-100"
+        isActive ? "text-accent-hover font-bold" : "text-muted hover:text-ink"
       }`}
     >
       {isActive && (
@@ -143,7 +144,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-neutral-800 bg-[#090a0c]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-edge bg-page/90 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-8">
         {/* Left: Identity */}
         <div className="flex items-center gap-3">
@@ -157,14 +158,14 @@ export function Header() {
             }}
             className="group flex items-baseline gap-2 cursor-pointer"
           >
-            <span className="font-pixel text-lg sm:text-xl text-neutral-100 tracking-wide group-hover:text-accent-hover transition-colors">
+            <span className="font-display text-lg sm:text-xl text-ink tracking-wide group-hover:text-accent-hover transition-colors">
               {profile.name}
             </span>
           </Link>
         </div>
 
         {/* Center: Desktop Navigation with Magnet Tabs & Sliding LayoutId Pill */}
-        <nav className="hidden lg:flex items-center gap-1 font-mono text-neutral-400">
+        <nav className="hidden lg:flex items-center gap-1 font-text text-muted">
           {navLinks.map((link) => (
             <MagneticNavLink
               key={link.id}
@@ -174,7 +175,8 @@ export function Header() {
               onClick={(e) => handleScrollTo(e, link.id)}
             />
           ))}
-          <AccentSwitcher className="ml-1" />
+          <ThemeToggle className="ml-1" />
+          <AccentCycle />
         </nav>
 
         {/* Right: Availability & Action */}
@@ -187,9 +189,9 @@ export function Header() {
             <button
               type="button"
               onClick={openEmailModal}
-              className="cursor-pointer rounded-sm bg-accent px-3.5 py-1.5 text-sm font-mono font-bold text-black hover:bg-accent-hover btn-tactical-sheen transition-colors inline-flex items-center gap-1.5 shadow-sm"
+              className="cursor-pointer rounded-sm bg-accent px-3.5 py-1.5 text-sm font-text font-bold text-on-accent hover:bg-accent-hover btn-accent transition-colors inline-flex items-center gap-1.5 shadow-sm"
             >
-              <Mail className="h-3.5 w-3.5 text-black" />
+              <Mail className="h-3.5 w-3.5 text-on-accent" />
               <span>Quick Email</span>
             </button>
           </motion.div>
@@ -197,7 +199,7 @@ export function Header() {
         {/* Mobile / Tablet menu button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden cursor-pointer rounded-sm border border-neutral-800 p-1.5 text-neutral-400 hover:text-white"
+          className="lg:hidden cursor-pointer rounded-sm border border-edge p-1.5 text-muted hover:text-ink"
           aria-label="Toggle menu"
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -206,7 +208,7 @@ export function Header() {
 
       {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-neutral-800 bg-[#0c0d10] px-4 py-4 font-mono text-sm space-y-3">
+        <div className="lg:hidden border-b border-edge bg-raised px-4 py-4 font-text text-sm space-y-3">
           <div className="flex flex-col gap-2.5 pt-1">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
@@ -217,7 +219,7 @@ export function Header() {
                     onClick={(e) => handleScrollTo(e, link.id)}
                     aria-current={isActive ? "location" : undefined}
                     className={`py-1 transition-colors cursor-pointer ${
-                      isActive ? "text-accent-hover font-bold" : "text-neutral-300 hover:text-accent-hover"
+                      isActive ? "text-accent-hover font-bold" : "text-copy hover:text-accent-hover"
                     }`}
                   >
                     {link.label}
@@ -227,28 +229,13 @@ export function Header() {
             })}
           </div>
 
-          {/* Tactical Swatch Strip (Mobile) */}
-          <div className="pt-2 border-t border-neutral-800 flex items-center justify-between">
-            <span className="text-xs text-neutral-500 uppercase tracking-wider">Accent</span>
-            <div className="flex items-center gap-1.5">
-              {ACCENT_PRESETS.map((preset) => (
-                <button
-                  key={preset.id}
-                  type="button"
-                  onClick={() => applyAccentPreset(preset.id)}
-                  aria-label={preset.id}
-                  className="h-6 w-6 rounded-sm border border-neutral-800 flex items-center justify-center cursor-pointer hover:border-neutral-600 transition-colors"
-                >
-                  <span
-                    className="h-2.5 w-2.5 rounded-full border"
-                    style={{ borderColor: preset.color, backgroundColor: preset.glow }}
-                  />
-                </button>
-              ))}
-            </div>
+          {/* Theme and accent controls (Mobile) */}
+          <div className="flex items-center gap-2 pt-2 border-t border-edge">
+            <ThemeToggle />
+            <AccentCycle />
           </div>
 
-          <div className="pt-2 border-t border-neutral-800 flex justify-end items-center text-sm">
+          <div className="pt-2 border-t border-edge flex justify-end items-center text-sm">
             <button
               type="button"
               onClick={() => {

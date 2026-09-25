@@ -1,29 +1,83 @@
 @import "tailwindcss";
 
-@theme {
-  --font-pixel: var(--font-dot-gothic), monospace;
-  --font-mono: var(--font-space-mono), monospace;
-}
+/* The `light` variant marks a rule that only applies while <html> carries
+   `data-theme="light"`. Dark is the default and is never inferred from the OS. */
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
-/* Accent utility family. `inline` keeps every utility pointing at the live
-   --accent-* tokens, so a `data-accent` swap repaints utilities that were
-   already generated. */
+/* Semantic colour and font family. `inline` keeps every utility pointing at
+   the live raw variable instead of a frozen copy, so a `data-theme` or
+   `data-accent` swap repaints utilities that were already generated. */
 @theme inline {
+  --font-display: var(--display-face);
+  --font-text: var(--text-face);
+
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-field: var(--field);
+  --color-sunken: var(--sunken);
+  --color-edge: var(--edge);
+  --color-edge-strong: var(--edge-strong);
+  --color-faint: var(--faint);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-copy: var(--copy);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-chip: var(--chip);
+  --color-chip-hover: var(--chip-hover);
+  --color-on-accent: var(--on-accent);
+  --color-danger: var(--danger);
+
   --color-accent: var(--accent-color);
   --color-accent-hover: var(--accent-hover);
-  --color-accent-soft: color-mix(in srgb, var(--accent-hover) 55%, white);
-  --color-accent-deep: color-mix(in srgb, var(--accent-color) 25%, #090a0c);
-  --color-heat-0: #14171c;
-  --color-heat-1: color-mix(in srgb, var(--accent-color) 30%, #14171c);
-  --color-heat-2: color-mix(in srgb, var(--accent-color) 50%, #14171c);
-  --color-heat-3: color-mix(in srgb, var(--accent-color) 75%, #14171c);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-deep: var(--accent-deep);
+  --color-heat-0: var(--heat-base);
+  --color-heat-1: color-mix(in srgb, var(--accent-color) 30%, var(--heat-base));
+  --color-heat-2: color-mix(in srgb, var(--accent-color) 50%, var(--heat-base));
+  --color-heat-3: color-mix(in srgb, var(--accent-color) 75%, var(--heat-base));
   --color-heat-4: var(--accent-color);
+}
+
+/* ---------------------------------------------------------------------------
+   Base palette. Dark is the default. The theme-dependent derivations and the
+   font faces live here as raw variables so the light theme can retarget them.
+--------------------------------------------------------------------------- */
+:root {
+  color-scheme: dark;
+
+  --display-face: var(--font-dot-gothic), monospace;
+  --text-face: var(--font-space-mono), monospace;
+
+  --page: #090a0c;
+  --surface: #0f1115;
+  --raised: #0c0e12;
+  --field: #14171d;
+  --sunken: #07080a;
+  --edge: #262626;
+  --edge-strong: #404040;
+  --faint: #525252;
+  --ink: #f5f5f5;
+  --body: #e5e5e5;
+  --copy: #d4d4d4;
+  --muted: #a3a3a3;
+  --subtle: #737373;
+  --chip: #171717;
+  --chip-hover: #262626;
+  --on-accent: #000000;
+  --danger: #ff6467;
+
+  --accent-soft: color-mix(in srgb, var(--accent-hover) 55%, white);
+  --accent-deep: color-mix(in srgb, var(--accent-color) 25%, var(--page));
+  --heat-base: #14171c;
 }
 
 /* ---------------------------------------------------------------------------
    Accent system. `data-accent` on <html> retargets every --accent-* token at
    once; app/layout.tsx restores the stored preset before first paint and
-   ui/accent-switcher.tsx writes it. Keep this list in sync with ACCENT_PRESETS.
+   ui/accent-cycle.tsx writes it. Keep this list in sync with ACCENT_PRESETS.
+   The light presets live after these blocks, where source order lets them win.
 --------------------------------------------------------------------------- */
 :root,
 [data-accent="emerald"] {
@@ -61,9 +115,82 @@
   --accent-muted: rgba(244, 63, 94, 0.15);
 }
 
+/* ---------------------------------------------------------------------------
+   Light theme: the same faces on warm paper. Declared after the dark `:root`
+   and `[data-accent]` blocks on purpose - the selectors match at the same
+   specificity, so source order is what lets the paper palette win.
+--------------------------------------------------------------------------- */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --page: #faf8f3;
+  --surface: #fffefb;
+  --raised: #ffffff;
+  --field: #f3f0e8;
+  --sunken: #f2eee5;
+  --edge: #e2ddd2;
+  --edge-strong: #cfc8ba;
+  --faint: #a8a29e;
+  --ink: #1c1917;
+  --body: #292524;
+  --copy: #44403c;
+  --muted: #57534e;
+  --subtle: #6b645f;
+  --chip: #f3f0e8;
+  --chip-hover: #ebe6db;
+  --on-accent: #ffffff;
+  --danger: #b91c1c;
+
+  --accent-soft: var(--accent-hover);
+  --accent-deep: color-mix(in srgb, var(--accent-color) 10%, var(--page));
+  --heat-base: #ebe6db;
+}
+
+/* Light accents: an earthy set - moss, deep teal, plum, ochre, brick. Each one
+   clears 4.5:1 both as a fill under white text and as text on the paper. The
+   bare `[data-theme="light"]` selector carries the emerald default, mirroring
+   the untouched dark `:root` block above. */
+[data-theme="light"],
+[data-theme="light"][data-accent="emerald"] {
+  --accent-color: #4f6b2c;
+  --accent-hover: #3d5422;
+  --accent-glow: rgba(79, 107, 44, 0.15);
+  --accent-muted: rgba(79, 107, 44, 0.1);
+}
+
+[data-theme="light"][data-accent="cyan"] {
+  --accent-color: #1f6470;
+  --accent-hover: #174e58;
+  --accent-glow: rgba(31, 100, 112, 0.15);
+  --accent-muted: rgba(31, 100, 112, 0.1);
+}
+
+[data-theme="light"][data-accent="violet"] {
+  --accent-color: #6a3d7c;
+  --accent-hover: #553063;
+  --accent-glow: rgba(106, 61, 124, 0.15);
+  --accent-muted: rgba(106, 61, 124, 0.1);
+}
+
+[data-theme="light"][data-accent="amber"] {
+  --accent-color: #8a5a14;
+  --accent-hover: #6f470f;
+  --accent-glow: rgba(138, 90, 20, 0.15);
+  --accent-muted: rgba(138, 90, 20, 0.1);
+}
+
+[data-theme="light"][data-accent="rose"] {
+  --accent-color: #9e2f3c;
+  --accent-hover: #80252f;
+  --accent-glow: rgba(158, 47, 60, 0.15);
+  --accent-muted: rgba(158, 47, 60, 0.1);
+}
+
+/* Unlayered on purpose: this rule, not the body element's utilities, is what
+   paints the page. */
 body {
-  background-color: #090a0c;
-  color: #ededed;
+  background-color: var(--page);
+  color: var(--body);
 }
 
 @keyframes text-shimmer {
@@ -89,13 +216,35 @@ body {
   animation: text-shimmer 3s ease-in-out infinite;
 }
 
-/* Tactical Button Specular Sheen */
-.btn-tactical-sheen {
+/* R2-a: the dark stops are deliberately translucent, so on paper they read as a
+   washed-out smudge. Light paints an opaque accent -> half-toward-paper ->
+   accent sweep instead. `background-image` (not the shorthand) keeps the base
+   rule's size and text clip. */
+.animate-text-shimmer:where([data-theme="light"], [data-theme="light"] *) {
+  background-image: linear-gradient(
+    90deg,
+    var(--accent-hover) 0%,
+    color-mix(in srgb, var(--accent-color) 50%, var(--page)) 50%,
+    var(--accent-hover) 100%
+  );
+}
+
+/* Theme crossfade. ui/theme-toggle.tsx runs the swap inside
+   `document.startViewTransition` when the platform has it, which is what these
+   two pseudo-elements paint; 150ms is the whole animation - nothing moves. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 150ms;
+}
+
+/* Filled button: specular sheen. Unlayered on purpose, so its specular layer
+   is not beaten by the `shadow-sm` utility on the same element. */
+.btn-accent {
   position: relative;
   overflow: hidden;
 }
 
-.btn-tactical-sheen::after {
+.btn-accent::after {
   content: "";
   position: absolute;
   top: 0;
@@ -113,7 +262,7 @@ body {
   transition: none;
 }
 
-.btn-tactical-sheen:hover::after {
+.btn-accent:hover::after {
   left: 160%;
   transition: left 0.55s cubic-bezier(0.4, 0, 0.2, 1);
 }

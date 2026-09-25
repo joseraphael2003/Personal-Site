@@ -20,6 +20,9 @@ import { useEffect, useRef } from "react";
 /*      float32 precision never degrades on long sessions.                      */
 /*    - A truly unmounted canvas releases its context; a StrictMode / Fast      */
 /*      Refresh remount of a still-connected canvas reuses it.                  */
+/*    - The palette and base tone follow `<html data-theme>`: dark keeps the    */
+/*      original tuning byte for byte, light walks the paper -> accent axis.    */
+/*      A theme flip re-derives both and re-renders one static frame.           */
 /* -------------------------------------------------------------------------- */
 
 const vertexShaderGLSL = `
@@ -39,6 +42,8 @@ uniform vec2  u_resolution;
 uniform float u_time;
 uniform float u_grain;
 uniform vec3  u_colors[3];
+uniform vec3  u_base;
+uniform float u_light;
 
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -77,15 +82,40 @@ void main() {
 
   float light = pow(abs(n2), 2.5) * 0.5;
 
-  vec3 col = vec3(0.02, 0.01, 0.01);
+  float grain = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453 + u_time);
+  float dist = length(uv - 0.5);
+
+  if (u_light > 0.5) {
+    // Paper path. Every channel walks the paper -> accent axis and never
+    // leaves it: the base term spends at most 80% of the span, and the ridge
+    // term only ever rides toward u_colors[1] (the accent mixed 50% toward
+    // paper) - back down that same axis - so the two cannot add up past 80%.
+    float intensity = clamp(smoothstep(-0.2, 0.8, n1), 0.0, 1.0);
+
+    vec3 col = mix(u_base, u_colors[0], intensity * 0.8);
+    col = mix(col, u_colors[1], light * 0.7 * (1.0 - intensity));
+    col += (grain - 0.5) * min(u_grain * 0.5, 0.02);
+
+    // Radial falloff blends toward the paper, not black. Ascending edges: a
+    // reversed smoothstep is undefined in GLSL ES.
+    col = mix(u_base, col, 1.0 - smoothstep(0.45, 0.72, dist));
+
+    // Paper ceiling and 80% accent floor, so grain can never push a channel
+    // out of the band the light palette is tuned for.
+    vec3 budget = mix(u_base, u_colors[0], 0.8);
+    // Reversed: reflect across the band so the accent is the field and the
+    // noise swirls read as paper-light, still inside the same paper..80% span.
+    col = clamp(col, min(u_base, budget), max(u_base, budget));
+    gl_FragColor = vec4(u_base + budget - col, 1.0);
+    return;
+  }
+
+  vec3 col = u_base;
 
   col += u_colors[0] * smoothstep(0.1, 1.0, n1) * 0.5;
   col += u_colors[1] * light;
-
-  float grain = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453 + u_time);
   col += (grain - 0.5) * u_grain * 0.5;
 
-  float dist = length(uv - 0.5);
   col *= smoothstep(1.2, 0.2, dist);
 
   gl_FragColor = vec4(col, 1.0);
@@ -116,6 +146,12 @@ export type AuralisProps = {
 
 const ACCENT_FALLBACK: AuralisColor = [0.0627, 0.7255, 0.5059]; // #10b981 (emerald)
 const ACCENT_CUSTOM_PROPERTY = "--accent-color";
+/** `<html>` attribute the theme controls and the pre-paint script write. */
+const THEME_ATTRIBUTE = "data-theme";
+/** Dark base tone — the shader's original literal. */
+const DARK_BASE: AuralisColor = [0.02, 0.01, 0.01];
+/** Paper base tone (#faf8f3) the light path mixes through. */
+const LIGHT_BASE: AuralisColor = [250 / 255, 248 / 255, 243 / 255];
 /** Seconds after which animation time wraps — keeps float32 noise math precise. */
 const TIME_WRAP_SECONDS = 3600;
 /** Fixed timestamp used for the single frame rendered under reduced motion. */
@@ -185,6 +221,28 @@ function derivePalette(accent: AuralisColor): AuralisColor[] {
   ];
 }
 
+/** Only the `light` value tints the aura; anything else (including none) is dark. */
+function readLightMode(): boolean {
+  if (typeof document === "undefined") return false;
+  return document.documentElement.getAttribute(THEME_ATTRIBUTE) === "light";
+}
+
+/**
+ * Paper palette: the accent itself (already a 700 token) plus its half-way
+ * tone toward the paper, which the shader uses for the ridge term.
+ */
+function derivePaperPalette(accent: AuralisColor): AuralisColor[] {
+  return [
+    accent,
+    [
+      accent[0] + (LIGHT_BASE[0] - accent[0]) * 0.5,
+      accent[1] + (LIGHT_BASE[1] - accent[1]) * 0.5,
+      accent[2] + (LIGHT_BASE[2] - accent[2]) * 0.5,
+    ],
+    LIGHT_BASE,
+  ];
+}
+
 type Scene = {
   program: WebGLProgram;
   buffer: WebGLBuffer;
@@ -193,6 +251,8 @@ type Scene = {
   timeLocation: WebGLUniformLocation | null;
   grainLocation: WebGLUniformLocation | null;
   colorsLocation: WebGLUniformLocation | null;
+  baseLocation: WebGLUniformLocation | null;
+  lightLocation: WebGLUniformLocation | null;
 };
 
 export function Auralis({
@@ -216,12 +276,25 @@ export function Auralis({
       : null;
 
     const palette = new Float32Array(9);
+    const base = new Float32Array(3);
+    let lightMode = readLightMode();
+
+    /** The base tone and mode follow the theme even with an explicit palette. */
+    const applyMode = () => {
+      lightMode = readLightMode();
+      const tone = lightMode ? LIGHT_BASE : DARK_BASE;
+      base[0] = tone[0];
+      base[1] = tone[1];
+      base[2] = tone[2];
+    };
 
     const resolvePalette = (): AuralisColor[] => {
       if (explicitPalette && explicitPalette.length > 0) {
-        return explicitPalette.length >= 3 ? explicitPalette.slice(0, 3) : derivePalette(explicitPalette[0]);
+        if (explicitPalette.length >= 3) return explicitPalette.slice(0, 3);
+        return lightMode ? derivePaperPalette(explicitPalette[0]) : derivePalette(explicitPalette[0]);
       }
-      return derivePalette(readAccentColor() ?? ACCENT_FALLBACK);
+      const accent = readAccentColor() ?? ACCENT_FALLBACK;
+      return lightMode ? derivePaperPalette(accent) : derivePalette(accent);
     };
 
     const writePalette = (next: AuralisColor[]) => {
@@ -305,6 +378,8 @@ export function Auralis({
         timeLocation: context.getUniformLocation(program, "u_time"),
         grainLocation: context.getUniformLocation(program, "u_grain"),
         colorsLocation: context.getUniformLocation(program, "u_colors"),
+        baseLocation: context.getUniformLocation(program, "u_base"),
+        lightLocation: context.getUniformLocation(program, "u_light"),
       };
     };
 
@@ -351,6 +426,8 @@ export function Auralis({
       gl.uniform1f(scene.timeLocation, (timeMs * 0.001 * speed) % TIME_WRAP_SECONDS);
       gl.uniform1f(scene.grainLocation, grain);
       gl.uniform3fv(scene.colorsLocation, palette);
+      gl.uniform3fv(scene.baseLocation, base);
+      gl.uniform1f(scene.lightLocation, lightMode ? 1 : 0);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     };
@@ -398,11 +475,18 @@ export function Auralis({
       }
     };
 
-    const syncAccent = () => {
-      if (explicitPalette) return;
-      const accent = readAccentColor();
-      if (!accent) return;
-      writePalette(derivePalette(accent));
+    const syncToken = () => {
+      const wasLight = lightMode;
+      applyMode();
+      const themeChanged = lightMode !== wasLight;
+      if (explicitPalette) {
+        // The palette is fixed, so only a theme flip can change what is drawn.
+        if (!themeChanged) return;
+      } else {
+        const accent = readAccentColor();
+        if (!accent) return;
+        writePalette(lightMode ? derivePaperPalette(accent) : derivePalette(accent));
+      }
       if (!canRender() || running) return;
       renderStaticFrame();
     };
@@ -441,6 +525,7 @@ export function Auralis({
       else start();
     };
 
+    applyMode();
     writePalette(resolvePalette());
 
     const visibilityObserver = new IntersectionObserver(
@@ -464,10 +549,10 @@ export function Auralis({
           });
     resizeObserver?.observe(canvas);
 
-    const accentObserver = new MutationObserver(syncAccent);
-    accentObserver.observe(document.documentElement, {
+    const tokenObserver = new MutationObserver(syncToken);
+    tokenObserver.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ["data-accent", "class", "style"],
+      attributeFilter: ["data-accent", "data-theme", "class", "style"],
     });
 
     motionQuery?.addEventListener?.("change", handleMotionPreference);
@@ -478,7 +563,7 @@ export function Auralis({
       stop();
       visibilityObserver.disconnect();
       resizeObserver?.disconnect();
-      accentObserver.disconnect();
+      tokenObserver.disconnect();
       motionQuery?.removeEventListener?.("change", handleMotionPreference);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (gl) {

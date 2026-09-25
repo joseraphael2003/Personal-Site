@@ -79,14 +79,15 @@ export default function RootLayout({
     >
       <head>
         <script
-          // Restores the stored accent before first paint so the palette never
-          // flashes emerald. Kept in sync with ACCENT_PRESETS in ui/accent-switcher.tsx.
+          // Restores the stored theme and accent before first paint so the
+          // palette never flashes the default. Kept in sync with
+          // ui/theme-toggle.tsx and ui/accent-cycle.tsx.
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var a=localStorage.getItem("portfolio-accent");if(a&&/^(emerald|cyan|violet|amber|rose)$/.test(a)){document.documentElement.setAttribute("data-accent",a)}}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem("portfolio-theme");if(t==="light"){document.documentElement.setAttribute("data-theme","light")}var a=localStorage.getItem("portfolio-accent");if(a&&/^(emerald|cyan|violet|amber|rose)$/.test(a)){document.documentElement.setAttribute("data-accent",a)}}catch(e){}})();`,
           }}
         />
       </head>
-      <body className="font-mono bg-[#090a0c] text-neutral-200 antialiased selection:bg-accent/20 selection:text-accent-soft min-h-screen">
+      <body className="font-text bg-page text-body antialiased selection:bg-accent/20 selection:text-accent-soft min-h-screen">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
