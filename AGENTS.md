@@ -3,7 +3,7 @@
 ## 1. Project Overview & Identity
 - **Owner**: Jose Raphael Dichoso (Computer Engineering student, Networks major)
 - **Purpose**: Modern developer portfolio showcasing software, hardware/electronics, and leadership background.
-- **Current State**: Active `remodel` branch.
+- **Current State**: Single `main` branch, deployed to Vercel on push.
 
 ## 2. Agent Operating Principles
 - **Inform, Don't Block**: If a user request conflicts with stack choices, conventions, or architectural decisions in this document, briefly note the discrepancy and any relevant trade-offs, then follow the user's lead. The user's directive always overrides this document.
