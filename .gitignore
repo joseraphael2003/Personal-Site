@@ -47,3 +47,7 @@ next-env.d.ts
 
 # staging assets
 public/temp/
+
+# local agent skills
+.agents/
+skills-lock.json
