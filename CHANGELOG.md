@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased] - 2026-09-26
 
 ### Added
-- **AI Tools Tech Stack Row**: New "AI Tools" category (Claude, ChatGPT) inserted before Engineering, with a `Bot` icon. Every skill category now carries an `icon: LucideIcon` field instead of a string-keyed `iconMap`, so `skills.tsx` renders `<category.icon />` directly.
+- **AI Tools Tech Stack Row**: New "AI Tools" category (oh-my-pi, Claude, ChatGPT) inserted before Engineering, with a `Bot` icon. Every skill category now carries an `icon: LucideIcon` field instead of a string-keyed `iconMap`, so `skills.tsx` renders `<category.icon />` directly.
 - **Shared Contributions Normaliser**: `src/lib/github-contributions.ts` exports `CONTRIBUTIONS_URL`, the `ContributionLevel`/`ContributionDay`/`ContributionData` types and a pure `normalizeContributions()` that merges the three duplicated variants (cron route, DB read, client fallback) with clamped levels and no casts.
 - **Cron Fail-Closed Auth**: `/api/cron/github` now returns 401 unless `CRON_SECRET` is set and the `Authorization` header matches; the upstream GitHub fetch carries a 10s `AbortSignal.timeout`, and the 500 body is a generic `{ ok: false, error: "Internal error" }` instead of leaking `error.message`. `CRON_SECRET` is set in Vercel Production.
 - **DB Scripts**: `npm run db:push` and `npm run db:studio` (drizzle-kit upgraded to the modern config API), plus `import "dotenv/config"` in `drizzle.config.ts`.

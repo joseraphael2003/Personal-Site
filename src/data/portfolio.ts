@@ -340,7 +340,7 @@ export const skillCategories: SkillCategory[] = [
   {
     title: "AI Tools",
     icon: Bot,
-    skills: ["Claude", "ChatGPT"],
+    skills: ["oh-my-pi", "Claude", "ChatGPT"],
   },
   {
     title: "Engineering",
