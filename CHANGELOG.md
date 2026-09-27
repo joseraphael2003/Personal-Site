@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased] - 2026-09-28
+
+### Added
+- **Hirozen Project**: New personal project (oh-my-pi plugin giving the agent consent-gated read access to the Zen browser) added as the first entry in the `/projects` archive, linking to its GitHub repository.
+
+### Changed
+- **Repository Hygiene**: `.agents/` and `skills-lock.json` untracked and gitignored; the unused phone number scrubbed from git history; the merged `remodel` branch deleted; AGENTS.md now describes the single `main` branch.
+
+---
+
 ## [Unreleased] - 2026-09-26
 
 ### Added

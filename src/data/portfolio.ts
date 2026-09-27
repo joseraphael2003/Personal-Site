@@ -257,6 +257,20 @@ export const flagshipProjects: Project[] = [
 ];
 
 export const archiveProjects: Project[] = [
+  {
+    id: "hirozen",
+    title: "Hirozen",
+    tagline: "oh-my-pi Plugin for AI Control of Zen Browser",
+    description:
+      "An oh-my-pi plugin that gives the agent consent-gated access to a running Zen browser: lists tabs and spaces, reads page text, and takes screenshots over an HMAC-authenticated loopback link and on-demand WebDriver BiDi.",
+    category: "PERSONAL",
+    confidential: false,
+    year: "2026",
+    techStack: ["TypeScript", "Bun", "WebDriver BiDi", "WebSocket", "oh-my-pi"],
+    primaryImage: null,
+    repoUrl: "https://github.com/joseraphael2003/Hirozen",
+    liveUrl: null,
+  },
   ...flagshipProjects,
   {
     id: "mubrew",
