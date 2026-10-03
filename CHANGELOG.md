@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - **Repository Hygiene**: `.agents/` and `skills-lock.json` untracked and gitignored; the unused phone number scrubbed from git history; the merged `remodel` branch deleted; AGENTS.md now describes the single `main` branch.
+- **Hero Bio**: Dropped the fixed "3 months" from the commissioned-work line, so it reads "Developer with months of commissioned project work…".
 
 ---
 
