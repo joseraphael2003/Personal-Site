@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased] - 2026-09-28
+## [Unreleased] - 2026-10-03
 
 ### Added
 - **Hirozen Project**: New personal project (oh-my-pi plugin giving the agent consent-gated read access to the Zen browser) added as the first entry in the `/projects` archive, linking to its GitHub repository.
